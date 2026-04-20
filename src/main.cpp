@@ -38,7 +38,7 @@ int main() {
             // (Vide pour l'instant, on y mettra le Renderer)
             gameRendu.setColor(0, 0, 0, 255);
             gameRendu.clear();
-            myMap.render(gameRendu);
+            myMap.graphisme(gameRendu);
             gameRendu.present();
         }
 

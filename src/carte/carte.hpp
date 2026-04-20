@@ -8,8 +8,8 @@
 class Carte {
     public :  
     Carte(const std::string& filepath);
-    void render(Rendu& rendu); // On dessine la carte
+    void graphisme(Rendu& rendu); // Partie Rendu
     private : 
     std::vector<std::vector<Case>> magrille;
-    int m_Case_Taille = 40;
+    int m_Case_Taille = 30;
 };

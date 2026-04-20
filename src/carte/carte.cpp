@@ -35,10 +35,9 @@ Carte::Carte(const std::string& filechemin) {
     }
 }
 
-void Carte::render(Rendu& rendu) {
+void Carte::graphisme(Rendu& rendu) {
     for (size_t y = 0; y < magrille.size(); ++y) {
         for (size_t x = 0; x < magrille[y].size(); ++x) {    
-            // On calcule la position et la taille du carré à dessiner
             SDL_Rect rect = { 
                 static_cast<int>(x) * m_Case_Taille, 
                 static_cast<int>(y) * m_Case_Taille, 
