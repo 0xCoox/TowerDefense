@@ -1,11 +1,14 @@
 #include "core/window.hpp"
+#include "carte/carte.hpp"
+#include "core/rendu.hpp"
 #include <iostream>
 #include <chrono>
 
 int main() {
     try {
         Window gameWindow("Tower Defense", 1920, 1080);
-
+        Rendu gameRendu(gameWindow.getNativeWindow());
+        Carte myMap("assets/map.txt"); //
         bool isRunning = true;
         auto referential_time = std::chrono::steady_clock::now();
         SDL_Event event;
@@ -33,6 +36,10 @@ int main() {
 
             // 3. RENDU (Dessin à l'écran)
             // (Vide pour l'instant, on y mettra le Renderer)
+            gameRendu.setColor(0, 0, 0, 255);
+            gameRendu.clear();
+            myMap.render(gameRendu);
+            gameRendu.present();
         }
 
     } catch (const std::exception& e) {
