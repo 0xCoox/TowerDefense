@@ -1,5 +1,6 @@
 #pragma once
 
+// on peut rajouter des Type a notre convenance 
 enum class CaseType {
     Wall,
     Chemin,
@@ -7,6 +8,7 @@ enum class CaseType {
     Base,
     TowerSpace
 };
+
 
 struct Case {
     CaseType type;

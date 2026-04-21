@@ -3,7 +3,8 @@
 #include <iostream>
 
 Rendu::Rendu(SDL_Window* window)
-    : m_renderer(nullptr, &SDL_DestroyRenderer) 
+//on init a  null mais on lui accorde deja la func destruct
+: m_renderer(nullptr, &SDL_DestroyRenderer) 
 {
     // On crée le renderer matériel avec VSYNC
     SDL_Renderer* rawRenderer = SDL_CreateRenderer(
@@ -12,11 +13,7 @@ Rendu::Rendu(SDL_Window* window)
         SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC
     );
 
-    if (!rawRenderer) {
-        throw std::runtime_error("Erreur SDL_CreateRenderer : " + std::string(SDL_GetError()));
-    }
-
-    // On donne la propriété du pointeur brut à notre smart pointer
+    // On donne la propriété du pointeur brut à notre smart pointer, creation réussi 
     m_renderer.reset(rawRenderer);
     
     std::cout << "Rendu cree avec succes !" << std::endl;
