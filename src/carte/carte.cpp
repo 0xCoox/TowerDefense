@@ -12,7 +12,6 @@ Carte::Carte(const std::string& filechemin) {
     }
 
     int y = 0; 
-    
     while (std::getline(fichier, ligne)) {
         std::vector<Case> colonne;
         int x = 0;
