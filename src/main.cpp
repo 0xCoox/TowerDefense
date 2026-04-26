@@ -1,51 +1,122 @@
 #include "core/window.hpp"
 #include "carte/carte.hpp"
 #include "core/rendu.hpp"
+#include "core/input_manager.hpp"
+#include "entiter/ennemi.hpp"
+#include "waves/wave_manager.hpp"
+
 #include <iostream>
 #include <chrono>
+#include <vector>
+#include <memory>
+#include <algorithm>
 
-int main() {
-    try {
+int main()
+{
+    try
+    {
         Window gameWindow("Tower Defense", 1920, 1080);
         Rendu gameRendu(gameWindow.getNativeWindow());
-        Carte myMap("assets/map.txt"); //
-        bool isRunning = true;
-        auto referential_time = std::chrono::steady_clock::now();
-        SDL_Event event;
+        Carte myMap("assets/map.txt");
 
-        // LA BOUCLE DE JEU
-        while (isRunning) {
-            //time Manager
-            auto TimeGoingOn = std::chrono::steady_clock::now();
-            std::chrono::duration<float> tempsreel = referential_time - TimeGoingOn;
+        InputManager input;
+
+        bool isRunning = true;
+        bool isPaused = false;
+
+        std::vector<std::unique_ptr<Ennemi>> ennemis;
+        WaveManager waveManager;
+
+        int numeroVague = 1;
+        int viesJoueur = 20;
+
+        auto referential_time = std::chrono::steady_clock::now();
+
+        while (isRunning)
+        {
+            auto timeGoingOn = std::chrono::steady_clock::now();
+
+            std::chrono::duration<float> tempsreel = timeGoingOn - referential_time;
             float dt = tempsreel.count();
-            referential_time = TimeGoingOn;
-            // On prépare le prochain tour
-            // gere les evenements
-            
-            while (SDL_PollEvent(&event)) {
-                // Si l'utilisateur clique sur la croix de la fenêtre
-                if (event.type == SDL_QUIT) {
-                    isRunning = false;
-                }
-                // (Plus tard, on ajoutera les touches du clavier ici)
+
+            referential_time = timeGoingOn;
+
+            input.update();
+
+            if (input.shouldQuit() || input.isKeyPressed(SDLK_ESCAPE))
+            {
+                isRunning = false;
             }
 
-            // 2. MISE À JOUR (Logique du jeu, déplacements, etc.)
-            // (Vide pour l'instant)
+            if (input.isKeyPressed(SDLK_SPACE))
+            {
+                isPaused = !isPaused;
+            }
 
-            // 3. RENDU (Dessin à l'écran)
-            // (Vide pour l'instant, on y mettra le Renderer)
+            if (input.isKeyPressed(SDLK_RETURN))
+            {
+                waveManager.lancerVague(numeroVague);
+                numeroVague++;
+            }
+
+            if (!isPaused)
+            {
+                waveManager.update(dt, ennemis, myMap.getChemin());
+
+                for (auto& ennemi : ennemis)
+                {
+                    ennemi->update(dt, myMap.getChemin());
+                }
+
+                int ennemisArrives = 0;
+
+                for (const auto& ennemi : ennemis)
+                {
+                    if (ennemi->estArrive())
+                    {
+                        ennemisArrives++;
+                    }
+                }
+
+                viesJoueur -= ennemisArrives;
+
+                ennemis.erase(
+                    std::remove_if(
+                        ennemis.begin(),
+                        ennemis.end(),
+                        [](const std::unique_ptr<Ennemi>& ennemi)
+                        {
+                            return ennemi->estMort() || ennemi->estArrive();
+                        }
+                    ),
+                    ennemis.end()
+                );
+
+                if (viesJoueur <= 0)
+                {
+                    std::cout << "Game Over !" << std::endl;
+                    isRunning = false;
+                }
+            }
+
             gameRendu.setColor(0, 0, 0, 255);
             gameRendu.clear();
+
             myMap.graphisme(gameRendu);
+
+            for (const auto& ennemi : ennemis)
+            {
+                ennemi->render(gameRendu);
+            }
+
             gameRendu.present();
         }
-
-    } catch (const std::exception& e) {
+    }
+    catch (const std::exception& e)
+    {
         std::cerr << "Erreur fatale : " << e.what() << std::endl;
         return 1;
     }
-    
+
     return 0;
 }

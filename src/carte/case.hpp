@@ -1,6 +1,5 @@
 #pragma once
 
-// on peut rajouter des Type a notre convenance 
 enum class CaseType {
     Wall,
     Chemin,
@@ -9,9 +8,8 @@ enum class CaseType {
     TowerSpace
 };
 
-
 struct Case {
-    CaseType type;
-    int x; 
-    int y;
+    CaseType type = CaseType::Wall;
+    int x = 0;
+    int y = 0;
 };
