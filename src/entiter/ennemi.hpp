@@ -58,8 +58,8 @@ public:
     TypeEnnemi getType() const;
     int getPV() const;
 
-    float getX() const;
-    float getY() const;
+    float  getX() const;
+    float  getY() const;
 
     std::size_t getPointActuel() const;
     float getProgressionChemin() const;

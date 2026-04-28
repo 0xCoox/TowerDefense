@@ -2,8 +2,25 @@
 
 #include <SDL2/SDL.h>
 
+namespace
+{
+    constexpr int DEGAT = 25;
+    constexpr float PORTEE = 170.0f;
+    constexpr float DELAI_ATTAQUE = 0.4f;
+    constexpr float VITESSE_PROJECTILE = 700.0f;
+    constexpr int COUT = 42;
+}
+
 TourAntiAir::TourAntiAir(int gridX, int gridY)
-    : Tour(gridX, gridY, 25, 170.0f, 0.4f)
+    : Tour(
+          gridX,
+          gridY,
+          DEGAT,
+          PORTEE,
+          DELAI_ATTAQUE,
+          VITESSE_PROJECTILE,
+          COUT
+      )
 {
 }
 

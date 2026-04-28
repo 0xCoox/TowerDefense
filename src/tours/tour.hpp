@@ -5,6 +5,7 @@
 #include "../entiter/projectile.hpp"
 
 #include <memory>
+#include <optional>
 #include <vector>
 
 class Tour
@@ -19,8 +20,21 @@ protected:
     float delaiAttaque_;
     float timerAttaque_;
 
+    float vitesseProjectile_;
+
+    int cout_;
+
 public:
-    Tour(int gridX, int gridY, int degat, float portee, float delaiAttaque);
+    Tour(
+        int gridX,
+        int gridY,
+        int degat,
+        float portee,
+        float delaiAttaque,
+        float vitesseProjectile,
+        int cout
+    );
+
     virtual ~Tour() = default;
 
     virtual void update(
@@ -32,15 +46,14 @@ public:
 
     virtual void render(Rendu& rendu, int tailleCase) const = 0;
 
-    virtual void attaquer(Ennemi& ennemi);
     virtual bool peutCibler(const Ennemi& ennemi) const;
 
     bool estDansPortee(const Ennemi& ennemi, int tailleCase) const;
 
-    Ennemi* trouverCible(
-        std::vector<std::unique_ptr<Ennemi>>& ennemis,
+    std::optional<std::size_t> trouverIndexCible(
+        const std::vector<std::unique_ptr<Ennemi>>& ennemis,
         int tailleCase
-    );
+    ) const;
 
     void creerProjectileVers(
         const Ennemi& ennemi,
@@ -50,4 +63,5 @@ public:
 
     int getGridX() const;
     int getGridY() const;
+    int getCout() const;
 };

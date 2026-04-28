@@ -2,13 +2,23 @@
 
 #include <cmath>
 
-Tour::Tour(int gridX, int gridY, int degat, float portee, float delaiAttaque)
+Tour::Tour(
+    int gridX,
+    int gridY,
+    int degat,
+    float portee,
+    float delaiAttaque,
+    float vitesseProjectile,
+    int cout
+)
     : gridX_(gridX),
       gridY_(gridY),
       degat_(degat),
       portee_(portee),
       delaiAttaque_(delaiAttaque),
-      timerAttaque_(0.0f)
+      timerAttaque_(0.0f),
+      vitesseProjectile_(vitesseProjectile),
+      cout_(cout)
 {
 }
 
@@ -29,20 +39,18 @@ void Tour::update(
         return;
     }
 
-    Ennemi* cible = trouverCible(ennemis, tailleCase);
+    std::optional<std::size_t> indexCible = trouverIndexCible(ennemis, tailleCase);
 
-    if (cible != nullptr)
+    if (!indexCible.has_value())
     {
-        creerProjectileVers(*cible, projectiles, tailleCase);
-        attaquer(*cible);
-
-        timerAttaque_ = delaiAttaque_;
+        return;
     }
-}
 
-void Tour::attaquer(Ennemi& ennemi)
-{
-    ennemi.prendreDegat(degat_);
+    Ennemi& cible = *ennemis[indexCible.value()];
+
+    creerProjectileVers(cible, projectiles, tailleCase);
+
+    timerAttaque_ = delaiAttaque_;
 }
 
 bool Tour::peutCibler(const Ennemi& ennemi) const
@@ -64,16 +72,18 @@ bool Tour::estDansPortee(const Ennemi& ennemi, int tailleCase) const
     return distance <= portee_;
 }
 
-Ennemi* Tour::trouverCible(
-    std::vector<std::unique_ptr<Ennemi>>& ennemis,
+std::optional<std::size_t> Tour::trouverIndexCible(
+    const std::vector<std::unique_ptr<Ennemi>>& ennemis,
     int tailleCase
-)
+) const
 {
-    Ennemi* meilleureCible = nullptr;
+    std::optional<std::size_t> meilleurIndex;
     float meilleureProgression = -1.0f;
 
-    for (auto& ennemi : ennemis)
+    for (std::size_t i = 0; i < ennemis.size(); i++)
     {
+        const std::unique_ptr<Ennemi>& ennemi = ennemis[i];
+
         if (!ennemi)
         {
             continue;
@@ -104,11 +114,11 @@ Ennemi* Tour::trouverCible(
         if (progression > meilleureProgression)
         {
             meilleureProgression = progression;
-            meilleureCible = ennemi.get();
+            meilleurIndex = i;
         }
     }
 
-    return meilleureCible;
+    return meilleurIndex;
 }
 
 void Tour::creerProjectileVers(
@@ -123,8 +133,9 @@ void Tour::creerProjectileVers(
     projectiles.emplace_back(
         centreTourX,
         centreTourY,
-        ennemi.getX(),
-        ennemi.getY()
+        ennemi.getId(),
+        degat_,
+        vitesseProjectile_
     );
 }
 
@@ -136,4 +147,9 @@ int Tour::getGridX() const
 int Tour::getGridY() const
 {
     return gridY_;
+}
+
+int Tour::getCout() const
+{
+    return cout_;
 }

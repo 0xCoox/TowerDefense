@@ -2,8 +2,25 @@
 
 #include <SDL2/SDL.h>
 
+namespace
+{
+    constexpr int DEGAT = 60;
+    constexpr float PORTEE = 260.0f;
+    constexpr float DELAI_ATTAQUE = 1.5f;
+    constexpr float VITESSE_PROJECTILE = 900.0f;
+    constexpr int COUT = 80;
+}
+
 TourSniper::TourSniper(int gridX, int gridY)
-    : Tour(gridX, gridY, 60, 260.0f, 1.5f)
+    : Tour(
+          gridX,
+          gridY,
+          DEGAT,
+          PORTEE,
+          DELAI_ATTAQUE,
+          VITESSE_PROJECTILE,
+          COUT
+      )
 {
 }
 

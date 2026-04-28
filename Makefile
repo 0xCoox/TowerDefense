@@ -3,7 +3,7 @@ CXX = g++
 # Flags de compilation : C++20, warnings activés, et on inclut le dossier src
 CXXFLAGS = -std=c++20 -Wall -Wextra -I./src
 # Flags d'édition de liens : on relie la bibliothèque SDL2
-LDFLAGS = -lSDL2
+LDFLAGS = -lSDL2 -lSDL2_ttf
 
 # --- Dossiers ---
 SRC_DIR = src

@@ -2,8 +2,25 @@
 
 #include <SDL2/SDL.h>
 
+namespace
+{
+    constexpr int DEGAT = 15;
+    constexpr float PORTEE = 120.0f;
+    constexpr float DELAI_ATTAQUE = 0.5f;
+    constexpr float VITESSE_PROJECTILE = 450.0f;
+    constexpr int COUT = 48;
+}
+
 TourBasique::TourBasique(int gridX, int gridY)
-    : Tour(gridX, gridY, 15, 120.0f, 0.5f)
+    : Tour(
+          gridX,
+          gridY,
+          DEGAT,
+          PORTEE,
+          DELAI_ATTAQUE,
+          VITESSE_PROJECTILE,
+          COUT
+      )
 {
 }
 
