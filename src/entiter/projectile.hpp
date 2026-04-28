@@ -1,13 +1,24 @@
-#include "entite.hpp" 
-class projectile : public Entite {
-public:
+#pragma once
 
-    projectile(float x, float y, float vitesse, int degat);
+#include "../core/rendu.hpp"
 
-    void update(float dt) override;
-    void render(Rendu& rendu) const override;
-
+class Projectile
+{
 private:
-    int m_degats;
-    float m_vitesse;
+    float x_;
+    float y_;
+
+    float cibleX_;
+    float cibleY_;
+
+    float vitesse_;
+    bool termine_;
+
+public:
+    Projectile(float xDepart, float yDepart, float cibleX, float cibleY);
+
+    void update(float dt);
+    void render(Rendu& rendu) const;
+
+    bool estTermine() const;
 };

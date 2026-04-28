@@ -96,6 +96,7 @@ void Ennemi::update(float dt, const std::vector<Vec2>& chemin)
     if (distance < 2.0f)
     {
         m_pointActuel++;
+        m_progressionSegment = 0.0f;
 
         if (m_pointActuel >= chemin.size())
         {
@@ -108,8 +109,38 @@ void Ennemi::update(float dt, const std::vector<Vec2>& chemin)
     float directionX = dx / distance;
     float directionY = dy / distance;
 
-    m_x += directionX * m_vitesse * dt;
-    m_y += directionY * m_vitesse * dt;
+    float distanceAParcourir = m_vitesse * dt;
+
+    if (distanceAParcourir >= distance)
+    {
+        m_x = cible.x;
+        m_y = cible.y;
+
+        m_pointActuel++;
+        m_progressionSegment = 0.0f;
+
+        if (m_pointActuel >= chemin.size())
+        {
+            m_estArrive = true;
+        }
+
+        return;
+    }
+
+    m_x += directionX * distanceAParcourir;
+    m_y += directionY * distanceAParcourir;
+
+    // Progression approximative entre le point précédent et la cible actuelle.
+    // C'est utilisé par les tours pour viser l'ennemi le plus avancé.
+    if (distance > 0.001f)
+    {
+        m_progressionSegment += distanceAParcourir / distance;
+    }
+
+    if (m_progressionSegment > 1.0f)
+    {
+        m_progressionSegment = 1.0f;
+    }
 }
 
 void Ennemi::render(Rendu& rendu) const
@@ -167,6 +198,11 @@ void Ennemi::render(Rendu& rendu) const
         ratioVie = 0.0f;
     }
 
+    if (ratioVie > 1.0f)
+    {
+        ratioVie = 1.0f;
+    }
+
     SDL_Rect barreVie = {
         static_cast<int>(m_x - 15),
         static_cast<int>(m_y - 22),
@@ -180,7 +216,7 @@ void Ennemi::render(Rendu& rendu) const
 
 void Ennemi::prendreDegat(int degat)
 {
-    float degatApresResistance = degat * (1.0f - m_resistance);
+    float degatApresResistance = static_cast<float>(degat) * (1.0f - m_resistance);
 
     m_pv -= static_cast<int>(degatApresResistance);
 
@@ -213,4 +249,24 @@ TypeEnnemi Ennemi::getType() const
 int Ennemi::getPV() const
 {
     return m_pv;
+}
+
+float Ennemi::getX() const
+{
+    return m_x;
+}
+
+float Ennemi::getY() const
+{
+    return m_y;
+}
+
+std::size_t Ennemi::getPointActuel() const
+{
+    return m_pointActuel;
+}
+
+float Ennemi::getProgressionChemin() const
+{
+    return static_cast<float>(m_pointActuel) + m_progressionSegment;
 }

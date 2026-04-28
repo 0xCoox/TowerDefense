@@ -16,14 +16,16 @@ public:
     const std::vector<Vec2>& getChemin() const;
     int getTailleCase() const;
 
+    bool estConstructible(int x, int y) const;
+
 private:
     bool estDansLaCarte(int x, int y) const;
     bool estCaseDeChemin(int x, int y) const;
     void calculerChemin();
 
 private:
-    std::vector<std::vector<Case>> magrille;
-    std::vector<Vec2> m_chemin;
+    std::vector<std::vector<Case>> grille_;
+    std::vector<Vec2> chemin_;
 
     int m_Case_Taille = 30;
 };

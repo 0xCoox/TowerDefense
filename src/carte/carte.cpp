@@ -46,18 +46,18 @@ Carte::Carte(const std::string& filechemin) {
             x++;
         }
 
-        magrille.push_back(colonne);
+        grille_.push_back(colonne);
         y++;
     }
 
     calculerChemin();
 
-    std::cout << "Chemin trouve : " << m_chemin.size() << " points" << std::endl;
+    std::cout << "Chemin trouve : " << chemin_.size() << " points" << std::endl;
 }
 
 void Carte::graphisme(Rendu& rendu) {
-    for (size_t y = 0; y < magrille.size(); ++y) {
-        for (size_t x = 0; x < magrille[y].size(); ++x) {
+    for (size_t y = 0; y < grille_.size(); ++y) {
+        for (size_t x = 0; x < grille_[y].size(); ++x) {
             SDL_Rect rect = {
                 static_cast<int>(x) * m_Case_Taille,
                 static_cast<int>(y) * m_Case_Taille,
@@ -65,7 +65,7 @@ void Carte::graphisme(Rendu& rendu) {
                 m_Case_Taille
             };
 
-            switch (magrille[y][x].type) {
+            switch (grille_[y][x].type) {
                 case CaseType::Wall:
                     rendu.setColor(50, 50, 50, 255);
                     break;
@@ -94,12 +94,12 @@ void Carte::graphisme(Rendu& rendu) {
 
 bool Carte::estDansLaCarte(int x, int y) const
 {
-    if (y < 0 || y >= static_cast<int>(magrille.size()))
+    if (y < 0 || y >= static_cast<int>(grille_.size()))
     {
         return false;
     }
 
-    if (x < 0 || x >= static_cast<int>(magrille[y].size()))
+    if (x < 0 || x >= static_cast<int>(grille_[y].size()))
     {
         return false;
     }
@@ -114,7 +114,7 @@ bool Carte::estCaseDeChemin(int x, int y) const
         return false;
     }
 
-    CaseType type = magrille[y][x].type;
+    CaseType type = grille_[y][x].type;
 
     if (type == CaseType::Chemin ||
         type == CaseType::Spawn ||
@@ -128,17 +128,17 @@ bool Carte::estCaseDeChemin(int x, int y) const
 
 void Carte::calculerChemin()
 {
-    m_chemin.clear();
+    chemin_.clear();
 
     int startX = -1;
     int startY = -1;
 
     // 1. Chercher le spawn S
-    for (size_t y = 0; y < magrille.size(); ++y)
+    for (size_t y = 0; y < grille_.size(); ++y)
     {
-        for (size_t x = 0; x < magrille[y].size(); ++x)
+        for (size_t x = 0; x < grille_[y].size(); ++x)
         {
-            if (magrille[y][x].type == CaseType::Spawn)
+            if (grille_[y][x].type == CaseType::Spawn)
             {
                 startX = static_cast<int>(x);
                 startY = static_cast<int>(y);
@@ -153,8 +153,8 @@ void Carte::calculerChemin()
     }
 
     std::vector<std::vector<bool>> visite(
-        magrille.size(),
-        std::vector<bool>(magrille[0].size(), false)
+        grille_.size(),
+        std::vector<bool>(grille_[0].size(), false)
     );
 
     int x = startX;
@@ -168,10 +168,10 @@ void Carte::calculerChemin()
         point.x = x * m_Case_Taille + m_Case_Taille / 2.0f;
         point.y = y * m_Case_Taille + m_Case_Taille / 2.0f;
 
-        m_chemin.push_back(point);
+        chemin_.push_back(point);
         visite[y][x] = true;
 
-        if (magrille[y][x].type == CaseType::Base)
+        if (grille_[y][x].type == CaseType::Base)
         {
             cheminTermine = true;
             break;
@@ -207,10 +207,20 @@ void Carte::calculerChemin()
 
 const std::vector<Vec2>& Carte::getChemin() const
 {
-    return m_chemin;
+    return chemin_;
 }
 
 int Carte::getTailleCase() const
 {
     return m_Case_Taille;
+}
+
+bool Carte::estConstructible(int x, int y) const
+{
+    if (!estDansLaCarte(x, y))
+    {
+        return false;
+    }
+
+    return grille_[y][x].type == CaseType::TowerSpace;
 }
