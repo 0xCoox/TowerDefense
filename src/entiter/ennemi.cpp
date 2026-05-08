@@ -6,7 +6,9 @@
 
 Ennemi::Ennemi(float x, float y, TypeEnnemi type)
     : Entite(x, y, TypeEntite::Ennemi),
-      m_type(type)
+      m_type(type),     
+      m_texture(nullptr), 
+      m_angle(0.0f)      
 {
     initialiserStats();
 }
@@ -70,15 +72,7 @@ void Ennemi::update(float dt)
 
 void Ennemi::update(float dt, const std::vector<Vec2>& chemin)
 {
-    if (chemin.empty())
-    {
-        return;
-    }
-
-    if (m_estArrive)
-    {
-        return;
-    }
+    if (chemin.empty() || m_estArrive) return;
 
     if (m_pointActuel >= chemin.size())
     {
@@ -87,27 +81,22 @@ void Ennemi::update(float dt, const std::vector<Vec2>& chemin)
     }
 
     Vec2 cible = chemin[m_pointActuel];
-
     float dx = cible.x - m_x;
     float dy = cible.y - m_y;
-
     float distance = std::sqrt(dx * dx + dy * dy);
 
+    // Si on est arrivé au point de passage actuel
     if (distance < 2.0f)
     {
         m_pointActuel++;
         m_progressionSegment = 0.0f;
-
-        if (m_pointActuel >= chemin.size())
-        {
-            m_estArrive = true;
-        }
-
+        if (m_pointActuel >= chemin.size()) m_estArrive = true;
         return;
     }
 
     float directionX = dx / distance;
     float directionY = dy / distance;
+    m_angle = std::atan2(directionY, directionX) * (180.0f / M_PI);
 
     float distanceAParcourir = m_vitesse * dt;
 
@@ -115,103 +104,77 @@ void Ennemi::update(float dt, const std::vector<Vec2>& chemin)
     {
         m_x = cible.x;
         m_y = cible.y;
-
         m_pointActuel++;
         m_progressionSegment = 0.0f;
+        if (m_pointActuel >= chemin.size()) m_estArrive = true;
+    }
+    else
+    {
+        m_x += directionX * distanceAParcourir;
+        m_y += directionY * distanceAParcourir;
 
-        if (m_pointActuel >= chemin.size())
+        // Mise à jour de la progression pour les tours
+        if (distance > 0.001f)
         {
-            m_estArrive = true;
+            m_progressionSegment += distanceAParcourir / distance;
         }
-
-        return;
     }
 
-    m_x += directionX * distanceAParcourir;
-    m_y += directionY * distanceAParcourir;
-
-    // Progression approximative entre le point précédent et la cible actuelle.
-    // C'est utilisé par les tours pour viser l'ennemi le plus avancé.
-    if (distance > 0.001f)
-    {
-        m_progressionSegment += distanceAParcourir / distance;
-    }
-
-    if (m_progressionSegment > 1.0f)
-    {
-        m_progressionSegment = 1.0f;
-    }
+    if (m_progressionSegment > 1.0f) m_progressionSegment = 1.0f;
 }
 
 void Ennemi::render(Rendu& rendu) const
 {
+    int tailleAffichage = 50; 
+    int moitie = tailleAffichage / 2;
+
     SDL_Rect rect = {
-        static_cast<int>(m_x - 15),
-        static_cast<int>(m_y - 15),
-        30,
-        30
+        static_cast<int>(m_x - moitie),
+        static_cast<int>(m_y - moitie),
+        tailleAffichage,
+        tailleAffichage
     };
 
-    switch (m_type)
+    if (m_texture) 
     {
-        case TypeEnnemi::Regular:
-            rendu.setColor(255, 0, 0, 255);
-            break;
-
-        case TypeEnnemi::Fast:
-            rendu.setColor(255, 100, 100, 255);
-            break;
-
-        case TypeEnnemi::Strong:
-            rendu.setColor(120, 0, 0, 255);
-            break;
-
-        case TypeEnnemi::Armored:
-            rendu.setColor(120, 120, 120, 255);
-            break;
-
-        case TypeEnnemi::Heli:
-            rendu.setColor(0, 200, 0, 255);
-            break;
-
-        case TypeEnnemi::Jet:
-            rendu.setColor(255, 255, 255, 255);
-            break;
+        float newAngle = m_angle + 90.0f;
+        SDL_RenderCopyEx(
+            rendu.getNativeRenderer(),
+            m_texture,
+            nullptr,    
+            &rect,        
+            newAngle,      
+            nullptr,      
+            SDL_FLIP_NONE
+        );
+    }
+    else 
+    {
+        switch (m_type)
+        {
+            case TypeEnnemi::Regular: rendu.setColor(255, 0, 0, 255); break;
+            case TypeEnnemi::Fast:    rendu.setColor(255, 100, 100, 255); break;
+            case TypeEnnemi::Strong:  rendu.setColor(120, 0, 0, 255); break;
+            case TypeEnnemi::Armored: rendu.setColor(120, 120, 120, 255); break;
+            case TypeEnnemi::Heli:    rendu.setColor(0, 200, 0, 255); break;
+            case TypeEnnemi::Jet:     rendu.setColor(255, 255, 255, 255); break;
+        }
+        SDL_RenderFillRect(rendu.getNativeRenderer(), &rect);
     }
 
-    SDL_RenderFillRect(rendu.getNativeRenderer(), &rect);
+    SDL_Rect barreFond = { static_cast<int>(m_x - moitie), static_cast<int>(m_y - moitie - 10), tailleAffichage, 5 };
+        rendu.setColor(80, 80, 80, 255);
+        SDL_RenderFillRect(rendu.getNativeRenderer(), &barreFond);
 
-    SDL_Rect barreFond = {
-        static_cast<int>(m_x - 15),
-        static_cast<int>(m_y - 22),
-        30,
-        4
-    };
-
-    rendu.setColor(80, 80, 80, 255);
-    SDL_RenderFillRect(rendu.getNativeRenderer(), &barreFond);
-
-    float ratioVie = static_cast<float>(m_pv) / static_cast<float>(m_pvMax);
-
-    if (ratioVie < 0.0f)
-    {
-        ratioVie = 0.0f;
-    }
-
-    if (ratioVie > 1.0f)
-    {
-        ratioVie = 1.0f;
-    }
-
-    SDL_Rect barreVie = {
-        static_cast<int>(m_x - 15),
-        static_cast<int>(m_y - 22),
-        static_cast<int>(30.0f * ratioVie),
-        4
-    };
-
-    rendu.setColor(0, 255, 0, 255);
-    SDL_RenderFillRect(rendu.getNativeRenderer(), &barreVie);
+        float ratioVie = std::fmax(0.0f, std::fmin(1.0f, (float)m_pv / m_pvMax));
+        SDL_Rect barreVie = {
+            static_cast<int>(m_x - moitie),
+            static_cast<int>(m_y - moitie - 10),
+            static_cast<int>(tailleAffichage * ratioVie),
+            5
+        };
+        rendu.setColor(0, 255, 0, 255);
+        SDL_RenderFillRect(rendu.getNativeRenderer(), &barreVie);
 }
 
 void Ennemi::prendreDegat(int degat)

@@ -5,6 +5,7 @@
 
 #include <vector>
 #include <cstddef>
+#include <SDL2/SDL.h> 
 
 class Rendu;
 
@@ -38,8 +39,10 @@ private:
     // Sert aux tours pour savoir quel ennemi est le plus proche de la base.
     // Exemple : point 3 + progression 0.5 = progression totale 3.5.
     float m_progressionSegment = 0.0f;
-
+    SDL_Texture* m_texture; 
+    float m_angle;
 public:
+    void setTexture(SDL_Texture* tex) { m_texture = tex; }
     Ennemi(float x, float y, TypeEnnemi type);
 
     void initialiserStats();

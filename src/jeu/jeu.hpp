@@ -14,6 +14,11 @@
 
 #include "../tours/tour.hpp"
 
+#include "../core/texture.hpp"
+
+#include "../bouton/bouton_manager.hpp" 
+#include "../bouton/game_bouton.hpp"
+
 #include "hud.hpp"
 
 #include <chrono>
@@ -34,6 +39,9 @@ private:
 
     Joueur joueur_;
     WaveManager waveManager_;
+    TextureManager textureManager_; 
+    BouttonManager guiManager_;
+
 
     int numeroVague_;
 
@@ -65,6 +73,7 @@ private:
     void mettreAJourProjectiles(float dt);
 
     void gererEnnemisMortsEtArrives();
+
 
     bool tourExisteDeja(int gridX, int gridY) const;
 

@@ -55,6 +55,24 @@ Jeu::Jeu()
       typeTourSelectionne_(TYPE_TOUR_PAR_DEFAUT),
       dernierTemps_(std::chrono::steady_clock::now())
 {
+    textureManager_.charger("ennemi_regular", "../assets/ground_shaker_asset/Blue/Bodies/body_tracks.png", rendu_.getNativeRenderer());
+    textureManager_.charger("ennemi_fast", "../assets/ground_shaker_asset/Purple/Bodies/body_tracks.png", rendu_.getNativeRenderer());
+    textureManager_.charger("ennemi_strong", "../assets/ground_shaker_asset/Camo/Bodies/body_tracks.png", rendu_.getNativeRenderer());
+    textureManager_.charger("ennemi_armored", "../assets/ground_shaker_asset/Red/Bodies/body_tracks.png", rendu_.getNativeRenderer());
+    textureManager_.charger("ennemi_heli", "../assets/ground_shaker_asset/Desert/Bodies/body_tracks.png", rendu_.getNativeRenderer());
+    textureManager_.charger("ennemi_jet", "../assets/ground_shaker_asset/Blue/Bodies/body_tracks.png", rendu_.getNativeRenderer());
+    textureManager_.charger("weapons_purple", "../assets/ground_shaker_asset/Purple/Weapons/weapons.png", rendu_.getNativeRenderer());
+    textureManager_.charger("map_sprite", "../assets/ground_shaker_asset/Terrains/terrain.png", rendu_.getNativeRenderer());
+    textureManager_.charger("base_tour", "../assets/ground_shaker_asset/Purple/Towers/towers_walls_snow_1.png", rendu_.getNativeRenderer());
+    
+    SDL_Color couleurAmeliorer = {50, 200, 50, 255}; // Vert
+    SDL_Color couleurVague = {100, 100, 100, 255};   // Gris
+    SDL_Color couleurVendre = {200, 50, 50, 255};    // Rouge
+   
+    guiManager_.ajouterBoutton(std::make_unique<BouttonLevelUp>(10, 150, 130, 40, couleurAmeliorer));
+    guiManager_.ajouterBoutton(std::make_unique<BouttonVague>(10, 200, 130, 40, couleurVague));
+    guiManager_.ajouterBoutton(std::make_unique<BouttonVendre>(10, 250, 130, 40, couleurVendre));
+
     afficherCommandes();
 }
 
@@ -165,6 +183,39 @@ void Jeu::traiterEntrees()
 void Jeu::mettreAJour(float dt)
 {
     waveManager_.update(dt, ennemis_, carte_.getChemin());
+    for (auto& ennemi : ennemis_)
+        {
+        
+            if (ennemi->getType() == TypeEnnemi::Regular) 
+            {
+                ennemi->setTexture(textureManager_.get("ennemi_regular"));
+            }
+            
+            if (ennemi->getType() == TypeEnnemi::Fast) 
+            {
+                ennemi->setTexture(textureManager_.get("ennemi_fast"));
+            }
+            
+            if (ennemi->getType() == TypeEnnemi::Strong) 
+            {
+                ennemi->setTexture(textureManager_.get("ennemi_strong"));
+            }
+            
+            if (ennemi->getType() == TypeEnnemi::Armored) 
+            {
+                ennemi->setTexture(textureManager_.get("ennemi_armored"));
+            }
+
+            if (ennemi->getType() == TypeEnnemi::Heli) 
+            {
+                ennemi->setTexture(textureManager_.get("ennemi_heli"));
+            }
+
+            if (ennemi->getType() == TypeEnnemi::Jet) 
+            {
+                ennemi->setTexture(textureManager_.get("ennemi_jet"));
+            }
+        }
 
     mettreAJourEnnemis(dt);
     mettreAJourTours(dt);
@@ -274,16 +325,13 @@ void Jeu::gererEnnemisMortsEtArrives()
 
 void Jeu::dessiner()
 {
-    rendu_.setColor(
-        COULEUR_FOND_R,
-        COULEUR_FOND_G,
-        COULEUR_FOND_B,
-        COULEUR_FOND_A
-    );
-
+    rendu_.setColor(COULEUR_FOND_R, COULEUR_FOND_G, COULEUR_FOND_B, COULEUR_FOND_A);
     rendu_.clear();
-
-    carte_.graphisme(rendu_);
+   
+    SDL_Texture* texMap = textureManager_.get("map_sprite");
+    SDL_Texture* texBase = textureManager_.get("base_tour");
+   
+    carte_.graphisme(rendu_, texMap, texBase);
 
     for (const auto& tour : tours_)
     {
@@ -315,6 +363,8 @@ void Jeu::dessiner()
     );
 
     SDL_RenderDrawRect(rendu_.getNativeRenderer(), &curseurRect);
+
+    guiManager_.render(rendu_.getNativeRenderer());
 
     hud_.render(
         rendu_,
@@ -369,11 +419,12 @@ void Jeu::essayerAjouterTour()
     }
 
     std::unique_ptr<Tour> nouvelleTour =
-        TourFactory::creerTour(typeTourSelectionne_, curseurX_, curseurY_);
+            TourFactory::creerTour(typeTourSelectionne_, curseurX_, curseurY_, textureManager_);
+    
 
-    if (!nouvelleTour)
+    if (!nouvelleTour) 
     {
-        return;
+        return; 
     }
 
     int cout = nouvelleTour->getCout();

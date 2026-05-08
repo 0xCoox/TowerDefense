@@ -24,17 +24,32 @@ TourAntiAir::TourAntiAir(int gridX, int gridY)
 {
 }
 
-void TourAntiAir::render(Rendu& rendu, int tailleCase) const
-{
-    SDL_Rect rect = {
-        gridX_ * tailleCase + 4,
-        gridY_ * tailleCase + 4,
-        tailleCase - 8,
-        tailleCase - 8
+
+void TourAntiAir::render(Rendu& rendu, int tailleCase) const {
+    SDL_Rect srcRect = { spriteX_, spriteY_, SPRITE_SIZE, SPRITE_SIZE };
+
+    SDL_Rect dstRect = { 
+        gridX_ * tailleCase, 
+        gridY_ * tailleCase, 
+        tailleCase, 
+        tailleCase 
     };
 
-    rendu.setColor(180, 80, 255, 255);
-    SDL_RenderFillRect(rendu.getNativeRenderer(), &rect);
+    if (textureCanon_ != nullptr) {
+        float angleCorrection = angle_ + 90.0f;
+        SDL_RenderCopyEx(
+            rendu.getNativeRenderer(),
+            textureCanon_,
+            &srcRect,        
+            &dstRect,       
+            angleCorrection,
+            nullptr,         
+            SDL_FLIP_NONE
+        );
+    } else {
+        rendu.setColor(255, 255, 0, 255); 
+        SDL_RenderDrawRect(rendu.getNativeRenderer(), &dstRect);
+    }
 }
 
 bool TourAntiAir::peutCibler(const Ennemi& ennemi) const

@@ -11,7 +11,7 @@ class Carte {
 public:
     Carte(const std::string& filepath);
 
-    void graphisme(Rendu& rendu);
+    void graphisme(Rendu& rendu, SDL_Texture* tileset, SDL_Texture* baseTour);
 
     const std::vector<Vec2>& getChemin() const;
     int getTailleCase() const;

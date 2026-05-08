@@ -50,6 +50,16 @@ void Tour::update(float dt, std::vector<std::unique_ptr<Ennemi>>& ennemis,
     creerProjectileVers(cible, projectiles, tailleCase);
     timerAttaque_ = delaiAttaque_;
 }
+
+//code caca
+void Tour::render(Rendu& rendu, int tailleCase) const 
+{
+    if (textureBase_) {
+        SDL_Rect rect = { gridX_ * tailleCase, gridY_ * tailleCase, tailleCase, tailleCase };
+        SDL_RenderCopy(rendu.getNativeRenderer(), textureBase_, nullptr, &rect);
+    }
+}
+
 bool Tour::peutCibler(const Ennemi& ennemi) const
 {
     (void)ennemi;

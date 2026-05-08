@@ -55,39 +55,62 @@ Carte::Carte(const std::string& filechemin) {
     std::cout << "Chemin trouve : " << chemin_.size() << " points" << std::endl;
 }
 
-void Carte::graphisme(Rendu& rendu) {
+void Carte::graphisme(Rendu& rendu, SDL_Texture* tileset, SDL_Texture* baseTour) {
+    const int ASSET_SIZE = 128; 
+
     for (size_t y = 0; y < grille_.size(); ++y) {
         for (size_t x = 0; x < grille_[y].size(); ++x) {
-            SDL_Rect rect = {
+            
+            SDL_Rect destRect = {
                 static_cast<int>(x) * m_Case_Taille,
                 static_cast<int>(y) * m_Case_Taille,
                 m_Case_Taille,
                 m_Case_Taille
             };
 
-            switch (grille_[y][x].type) {
-                case CaseType::Wall:
-                    rendu.setColor(50, 50, 50, 255);
-                    break;
+            if (tileset) {
+                SDL_Rect srcRectMap = { 0, 0, ASSET_SIZE, ASSET_SIZE };
+                double angle = 0.0;
 
-                case CaseType::Chemin:
-                    rendu.setColor(100, 100, 100, 255);
-                    break;
+                if (estCaseDeChemin(x, y)) {
+                    bool H = estCaseDeChemin(x, (int)y - 1);
+                    bool B = estCaseDeChemin(x, (int)y + 1);
+                    bool G = estCaseDeChemin((int)x - 1, y);
+                    bool D = estCaseDeChemin((int)x + 1, y);
 
-                case CaseType::Spawn:
-                    rendu.setColor(0, 255, 0, 255);
-                    break;
+                    if ((G && D) || (G && !H && !B) || (D && !H && !B)) {
+                        srcRectMap.x = 3 * ASSET_SIZE; angle = 90.0;
+                    } else if ((H && B) || (H && !G && !D) || (B && !G && !D)) {
+                        srcRectMap.x = 3 * ASSET_SIZE; angle = 0.0;
+                    } else {
+                        srcRectMap.x = 4 * ASSET_SIZE;
+                        if (B && D) angle = 0.0;
+                        else if (B && G) angle = 90.0;
+                        else if (H && G) angle = 180.0;
+                        else if (H && D) angle = 270.0;
+                    }
+                } else {
+                    srcRectMap.x = 0; // Neige
+                }
 
-                case CaseType::Base:
-                    rendu.setColor(255, 0, 0, 255);
-                    break;
-
-                case CaseType::TowerSpace:
-                    rendu.setColor(150, 150, 200, 255);
-                    break;
+                SDL_RenderCopyEx(rendu.getNativeRenderer(), tileset, &srcRectMap, &destRect, angle, NULL, SDL_FLIP_NONE);
             }
 
-            SDL_RenderFillRect(rendu.getNativeRenderer(), &rect);
+            if (grille_[y][x].type == CaseType::Spawn) {
+                rendu.setColor(0, 255, 0, 100); 
+                SDL_SetRenderDrawBlendMode(rendu.getNativeRenderer(), SDL_BLENDMODE_BLEND);
+                SDL_RenderFillRect(rendu.getNativeRenderer(), &destRect);
+            } 
+            else if (grille_[y][x].type == CaseType::Base) {
+                rendu.setColor(255, 0, 0, 100);
+                SDL_SetRenderDrawBlendMode(rendu.getNativeRenderer(), SDL_BLENDMODE_BLEND);
+                SDL_RenderFillRect(rendu.getNativeRenderer(), &destRect);
+            }
+
+            if (grille_[y][x].type == CaseType::TowerSpace && baseTour) {
+                SDL_Rect srcRectBase = { 0, 128, ASSET_SIZE, ASSET_SIZE };
+                SDL_RenderCopy(rendu.getNativeRenderer(), baseTour, &srcRectBase, &destRect);
+            }
         }
     }
 }

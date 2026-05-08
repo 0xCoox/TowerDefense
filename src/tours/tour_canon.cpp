@@ -24,15 +24,29 @@ TourCanon::TourCanon(int gridX, int gridY)
 {
 }
 
-void TourCanon::render(Rendu& rendu, int tailleCase) const
-{
-    SDL_Rect rect = {
-        gridX_ * tailleCase + 3,
-        gridY_ * tailleCase + 3,
-        tailleCase - 6,
-        tailleCase - 6
+void TourCanon::render(Rendu& rendu, int tailleCase) const {
+    SDL_Rect srcRect = { spriteX_, spriteY_, SPRITE_SIZE, SPRITE_SIZE };
+
+    SDL_Rect dstRect = { 
+        gridX_ * tailleCase, 
+        gridY_ * tailleCase, 
+        tailleCase, 
+        tailleCase 
     };
 
-    rendu.setColor(255, 130, 0, 255);
-    SDL_RenderFillRect(rendu.getNativeRenderer(), &rect);
+    if (textureCanon_ != nullptr) {
+        float angleCorrection = angle_ + 90.0f;
+        SDL_RenderCopyEx(
+            rendu.getNativeRenderer(),
+            textureCanon_,
+            &srcRect,        
+            &dstRect,       
+            angleCorrection,
+            nullptr,         
+            SDL_FLIP_NONE
+        );
+    } else {
+        rendu.setColor(255, 255, 0, 255); 
+        SDL_RenderDrawRect(rendu.getNativeRenderer(), &dstRect);
+    }
 }
