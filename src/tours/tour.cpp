@@ -22,37 +22,34 @@ Tour::Tour(
 {
 }
 
-void Tour::update(
-    float dt,
-    std::vector<std::unique_ptr<Ennemi>>& ennemis,
-    std::vector<Projectile>& projectiles,
-    int tailleCase
-)
+void Tour::update(float dt, std::vector<std::unique_ptr<Ennemi>>& ennemis, 
+                  std::vector<Projectile>& projectiles, int tailleCase)
 {
-    if (timerAttaque_ > 0.0f)
-    {
+    if (timerAttaque_ > 0.0f) {
         timerAttaque_ -= dt;
     }
-
-    if (timerAttaque_ > 0.0f)
-    {
-        return;
-    }
-
     std::optional<std::size_t> indexCible = trouverIndexCible(ennemis, tailleCase);
 
-    if (!indexCible.has_value())
-    {
+    if (!indexCible.has_value()) {
+        return; 
+    }
+
+    Ennemi& cible = *ennemis.at(indexCible.value());
+    float centreTourX = gridX_ * tailleCase + tailleCase / 2.0f;
+    float centreTourY = gridY_ * tailleCase + tailleCase / 2.0f;
+    float dx = cible.getX() - centreTourX;
+    float dy = cible.getY() - centreTourY;
+
+    angle_ = std::atan2(dy, dx) * (180.0f / M_PI);
+
+
+    if (timerAttaque_ > 0.0f) {
         return;
     }
 
-    Ennemi& cible = *ennemis[indexCible.value()];
-
     creerProjectileVers(cible, projectiles, tailleCase);
-
     timerAttaque_ = delaiAttaque_;
 }
-
 bool Tour::peutCibler(const Ennemi& ennemi) const
 {
     (void)ennemi;

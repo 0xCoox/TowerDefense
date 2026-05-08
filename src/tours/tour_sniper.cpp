@@ -32,7 +32,20 @@ void TourSniper::render(Rendu& rendu, int tailleCase) const
         tailleCase - 14,
         tailleCase - 14
     };
-
     rendu.setColor(0, 255, 100, 255);
     SDL_RenderFillRect(rendu.getNativeRenderer(), &rect);
+
+    float centreX = gridX_ * tailleCase + tailleCase / 2.0f;
+    float centreY = gridY_ * tailleCase + tailleCase / 2.0f;
+
+    float angleRad = angle_ * (M_PI / 180.0f);
+
+    float longueurCanon = tailleCase / 2.0f;
+    float canonX = centreX + std::cos(angleRad) * longueurCanon;
+    float canonY = centreY + std::sin(angleRad) * longueurCanon;
+
+    rendu.setColor(255, 255, 255, 255); // Canon blanc
+    SDL_RenderDrawLine(rendu.getNativeRenderer(), 
+                       (int)centreX, (int)centreY, 
+                       (int)canonX, (int)canonY);
 }

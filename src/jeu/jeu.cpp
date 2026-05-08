@@ -43,7 +43,7 @@ namespace
 Jeu::Jeu()
     : window_("Tower Defense", LARGEUR_FENETRE, HAUTEUR_FENETRE),
       rendu_(window_.getNativeWindow()),
-      carte_("assets/map.txt"),
+      carte_("../assets/map.txt"),
       input_(),
       hud_(CHEMIN_POLICE_HUD, TAILLE_POLICE_HUD),
       estLance_(true),

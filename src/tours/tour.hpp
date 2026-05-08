@@ -24,6 +24,8 @@ protected:
 
     int cout_;
 
+    float angle_; 
+
 public:
     Tour(
         int gridX,
@@ -64,4 +66,5 @@ public:
     int getGridX() const;
     int getGridY() const;
     int getCout() const;
+    float getAngle() const { return angle_; }
 };

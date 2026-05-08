@@ -27,5 +27,5 @@ private:
     std::vector<std::vector<Case>> grille_;
     std::vector<Vec2> chemin_;
 
-    int m_Case_Taille = 30;
+    int m_Case_Taille = 80;
 };
