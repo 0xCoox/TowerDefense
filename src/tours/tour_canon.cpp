@@ -22,11 +22,11 @@ TourCanon::TourCanon(int gridX, int gridY)
           COUT
       )
 {
+    rayonSplash_ = 40.0f; 
 }
 
 void TourCanon::render(Rendu& rendu, int tailleCase) const {
     const int SIZE = 96; 
-
     int currentSpriteX = (niveau_ - 1) * SIZE;    
     SDL_Rect srcRect = { currentSpriteX, spriteY_, SPRITE_SIZE, SPRITE_SIZE };
 

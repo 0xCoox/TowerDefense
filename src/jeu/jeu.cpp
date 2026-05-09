@@ -17,7 +17,7 @@ namespace
     constexpr int LARGEUR_SIDEBAR = 200; 
     constexpr int LARGEUR_FENETRE = LARGEUR_MAP + LARGEUR_SIDEBAR;
     constexpr int HAUTEUR_FENETRE = 720;
-    constexpr int ARGENT_INITIAL = 250;
+    constexpr int ARGENT_INITIAL = 100000;
     constexpr int VIES_INITIALES = 20;
 
     constexpr int PREMIERE_VAGUE = 1;

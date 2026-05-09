@@ -22,8 +22,10 @@ protected:
     float timerAttaque_;
     float vitesseProjectile_;
     float ralentissement_;
+    float rayonSplash_;
     int cout_;
     float angle_;
+    int idCibleVerrouille_;
 
     // Upgrade et vente
     int niveau_;

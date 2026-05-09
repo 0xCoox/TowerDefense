@@ -19,8 +19,10 @@ Tour::Tour(
       timerAttaque_(0.0f),
       vitesseProjectile_(vitesseProjectile),
       ralentissement_(1.0f), 
+      rayonSplash_(0.0f),                 
       cout_(cout),
       angle_(0.0f),
+      idCibleVerrouille_(-1), 
       niveau_(1),
       niveauMax_(4),       
       totalInvesti_(cout) 
@@ -34,19 +36,43 @@ void Tour::update(
     int tailleCase
 )
 {
+    // 1. Gestion du timer d'attaque
     if (timerAttaque_ > 0.0f)
     {
         timerAttaque_ -= dt;
     }
 
-    std::optional<std::size_t> indexCible =
-        trouverIndexCible(ennemis, tailleCase);
+    auto it = std::find_if(ennemis.begin(), ennemis.end(), [this, tailleCase](const std::unique_ptr<Ennemi>& e) {
+        return e && e->getId() == idCibleVerrouille_ && 
+               !e->estMort() && !e->estArrive() && estDansPortee(*e, tailleCase);
+    });
 
-    if (!indexCible.has_value())
+    std::optional<std::size_t> indexCible;
+
+    if (it != ennemis.end()) 
     {
-        return;
+        // Cible toujours valide
+        indexCible = std::distance(ennemis.begin(), it);
+    } 
+    else 
+    {
+        // la cible est morte ou hors de portée on relance une recherche
+        indexCible = trouverIndexCible(ennemis, tailleCase);
+        
+        if (indexCible.has_value()) 
+        {
+            // on se souvient de l'id pour la suite 
+            idCibleVerrouille_ = ennemis[indexCible.value()]->getId();
+        } 
+        else 
+        {
+            //rien ne se passe
+            idCibleVerrouille_ = -1;
+            return; 
+        }
     }
 
+    // calcul de l'angle
     Ennemi& cible = *ennemis.at(indexCible.value());
 
     float centreTourX = gridX_ * tailleCase + tailleCase / 2.0f;
@@ -55,15 +81,21 @@ void Tour::update(
     float dx = cible.getX() - centreTourX;
     float dy = cible.getY() - centreTourY;
 
-    angle_ = std::atan2(dy, dx) * (180.0f / M_PI);
+    // angle instantané
+    float angleCible = std::atan2(dy, dx) * (180.0f / M_PI);
 
-    if (timerAttaque_ > 0.0f)
+    // on evite les rotations instatanés
+    float diff = angleCible - angle_;
+    while (diff > 180)  diff -= 360;
+    while (diff < -180) diff += 360;
+
+    // Vitesse de rotation 
+    angle_ += diff * 10.0f * dt;
+    if (timerAttaque_ <= 0.0f)
     {
-        return;
+        creerProjectileVers(cible, projectiles, tailleCase);
+        timerAttaque_ = delaiAttaque_;
     }
-
-    creerProjectileVers(cible, projectiles, tailleCase);
-    timerAttaque_ = delaiAttaque_;
 }
 
 void Tour::render(Rendu& rendu, int tailleCase) const
@@ -168,7 +200,8 @@ void Tour::creerProjectileVers(
         centreTourY,
         ennemi.getId(),
         degat_,
-        ralentissement_, // <--- ON TRANSMET LA VALEUR AU PROJECTILE
+        ralentissement_, 
+        rayonSplash_,
         vitesseProjectile_
     );
 }

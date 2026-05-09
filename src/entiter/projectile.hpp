@@ -11,14 +11,11 @@ class Projectile
 private:
     float x_;
     float y_;
-
     int idCible_;
     int degat_;
     float ralentissement_;
-
+    float rayonSplash_;
     float vitesse_;
-
-
     bool termine_;
 
 public:
@@ -28,6 +25,7 @@ public:
         int idCible,
         int degat,
         float ralentissement,
+        float rayonSplash,
         float vitesse
     );
 
