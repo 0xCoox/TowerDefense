@@ -5,6 +5,7 @@
 #include <SDL2/SDL.h>
 
 #include <algorithm>
+#include <cmath>
 #include <iostream>
 #include <memory>
 #include <string>
@@ -49,6 +50,7 @@ Jeu::Jeu()
       hud_(CHEMIN_POLICE_HUD, TAILLE_POLICE_HUD),
       estLance_(true),
       estPause_(false),
+      afficherPorteePlacement_(false),
       joueur_(ARGENT_INITIAL, VIES_INITIALES),
       numeroVague_(PREMIERE_VAGUE),
       curseurX_(CURSEUR_X_INITIAL),
@@ -385,6 +387,8 @@ void Jeu::dessiner()
 
     carte_.graphisme(rendu_, texMap, texBase);
 
+    dessinerPorteeAuCurseur();
+
     for (const auto& tour : tours_)
     {
         tour->render(rendu_, carte_.getTailleCase());
@@ -431,6 +435,7 @@ void Jeu::dessiner()
 void Jeu::selectionnerTour(int typeTour)
 {
     typeTourSelectionne_ = typeTour;
+    afficherPorteePlacement_ = true;
 
     if (typeTourSelectionne_ == 1)
     {
@@ -501,6 +506,7 @@ void Jeu::essayerAjouterTour()
               << std::endl;
 
     tours_.push_back(std::move(nouvelleTour));
+    afficherPorteePlacement_ = false;
 }
 
 void Jeu::lancerVague()
@@ -625,4 +631,131 @@ void Jeu::afficherCommandes() const
     std::cout << "ESC : quitter" << std::endl;
     std::cout << "Argent initial : " << joueur_.getArgent() << std::endl;
     std::cout << "Vies initiales : " << joueur_.getVies() << std::endl;
+}
+
+float Jeu::getPorteeTourSelectionnee()
+{
+    std::unique_ptr<Tour> tourPreview =
+        TourFactory::creerTour(
+            typeTourSelectionne_,
+            curseurX_,
+            curseurY_,
+            textureManager_
+        );
+
+    if (!tourPreview)
+    {
+        return 0.0f;
+    }
+
+    return tourPreview->getPortee();
+}
+void Jeu::dessinerPorteeAuCurseur()
+{
+    int indexTour = trouverIndexTour(curseurX_, curseurY_);
+
+    // 1) Si le curseur est sur une tour déjà posée,
+    // on affiche toujours sa vraie portée.
+    if (indexTour != -1)
+    {
+        float portee = tours_[indexTour]->getPortee();
+
+        dessinerCerclePortee(
+            curseurX_,
+            curseurY_,
+            portee,
+            80,
+            160,
+            255,
+            45
+        );
+
+        return;
+    }
+
+    // 2) Si aucune tour n'est sélectionnée pour placement,
+    // on n'affiche rien.
+    if (!afficherPorteePlacement_)
+    {
+        return;
+    }
+
+    // 3) On affiche la prévisualisation uniquement sur une case @ vide.
+    bool caseConstructibleVide =
+        carte_.estConstructible(curseurX_, curseurY_) &&
+        !tourExisteDeja(curseurX_, curseurY_);
+
+    if (!caseConstructibleVide)
+    {
+        return;
+    }
+
+    float porteePreview = getPorteeTourSelectionnee();
+
+    if (porteePreview <= 0.0f)
+    {
+        return;
+    }
+
+    // Vert : portée de la tour avant placement
+    dessinerCerclePortee(
+        curseurX_,
+        curseurY_,
+        porteePreview,
+        80,
+        255,
+        120,
+        40
+    );
+}
+void Jeu::dessinerCerclePortee(
+    int gridX,
+    int gridY,
+    float portee,
+    int r,
+    int g,
+    int b,
+    int a
+) const
+{
+    SDL_Renderer* renderer = rendu_.getNativeRenderer();
+
+    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+
+    int tailleCase = carte_.getTailleCase();
+
+    int centreX = gridX * tailleCase + tailleCase / 2;
+    int centreY = gridY * tailleCase + tailleCase / 2;
+    int rayon = static_cast<int>(portee);
+
+    SDL_SetRenderDrawColor(renderer, r, g, b, a);
+
+    for (int y = -rayon; y <= rayon; y++)
+    {
+        int xMax = static_cast<int>(
+            std::sqrt(static_cast<float>(rayon * rayon - y * y))
+        );
+
+        SDL_RenderDrawLine(
+            renderer,
+            centreX - xMax,
+            centreY + y,
+            centreX + xMax,
+            centreY + y
+        );
+    }
+
+    SDL_SetRenderDrawColor(renderer, r, g, b, 180);
+
+    constexpr float PI = 3.14159265f;
+
+    for (int angle = 0; angle < 360; angle++)
+    {
+        float rad = angle * PI / 180.0f;
+
+        int x = centreX + static_cast<int>(std::cos(rad) * rayon);
+        int y = centreY + static_cast<int>(std::sin(rad) * rayon);
+
+        SDL_RenderDrawPoint(renderer, x, y);
+    }
 }

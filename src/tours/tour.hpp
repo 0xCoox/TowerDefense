@@ -111,7 +111,7 @@ public:
     int getNiveau() const;
     int getCoutAmelioration() const;
     int getPrixVente() const;
-
+    float getPortee() const;
     float getAngle() const
     {
         return angle_;

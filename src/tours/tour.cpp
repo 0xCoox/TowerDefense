@@ -231,3 +231,8 @@ int Tour::getPrixVente() const
 {
     return totalInvesti_ / 2;
 }
+
+float Tour::getPortee() const
+{
+    return portee_;
+}
