@@ -2,21 +2,34 @@
 #define BOUTTON_HPP
 
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_ttf.h>
 
-class Boutton {
-protected:
-    SDL_Rect rect;
-    SDL_Color couleur;
+#include <functional>
+#include <string>
+
+class Boutton
+{
+private:
+    SDL_Rect rect_;
+    SDL_Color couleur_;
+    SDL_Color couleurTexte_;
+    std::string texte_;
+    std::function<void()> action_;
 
 public:
-    Boutton(int x, int y, int w, int h, SDL_Color col);
-    virtual ~Boutton() {}
+    Boutton(
+        int x,
+        int y,
+        int w,
+        int h,
+        const std::string& texte,
+        SDL_Color couleur,
+        std::function<void()> action
+    );
 
-    virtual void action() = 0;
-
-    virtual void dessiner(SDL_Renderer* renderer);
-
-    bool estClique(int mouseX, int mouseY);
+    void action();
+    void dessiner(SDL_Renderer* renderer, TTF_Font* font) const;
+    bool estClique(int mouseX, int mouseY) const;
 };
 
 #endif

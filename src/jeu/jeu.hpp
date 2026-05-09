@@ -4,6 +4,7 @@
 #include "../core/rendu.hpp"
 #include "../core/input_manager.hpp"
 #include "../core/joueur.hpp"
+#include "../core/texture.hpp"
 
 #include "../carte/carte.hpp"
 
@@ -14,10 +15,7 @@
 
 #include "../tours/tour.hpp"
 
-#include "../core/texture.hpp"
-
-#include "../bouton/bouton_manager.hpp" 
-#include "../bouton/game_bouton.hpp"
+#include "../bouton/bouton_manager.hpp"
 
 #include "hud.hpp"
 
@@ -39,15 +37,16 @@ private:
 
     Joueur joueur_;
     WaveManager waveManager_;
-    TextureManager textureManager_; 
+    TextureManager textureManager_;
     BouttonManager guiManager_;
-
 
     int numeroVague_;
 
     int curseurX_;
     int curseurY_;
     int typeTourSelectionne_;
+
+    bool sourisGaucheAvant_;
 
     std::vector<std::unique_ptr<Ennemi>> ennemis_;
     std::vector<std::unique_ptr<Tour>> tours_;
@@ -68,12 +67,17 @@ private:
     void selectionnerTour(int typeTour);
     void essayerAjouterTour();
 
+    void lancerVague();
+    void ameliorerTourAuCurseur();
+    void vendreTourAuCurseur();
+
+    int trouverIndexTour(int gridX, int gridY) const;
+
     void mettreAJourEnnemis(float dt);
     void mettreAJourTours(float dt);
     void mettreAJourProjectiles(float dt);
 
     void gererEnnemisMortsEtArrives();
-
 
     bool tourExisteDeja(int gridX, int gridY) const;
 

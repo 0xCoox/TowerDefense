@@ -6,6 +6,7 @@
 
 #include <algorithm>
 #include <iostream>
+#include <memory>
 #include <string>
 
 namespace
@@ -53,6 +54,7 @@ Jeu::Jeu()
       curseurX_(CURSEUR_X_INITIAL),
       curseurY_(CURSEUR_Y_INITIAL),
       typeTourSelectionne_(TYPE_TOUR_PAR_DEFAUT),
+      sourisGaucheAvant_(false),
       dernierTemps_(std::chrono::steady_clock::now())
 {
     textureManager_.charger("ennemi_regular", "../assets/ground_shaker_asset/Blue/Bodies/body_tracks.png", rendu_.getNativeRenderer());
@@ -64,14 +66,55 @@ Jeu::Jeu()
     textureManager_.charger("weapons_purple", "../assets/ground_shaker_asset/Purple/Weapons/weapons.png", rendu_.getNativeRenderer());
     textureManager_.charger("map_sprite", "../assets/ground_shaker_asset/Terrains/terrain.png", rendu_.getNativeRenderer());
     textureManager_.charger("base_tour", "../assets/ground_shaker_asset/Purple/Towers/towers_walls_snow_1.png", rendu_.getNativeRenderer());
-    
-    SDL_Color couleurAmeliorer = {50, 200, 50, 255}; // Vert
-    SDL_Color couleurVague = {100, 100, 100, 255};   // Gris
-    SDL_Color couleurVendre = {200, 50, 50, 255};    // Rouge
-   
-    guiManager_.ajouterBoutton(std::make_unique<BouttonLevelUp>(10, 150, 130, 40, couleurAmeliorer));
-    guiManager_.ajouterBoutton(std::make_unique<BouttonVague>(10, 200, 130, 40, couleurVague));
-    guiManager_.ajouterBoutton(std::make_unique<BouttonVendre>(10, 250, 130, 40, couleurVendre));
+
+    SDL_Color couleurAmeliorer = {50, 200, 50, 255};
+    SDL_Color couleurVague = {100, 100, 100, 255};
+    SDL_Color couleurVendre = {200, 50, 50, 255};
+
+    guiManager_.ajouterBoutton(
+        std::make_unique<Boutton>(
+            10,
+            150,
+            150,
+            40,
+            "Ameliorer",
+            couleurAmeliorer,
+            [this]()
+            {
+                ameliorerTourAuCurseur();
+            }
+        )
+    );
+
+    guiManager_.ajouterBoutton(
+        std::make_unique<Boutton>(
+            10,
+            200,
+            150,
+            40,
+            "Vague",
+            couleurVague,
+            [this]()
+            {
+                lancerVague();
+            }
+        )
+    );
+
+    guiManager_.ajouterBoutton(
+        std::make_unique<Boutton>(
+            10,
+            250,
+            150,
+            40,
+            "Vendre",
+            couleurVendre,
+            [this]()
+            {
+                vendreTourAuCurseur();
+            }
+        )
+    );
 
     afficherCommandes();
 }
@@ -101,6 +144,19 @@ void Jeu::traiterEntrees()
 {
     input_.update();
 
+    int sourisX = 0;
+    int sourisY = 0;
+
+    Uint32 etatSouris = SDL_GetMouseState(&sourisX, &sourisY);
+    bool sourisGauche = (etatSouris & SDL_BUTTON(SDL_BUTTON_LEFT)) != 0;
+
+    if (sourisGauche && !sourisGaucheAvant_)
+    {
+        guiManager_.handleClick(sourisX, sourisY);
+    }
+
+    sourisGaucheAvant_ = sourisGauche;
+
     if (input_.shouldQuit() || input_.isKeyPressed(SDLK_ESCAPE))
     {
         estLance_ = false;
@@ -122,11 +178,7 @@ void Jeu::traiterEntrees()
 
     if (input_.isKeyPressed(SDLK_RETURN))
     {
-        waveManager_.lancerVague(numeroVague_);
-
-        std::cout << "Vague " << numeroVague_ << " lancee" << std::endl;
-
-        numeroVague_++;
+        lancerVague();
     }
 
     if (input_.isKeyPressed(SDLK_UP))
@@ -183,39 +235,39 @@ void Jeu::traiterEntrees()
 void Jeu::mettreAJour(float dt)
 {
     waveManager_.update(dt, ennemis_, carte_.getChemin());
+
     for (auto& ennemi : ennemis_)
+    {
+        if (ennemi->getType() == TypeEnnemi::Regular)
         {
-        
-            if (ennemi->getType() == TypeEnnemi::Regular) 
-            {
-                ennemi->setTexture(textureManager_.get("ennemi_regular"));
-            }
-            
-            if (ennemi->getType() == TypeEnnemi::Fast) 
-            {
-                ennemi->setTexture(textureManager_.get("ennemi_fast"));
-            }
-            
-            if (ennemi->getType() == TypeEnnemi::Strong) 
-            {
-                ennemi->setTexture(textureManager_.get("ennemi_strong"));
-            }
-            
-            if (ennemi->getType() == TypeEnnemi::Armored) 
-            {
-                ennemi->setTexture(textureManager_.get("ennemi_armored"));
-            }
-
-            if (ennemi->getType() == TypeEnnemi::Heli) 
-            {
-                ennemi->setTexture(textureManager_.get("ennemi_heli"));
-            }
-
-            if (ennemi->getType() == TypeEnnemi::Jet) 
-            {
-                ennemi->setTexture(textureManager_.get("ennemi_jet"));
-            }
+            ennemi->setTexture(textureManager_.get("ennemi_regular"));
         }
+
+        if (ennemi->getType() == TypeEnnemi::Fast)
+        {
+            ennemi->setTexture(textureManager_.get("ennemi_fast"));
+        }
+
+        if (ennemi->getType() == TypeEnnemi::Strong)
+        {
+            ennemi->setTexture(textureManager_.get("ennemi_strong"));
+        }
+
+        if (ennemi->getType() == TypeEnnemi::Armored)
+        {
+            ennemi->setTexture(textureManager_.get("ennemi_armored"));
+        }
+
+        if (ennemi->getType() == TypeEnnemi::Heli)
+        {
+            ennemi->setTexture(textureManager_.get("ennemi_heli"));
+        }
+
+        if (ennemi->getType() == TypeEnnemi::Jet)
+        {
+            ennemi->setTexture(textureManager_.get("ennemi_jet"));
+        }
+    }
 
     mettreAJourEnnemis(dt);
     mettreAJourTours(dt);
@@ -327,10 +379,10 @@ void Jeu::dessiner()
 {
     rendu_.setColor(COULEUR_FOND_R, COULEUR_FOND_G, COULEUR_FOND_B, COULEUR_FOND_A);
     rendu_.clear();
-   
+
     SDL_Texture* texMap = textureManager_.get("map_sprite");
     SDL_Texture* texBase = textureManager_.get("base_tour");
-   
+
     carte_.graphisme(rendu_, texMap, texBase);
 
     for (const auto& tour : tours_)
@@ -419,12 +471,11 @@ void Jeu::essayerAjouterTour()
     }
 
     std::unique_ptr<Tour> nouvelleTour =
-            TourFactory::creerTour(typeTourSelectionne_, curseurX_, curseurY_, textureManager_);
-    
+        TourFactory::creerTour(typeTourSelectionne_, curseurX_, curseurY_, textureManager_);
 
-    if (!nouvelleTour) 
+    if (!nouvelleTour)
     {
-        return; 
+        return;
     }
 
     int cout = nouvelleTour->getCout();
@@ -452,6 +503,98 @@ void Jeu::essayerAjouterTour()
     tours_.push_back(std::move(nouvelleTour));
 }
 
+void Jeu::lancerVague()
+{
+    waveManager_.lancerVague(numeroVague_);
+
+    std::cout << "Vague "
+              << numeroVague_
+              << " lancee"
+              << std::endl;
+
+    numeroVague_++;
+}
+
+void Jeu::ameliorerTourAuCurseur()
+{
+    int indexTour = trouverIndexTour(curseurX_, curseurY_);
+
+    if (indexTour == -1)
+    {
+        std::cout << "Aucune tour sous le curseur." << std::endl;
+        return;
+    }
+
+    Tour& tour = *tours_[indexTour];
+
+    if (!tour.peutAmeliorer())
+    {
+        std::cout << "Cette tour est deja au niveau maximum." << std::endl;
+        return;
+    }
+
+    int coutAmelioration = tour.getCoutAmelioration();
+
+    if (!joueur_.payer(coutAmelioration))
+    {
+        std::cout << "Pas assez d'argent pour ameliorer. Cout = "
+                  << coutAmelioration
+                  << ", argent = "
+                  << joueur_.getArgent()
+                  << std::endl;
+        return;
+    }
+
+    if (!tour.ameliorer())
+    {
+        std::cout << "Amelioration impossible." << std::endl;
+        return;
+    }
+
+    std::cout << "Tour amelioree. Niveau : "
+              << tour.getNiveau()
+              << " | Argent restant : "
+              << joueur_.getArgent()
+              << std::endl;
+}
+
+void Jeu::vendreTourAuCurseur()
+{
+    int indexTour = trouverIndexTour(curseurX_, curseurY_);
+
+    if (indexTour == -1)
+    {
+        std::cout << "Aucune tour sous le curseur." << std::endl;
+        return;
+    }
+
+    int prixVente = tours_[indexTour]->getPrixVente();
+
+    joueur_.ajouterArgent(prixVente);
+
+    tours_.erase(tours_.begin() + indexTour);
+
+    std::cout << "Tour vendue pour "
+              << prixVente
+              << " | Argent actuel : "
+              << joueur_.getArgent()
+              << std::endl;
+}
+
+int Jeu::trouverIndexTour(int gridX, int gridY) const
+{
+    for (int i = 0; i < static_cast<int>(tours_.size()); i++)
+    {
+        if (tours_[i]->getGridX() == gridX &&
+            tours_[i]->getGridY() == gridY)
+        {
+            return i;
+        }
+    }
+
+    return -1;
+}
+
 bool Jeu::tourExisteDeja(int gridX, int gridY) const
 {
     return std::any_of(
@@ -475,6 +618,9 @@ void Jeu::afficherCommandes() const
     std::cout << "5 : tour anti-air" << std::endl;
     std::cout << "A : placer une tour" << std::endl;
     std::cout << "ENTER : lancer une vague" << std::endl;
+    std::cout << "Bouton Ameliorer : ameliorer la tour sous le curseur" << std::endl;
+    std::cout << "Bouton Vendre : vendre la tour sous le curseur" << std::endl;
+    std::cout << "Bouton Vague : lancer une vague" << std::endl;
     std::cout << "SPACE : pause" << std::endl;
     std::cout << "ESC : quitter" << std::endl;
     std::cout << "Argent initial : " << joueur_.getArgent() << std::endl;

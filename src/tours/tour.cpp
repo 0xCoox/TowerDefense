@@ -18,32 +18,46 @@ Tour::Tour(
       delaiAttaque_(delaiAttaque),
       timerAttaque_(0.0f),
       vitesseProjectile_(vitesseProjectile),
-      cout_(cout)
+      cout_(cout),
+      angle_(0.0f),
+      niveau_(1),
+      niveauMax_(3),
+      totalInvesti_(cout)
 {
 }
 
-void Tour::update(float dt, std::vector<std::unique_ptr<Ennemi>>& ennemis, 
-                  std::vector<Projectile>& projectiles, int tailleCase)
+void Tour::update(
+    float dt,
+    std::vector<std::unique_ptr<Ennemi>>& ennemis,
+    std::vector<Projectile>& projectiles,
+    int tailleCase
+)
 {
-    if (timerAttaque_ > 0.0f) {
+    if (timerAttaque_ > 0.0f)
+    {
         timerAttaque_ -= dt;
     }
-    std::optional<std::size_t> indexCible = trouverIndexCible(ennemis, tailleCase);
 
-    if (!indexCible.has_value()) {
-        return; 
+    std::optional<std::size_t> indexCible =
+        trouverIndexCible(ennemis, tailleCase);
+
+    if (!indexCible.has_value())
+    {
+        return;
     }
 
     Ennemi& cible = *ennemis.at(indexCible.value());
+
     float centreTourX = gridX_ * tailleCase + tailleCase / 2.0f;
     float centreTourY = gridY_ * tailleCase + tailleCase / 2.0f;
+
     float dx = cible.getX() - centreTourX;
     float dy = cible.getY() - centreTourY;
 
     angle_ = std::atan2(dy, dx) * (180.0f / M_PI);
 
-
-    if (timerAttaque_ > 0.0f) {
+    if (timerAttaque_ > 0.0f)
+    {
         return;
     }
 
@@ -51,12 +65,24 @@ void Tour::update(float dt, std::vector<std::unique_ptr<Ennemi>>& ennemis,
     timerAttaque_ = delaiAttaque_;
 }
 
-//code caca
-void Tour::render(Rendu& rendu, int tailleCase) const 
+// code caca
+void Tour::render(Rendu& rendu, int tailleCase) const
 {
-    if (textureBase_) {
-        SDL_Rect rect = { gridX_ * tailleCase, gridY_ * tailleCase, tailleCase, tailleCase };
-        SDL_RenderCopy(rendu.getNativeRenderer(), textureBase_, nullptr, &rect);
+    if (textureBase_)
+    {
+        SDL_Rect rect = {
+            gridX_ * tailleCase,
+            gridY_ * tailleCase,
+            tailleCase,
+            tailleCase
+        };
+
+        SDL_RenderCopy(
+            rendu.getNativeRenderer(),
+            textureBase_,
+            nullptr,
+            &rect
+        );
     }
 }
 
@@ -159,4 +185,49 @@ int Tour::getGridY() const
 int Tour::getCout() const
 {
     return cout_;
+}
+
+bool Tour::peutAmeliorer() const
+{
+    return niveau_ < niveauMax_;
+}
+
+bool Tour::ameliorer()
+{
+    if (!peutAmeliorer())
+    {
+        return false;
+    }
+
+    int coutAmelioration = getCoutAmelioration();
+
+    niveau_++;
+    totalInvesti_ += coutAmelioration;
+
+    degat_ = static_cast<int>(degat_ * 1.30f);
+    portee_ *= 1.10f;
+    delaiAttaque_ *= 0.90f;
+    vitesseProjectile_ *= 1.05f;
+
+    return true;
+}
+
+int Tour::getNiveau() const
+{
+    return niveau_;
+}
+
+int Tour::getCoutAmelioration() const
+{
+    if (!peutAmeliorer())
+    {
+        return 0;
+    }
+
+    return (cout_ / 2) * niveau_;
+}
+
+int Tour::getPrixVente() const
+{
+    return totalInvesti_ / 2;
 }
