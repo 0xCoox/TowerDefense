@@ -9,6 +9,7 @@ namespace
     constexpr float DELAI_ATTAQUE = 0.7f;
     constexpr float VITESSE_PROJECTILE = 400.0f;
     constexpr int COUT = 80;
+    constexpr float COEFF_SLOW = 0.5f;
 }
 
 TourGlace::TourGlace(int gridX, int gridY)
@@ -22,6 +23,7 @@ TourGlace::TourGlace(int gridX, int gridY)
           COUT
       )
 {
+    ralentissement_ = COEFF_SLOW;
 }
 
 

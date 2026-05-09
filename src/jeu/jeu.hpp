@@ -34,7 +34,7 @@ private:
 
     bool estLance_;
     bool estPause_;
-
+    bool afficherPorteePlacement_;
     Joueur joueur_;
     WaveManager waveManager_;
     TextureManager textureManager_;
@@ -72,7 +72,19 @@ private:
     void vendreTourAuCurseur();
 
     int trouverIndexTour(int gridX, int gridY) const;
+    float getPorteeTourSelectionnee();
 
+    void dessinerPorteeAuCurseur();
+
+    void dessinerCerclePortee(
+        int gridX,
+        int gridY,
+        float portee,
+        int r,
+        int g,
+        int b,
+        int a
+    ) const;
     void mettreAJourEnnemis(float dt);
     void mettreAJourTours(float dt);
     void mettreAJourProjectiles(float dt);

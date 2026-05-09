@@ -5,15 +5,18 @@
 #include <SDL2/SDL.h>
 
 #include <algorithm>
+#include <cmath>
 #include <iostream>
 #include <memory>
 #include <string>
 
 namespace
 {
-    constexpr int LARGEUR_FENETRE = 720;
+    //pour split la zone d'intéractions avec les bouttons et la zone de la map 
+    constexpr int LARGEUR_MAP = 720; 
+    constexpr int LARGEUR_SIDEBAR = 200; 
+    constexpr int LARGEUR_FENETRE = LARGEUR_MAP + LARGEUR_SIDEBAR;
     constexpr int HAUTEUR_FENETRE = 720;
-
     constexpr int ARGENT_INITIAL = 250;
     constexpr int VIES_INITIALES = 20;
 
@@ -49,6 +52,7 @@ Jeu::Jeu()
       hud_(CHEMIN_POLICE_HUD, TAILLE_POLICE_HUD),
       estLance_(true),
       estPause_(false),
+      afficherPorteePlacement_(false),
       joueur_(ARGENT_INITIAL, VIES_INITIALES),
       numeroVague_(PREMIERE_VAGUE),
       curseurX_(CURSEUR_X_INITIAL),
@@ -72,9 +76,10 @@ Jeu::Jeu()
     SDL_Color couleurVague = {100, 100, 100, 255};
     SDL_Color couleurVendre = {200, 50, 50, 255};
 
+    int xBouton = LARGEUR_MAP + 25; 
     guiManager_.ajouterBoutton(
         std::make_unique<Boutton>(
-            10,
+            xBouton,
             150,
             150,
             40,
@@ -89,7 +94,7 @@ Jeu::Jeu()
 
     guiManager_.ajouterBoutton(
         std::make_unique<Boutton>(
-            10,
+            xBouton,
             200,
             150,
             40,
@@ -104,7 +109,7 @@ Jeu::Jeu()
 
     guiManager_.ajouterBoutton(
         std::make_unique<Boutton>(
-            10,
+            xBouton,
             250,
             150,
             40,
@@ -381,10 +386,13 @@ void Jeu::dessiner()
     rendu_.setColor(COULEUR_FOND_R, COULEUR_FOND_G, COULEUR_FOND_B, COULEUR_FOND_A);
     rendu_.clear();
 
+    //
     SDL_Texture* texMap = textureManager_.get("map_sprite");
     SDL_Texture* texBase = textureManager_.get("base_tour");
 
     carte_.graphisme(rendu_, texMap, texBase);
+
+    dessinerPorteeAuCurseur();
 
     for (const auto& tour : tours_)
     {
@@ -417,6 +425,12 @@ void Jeu::dessiner()
 
     SDL_RenderDrawRect(rendu_.getNativeRenderer(), &curseurRect);
 
+
+    //separation entre la zone jeu et zone intéractable 
+    SDL_Rect sidebarRect = { LARGEUR_MAP, 0, LARGEUR_SIDEBAR, HAUTEUR_FENETRE };
+    SDL_SetRenderDrawColor(rendu_.getNativeRenderer(), 40, 40, 40, 255);
+    SDL_RenderFillRect(rendu_.getNativeRenderer(), &sidebarRect);
+
     guiManager_.render(rendu_.getNativeRenderer());
 
     hud_.render(
@@ -432,6 +446,7 @@ void Jeu::dessiner()
 void Jeu::selectionnerTour(int typeTour)
 {
     typeTourSelectionne_ = typeTour;
+    afficherPorteePlacement_ = true;
 
     if (typeTourSelectionne_ == 1)
     {
@@ -502,6 +517,7 @@ void Jeu::essayerAjouterTour()
               << std::endl;
 
     tours_.push_back(std::move(nouvelleTour));
+    afficherPorteePlacement_ = false;
 }
 
 void Jeu::lancerVague()
@@ -629,4 +645,131 @@ void Jeu::afficherCommandes() const
     std::cout << "ESC : quitter" << std::endl;
     std::cout << "Argent initial : " << joueur_.getArgent() << std::endl;
     std::cout << "Vies initiales : " << joueur_.getVies() << std::endl;
+}
+
+float Jeu::getPorteeTourSelectionnee()
+{
+    std::unique_ptr<Tour> tourPreview =
+        TourFactory::creerTour(
+            typeTourSelectionne_,
+            curseurX_,
+            curseurY_,
+            textureManager_
+        );
+
+    if (!tourPreview)
+    {
+        return 0.0f;
+    }
+
+    return tourPreview->getPortee();
+}
+void Jeu::dessinerPorteeAuCurseur()
+{
+    int indexTour = trouverIndexTour(curseurX_, curseurY_);
+
+    // 1) Si le curseur est sur une tour déjà posée,
+    // on affiche toujours sa vraie portée.
+    if (indexTour != -1)
+    {
+        float portee = tours_[indexTour]->getPortee();
+
+        dessinerCerclePortee(
+            curseurX_,
+            curseurY_,
+            portee,
+            80,
+            160,
+            255,
+            45
+        );
+
+        return;
+    }
+
+    // 2) Si aucune tour n'est sélectionnée pour placement,
+    // on n'affiche rien.
+    if (!afficherPorteePlacement_)
+    {
+        return;
+    }
+
+    // 3) On affiche la prévisualisation uniquement sur une case @ vide.
+    bool caseConstructibleVide =
+        carte_.estConstructible(curseurX_, curseurY_) &&
+        !tourExisteDeja(curseurX_, curseurY_);
+
+    if (!caseConstructibleVide)
+    {
+        return;
+    }
+
+    float porteePreview = getPorteeTourSelectionnee();
+
+    if (porteePreview <= 0.0f)
+    {
+        return;
+    }
+
+    // Vert : portée de la tour avant placement
+    dessinerCerclePortee(
+        curseurX_,
+        curseurY_,
+        porteePreview,
+        80,
+        255,
+        120,
+        40
+    );
+}
+void Jeu::dessinerCerclePortee(
+    int gridX,
+    int gridY,
+    float portee,
+    int r,
+    int g,
+    int b,
+    int a
+) const
+{
+    SDL_Renderer* renderer = rendu_.getNativeRenderer();
+
+    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+
+    int tailleCase = carte_.getTailleCase();
+
+    int centreX = gridX * tailleCase + tailleCase / 2;
+    int centreY = gridY * tailleCase + tailleCase / 2;
+    int rayon = static_cast<int>(portee);
+
+    SDL_SetRenderDrawColor(renderer, r, g, b, a);
+
+    for (int y = -rayon; y <= rayon; y++)
+    {
+        int xMax = static_cast<int>(
+            std::sqrt(static_cast<float>(rayon * rayon - y * y))
+        );
+
+        SDL_RenderDrawLine(
+            renderer,
+            centreX - xMax,
+            centreY + y,
+            centreX + xMax,
+            centreY + y
+        );
+    }
+
+    SDL_SetRenderDrawColor(renderer, r, g, b, 180);
+
+    constexpr float PI = 3.14159265f;
+
+    for (int angle = 0; angle < 360; angle++)
+    {
+        float rad = angle * PI / 180.0f;
+
+        int x = centreX + static_cast<int>(std::cos(rad) * rayon);
+        int y = centreY + static_cast<int>(std::sin(rad) * rayon);
+
+        SDL_RenderDrawPoint(renderer, x, y);
+    }
 }

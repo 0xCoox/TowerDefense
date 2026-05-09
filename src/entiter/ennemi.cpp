@@ -65,17 +65,33 @@ void Ennemi::initialiserStats()
 
 void Ennemi::update(float dt)
 {
-    // Cette fonction existe seulement pour respecter la classe Entite.
-    // Dans le jeu, on utilise update(dt, chemin).
+    // Cette fonction existe pour respecter la classe entite; dans le jeu, on utilise update(dt, chemin).
     (void)dt;
+}
+
+void Ennemi::appliquerRalentissement(float coeff, float duree)
+{
+    m_multiplicateurVitesse *= coeff;
+    m_timerRalentissement = std::max(m_timerRalentissement, duree);
+    //Pour eviter d'avoir des cibles a l'arret 
+    if (m_multiplicateurVitesse < 0.2f) m_multiplicateurVitesse = 0.2f;
 }
 
 void Ennemi::update(float dt, const std::vector<Vec2>& chemin)
 {
     if (chemin.empty() || m_estArrive) return;
+    // Gestion du ralentissement
+    if (m_timerRalentissement > 0) {
+        m_timerRalentissement -= dt;
+        if (m_timerRalentissement <= 0) {
+            m_timerRalentissement = 0;
+            m_multiplicateurVitesse = 1.0f; 
+        }
+    }
+    // application ralentissement
+    float vitesseReel = m_vitesse * m_multiplicateurVitesse; 
 
-    if (m_pointActuel >= chemin.size())
-    {
+    if (m_pointActuel >= chemin.size()) {
         m_estArrive = true;
         return;
     }
@@ -85,12 +101,9 @@ void Ennemi::update(float dt, const std::vector<Vec2>& chemin)
     float dy = cible.y - m_y;
     float distance = std::sqrt(dx * dx + dy * dy);
 
-    // Si on est arrivé au point de passage actuel
-    if (distance < 2.0f)
-    {
+    if (distance < 2.0f) {
         m_pointActuel++;
         m_progressionSegment = 0.0f;
-        if (m_pointActuel >= chemin.size()) m_estArrive = true;
         return;
     }
 
@@ -98,29 +111,21 @@ void Ennemi::update(float dt, const std::vector<Vec2>& chemin)
     float directionY = dy / distance;
     m_angle = std::atan2(directionY, directionX) * (180.0f / M_PI);
 
-    float distanceAParcourir = m_vitesse * dt;
 
-    if (distanceAParcourir >= distance)
-    {
+    float distanceAParcourir = vitesseReel * dt;
+    
+    if (distanceAParcourir >= distance) {
         m_x = cible.x;
         m_y = cible.y;
         m_pointActuel++;
         m_progressionSegment = 0.0f;
-        if (m_pointActuel >= chemin.size()) m_estArrive = true;
-    }
-    else
-    {
+    } else {
         m_x += directionX * distanceAParcourir;
         m_y += directionY * distanceAParcourir;
-
-        // Mise à jour de la progression pour les tours
-        if (distance > 0.001f)
-        {
+        if (distance > 0.001f) {
             m_progressionSegment += distanceAParcourir / distance;
         }
     }
-
-    if (m_progressionSegment > 1.0f) m_progressionSegment = 1.0f;
 }
 
 void Ennemi::render(Rendu& rendu) const

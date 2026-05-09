@@ -14,8 +14,11 @@ private:
 
     int idCible_;
     int degat_;
+    float ralentissement_;
 
     float vitesse_;
+
+
     bool termine_;
 
 public:
@@ -24,6 +27,7 @@ public:
         float yDepart,
         int idCible,
         int degat,
+        float ralentissement,
         float vitesse
     );
 

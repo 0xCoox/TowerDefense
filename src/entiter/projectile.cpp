@@ -22,12 +22,14 @@ Projectile::Projectile(
     float yDepart,
     int idCible,
     int degat,
+    float ralentissement,
     float vitesse
 )
     : x_(xDepart),
       y_(yDepart),
       idCible_(idCible),
       degat_(degat),
+      ralentissement_(ralentissement),
       vitesse_(vitesse),
       termine_(false)
 {
@@ -71,6 +73,9 @@ void Projectile::update(
     if (distance <= DISTANCE_IMPACT)
     {
         cible.prendreDegat(degat_);
+        
+        cible.appliquerRalentissement(ralentissement_, 4.0f);
+
         termine_ = true;
         return;
     }
@@ -86,6 +91,7 @@ void Projectile::update(
         y_ = cible.getY();
 
         cible.prendreDegat(degat_);
+        cible.appliquerRalentissement(ralentissement_, 2.0f);
         termine_ = true;
         return;
     }
@@ -102,6 +108,10 @@ void Projectile::render(Rendu& rendu) const
         TAILLE_PROJECTILE,
         TAILLE_PROJECTILE
     };
+
+    //change couleur si projectile glace
+    if (ralentissement_ < 1.0f) {
+        rendu.setColor(100, 150, 255, 255);} 
 
     rendu.setColor(
         COULEUR_PROJECTILE_R,

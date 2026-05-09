@@ -7,7 +7,7 @@ Tour::Tour(
     int gridY,
     int degat,
     float portee,
-    float delaiAttaque  ,
+    float delaiAttaque,
     float vitesseProjectile,
     int cout
 )
@@ -18,11 +18,12 @@ Tour::Tour(
       delaiAttaque_(delaiAttaque),
       timerAttaque_(0.0f),
       vitesseProjectile_(vitesseProjectile),
+      ralentissement_(1.0f), 
       cout_(cout),
       angle_(0.0f),
       niveau_(1),
-      niveauMax_(4),
-      totalInvesti_(cout)
+      niveauMax_(4),       
+      totalInvesti_(cout) 
 {
 }
 
@@ -64,9 +65,6 @@ void Tour::update(
     creerProjectileVers(cible, projectiles, tailleCase);
     timerAttaque_ = delaiAttaque_;
 }
-
-// code caca pour la base ici il faudrait le clean inutile avec notre nouvelle version 
-//d'affichage des tours
 
 void Tour::render(Rendu& rendu, int tailleCase) const
 {
@@ -170,6 +168,7 @@ void Tour::creerProjectileVers(
         centreTourY,
         ennemi.getId(),
         degat_,
+        ralentissement_, // <--- ON TRANSMET LA VALEUR AU PROJECTILE
         vitesseProjectile_
     );
 }
@@ -232,4 +231,9 @@ int Tour::getCoutAmelioration() const
 int Tour::getPrixVente() const
 {
     return totalInvesti_ / 2;
+}
+
+float Tour::getPortee() const
+{
+    return portee_;
 }

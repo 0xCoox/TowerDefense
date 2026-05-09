@@ -41,6 +41,9 @@ private:
     float m_progressionSegment = 0.0f;
     SDL_Texture* m_texture; 
     float m_angle;
+    //Partie Slow quand on ets hit par une tour glace
+    float m_multiplicateurVitesse = 1.0f; 
+    float m_timerRalentissement = 0.0f;
 public:
     void setTexture(SDL_Texture* tex) { m_texture = tex; }
     Ennemi(float x, float y, TypeEnnemi type);
@@ -53,7 +56,8 @@ public:
     void render(Rendu& rendu) const override;
 
     void prendreDegat(int degat);
-
+    void appliquerRalentissement(float coeff, float duree);
+    
     bool estMort() const;
     bool estArrive() const;
     bool estVolant() const;

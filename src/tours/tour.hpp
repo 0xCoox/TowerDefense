@@ -13,7 +13,7 @@
 class Tour
 {
 protected:
-    // Position et stats
+    // Position et stat
     int gridX_;
     int gridY_;
     int degat_;
@@ -21,21 +21,20 @@ protected:
     float delaiAttaque_;
     float timerAttaque_;
     float vitesseProjectile_;
+    float ralentissement_;
     int cout_;
     float angle_;
 
-    // Upgrade / vente
+    // Upgrade et vente
     int niveau_;
     int niveauMax_;
     int totalInvesti_;
 
-    // Faut que je clean le code Base est maintenant useless on ne load plus que un canon
+    // Textures et sprite
     SDL_Texture* textureBase_ = nullptr;
     SDL_Texture* textureCanon_ = nullptr;
-
     int spriteX_ = 0;
     int spriteY_ = 0;
-
     const int SPRITE_SIZE = 96;
 
 public:
@@ -111,7 +110,7 @@ public:
     int getNiveau() const;
     int getCoutAmelioration() const;
     int getPrixVente() const;
-
+    float getPortee() const;
     float getAngle() const
     {
         return angle_;
