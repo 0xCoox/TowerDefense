@@ -7,7 +7,7 @@ Tour::Tour(
     int gridY,
     int degat,
     float portee,
-    float delaiAttaque,
+    float delaiAttaque  ,
     float vitesseProjectile,
     int cout
 )
@@ -21,7 +21,7 @@ Tour::Tour(
       cout_(cout),
       angle_(0.0f),
       niveau_(1),
-      niveauMax_(3),
+      niveauMax_(4),
       totalInvesti_(cout)
 {
 }
@@ -65,7 +65,9 @@ void Tour::update(
     timerAttaque_ = delaiAttaque_;
 }
 
-// code caca
+// code caca pour la base ici il faudrait le clean inutile avec notre nouvelle version 
+//d'affichage des tours
+
 void Tour::render(Rendu& rendu, int tailleCase) const
 {
     if (textureBase_)

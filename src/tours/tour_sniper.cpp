@@ -4,7 +4,6 @@
 
 namespace
 {
-    // On garde tes stats d'origine
     constexpr int DEGAT = 60;
     constexpr float PORTEE = 260.0f;
     constexpr float DELAI_ATTAQUE = 1.5f;
@@ -12,13 +11,18 @@ namespace
     constexpr int COUT = 80;
 }
 
+
 TourSniper::TourSniper(int gridX, int gridY)
     : Tour(gridX, gridY, DEGAT, PORTEE, DELAI_ATTAQUE, VITESSE_PROJECTILE, COUT)
 {
 }
 
 void TourSniper::render(Rendu& rendu, int tailleCase) const {
-    SDL_Rect srcRect = { spriteX_, spriteY_, SPRITE_SIZE, SPRITE_SIZE };
+    
+    const int SIZE = 96; 
+
+    int currentSpriteX = (niveau_ - 1) * SIZE;    
+    SDL_Rect srcRect = { currentSpriteX, spriteY_, SPRITE_SIZE, SPRITE_SIZE };
 
     SDL_Rect dstRect = { 
         gridX_ * tailleCase, 

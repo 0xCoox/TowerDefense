@@ -31,8 +31,8 @@ namespace
     constexpr int COULEUR_FOND_A = 255;
 
     constexpr int COULEUR_CURSEUR_R = 255;
-    constexpr int COULEUR_CURSEUR_G = 255;
-    constexpr int COULEUR_CURSEUR_B = 255;
+    constexpr int COULEUR_CURSEUR_G = 0;
+    constexpr int COULEUR_CURSEUR_B = 0;
     constexpr int COULEUR_CURSEUR_A = 255;
 
     constexpr int TAILLE_POLICE_HUD = 24;
@@ -64,6 +64,7 @@ Jeu::Jeu()
     textureManager_.charger("ennemi_heli", "../assets/ground_shaker_asset/Desert/Bodies/body_tracks.png", rendu_.getNativeRenderer());
     textureManager_.charger("ennemi_jet", "../assets/ground_shaker_asset/Blue/Bodies/body_tracks.png", rendu_.getNativeRenderer());
     textureManager_.charger("weapons_purple", "../assets/ground_shaker_asset/Purple/Weapons/weapons.png", rendu_.getNativeRenderer());
+    textureManager_.charger("weapons_blue", "../assets/ground_shaker_asset/Blue/Weapons/weapons.png", rendu_.getNativeRenderer());
     textureManager_.charger("map_sprite", "../assets/ground_shaker_asset/Terrains/terrain.png", rendu_.getNativeRenderer());
     textureManager_.charger("base_tour", "../assets/ground_shaker_asset/Purple/Towers/towers_walls_snow_1.png", rendu_.getNativeRenderer());
 
@@ -505,6 +506,12 @@ void Jeu::essayerAjouterTour()
 
 void Jeu::lancerVague()
 {
+    //locker pour les vagues, si ennemi pas tous tués alors on peut pas lancer
+    if (!ennemis_.empty())
+    {
+        std::cout << "Vague pas finis" << std::endl;
+        return; 
+    }
     waveManager_.lancerVague(numeroVague_);
 
     std::cout << "Vague "
@@ -518,18 +525,15 @@ void Jeu::lancerVague()
 void Jeu::ameliorerTourAuCurseur()
 {
     int indexTour = trouverIndexTour(curseurX_, curseurY_);
-
     if (indexTour == -1)
     {
         std::cout << "Aucune tour sous le curseur." << std::endl;
         return;
     }
-
     Tour& tour = *tours_[indexTour];
-
     if (!tour.peutAmeliorer())
     {
-        std::cout << "Cette tour est deja au niveau maximum." << std::endl;
+        std::cout << "Cette tour est deja niveau max" << std::endl;
         return;
     }
 

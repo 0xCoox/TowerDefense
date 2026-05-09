@@ -26,7 +26,9 @@ TourGlace::TourGlace(int gridX, int gridY)
 
 
 void TourGlace::render(Rendu& rendu, int tailleCase) const {
-    SDL_Rect srcRect = { spriteX_, spriteY_, SPRITE_SIZE, SPRITE_SIZE };
+    const int SIZE = 96; 
+    int currentSpriteX = (niveau_ - 1) * SIZE;    
+    SDL_Rect srcRect = { currentSpriteX, spriteY_, SPRITE_SIZE, SPRITE_SIZE };
 
     SDL_Rect dstRect = { 
         gridX_ * tailleCase, 
@@ -46,8 +48,5 @@ void TourGlace::render(Rendu& rendu, int tailleCase) const {
             nullptr,         
             SDL_FLIP_NONE
         );
-    } else {
-        rendu.setColor(255, 255, 0, 255); 
-        SDL_RenderDrawRect(rendu.getNativeRenderer(), &dstRect);
     }
 }
