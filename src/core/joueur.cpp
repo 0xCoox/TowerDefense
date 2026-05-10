@@ -6,16 +6,6 @@ Joueur::Joueur(int argentInitial, int viesInitiales)
 {
 }
 
-int Joueur::getArgent() const
-{
-    return argent_;
-}
-
-int Joueur::getVies() const
-{
-    return vies_;
-}
-
 bool Joueur::peutPayer(int cout) const
 {
     return argent_ >= cout;
@@ -53,9 +43,4 @@ void Joueur::perdreVie(int nombre)
     {
         vies_ = 0;
     }
-}
-
-bool Joueur::estMort() const
-{
-    return vies_ <= 0;
 }

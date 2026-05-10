@@ -22,30 +22,30 @@ enum class TypeEnnemi
 class Ennemi : public Entite
 {
 private:
-    TypeEnnemi m_type;
+    TypeEnnemi type_;
 
-    float m_vitesse = 0.0f;
+    float vitesse_ = 0.0f;
 
-    int m_pv = 0;
-    int m_pvMax = 0;
+    int pv_ = 0;
+    int pvMax_ = 0;
 
-    float m_resistance = 0.0f;
+    float resistance_ = 0.0f;
 
-    bool m_volant = false;
-    bool m_estArrive = false;
+    bool volant_ = false;
+    bool estArrive_ = false;
 
-    std::size_t m_pointActuel = 0;
+    std::size_t pointActuel_ = 0;
 
     // Sert aux tours pour savoir quel ennemi est le plus proche de la base.
     // Exemple : point 3 + progression 0.5 = progression totale 3.5.
-    float m_progressionSegment = 0.0f;
-    SDL_Texture* m_texture; 
-    float m_angle;
+    float progressionSegment_ = 0.0f;
+    SDL_Texture* texture_; 
+    float angle_;
     //Partie Slow quand on ets hit par une tour glace
-    float m_multiplicateurVitesse = 1.0f; 
-    float m_timerRalentissement = 0.0f;
+    float multiplicateurVitesse_ = 1.0f; 
+    float timerRalentissement_ = 0.0f;
 public:
-    void setTexture(SDL_Texture* tex) { m_texture = tex; }
+    void setTexture(SDL_Texture* tex) { texture_ = tex; }
     Ennemi(float x, float y, TypeEnnemi type);
 
     void initialiserStats();
@@ -58,16 +58,19 @@ public:
     void prendreDegat(int degat);
     void appliquerRalentissement(float coeff, float duree);
     
-    bool estMort() const;
-    bool estArrive() const;
-    bool estVolant() const;
+    bool estMort() const { return pv_ <= 0; }
+    bool estArrive() const { return estArrive_; }
+    bool estVolant() const { return volant_; }
 
-    TypeEnnemi getType() const;
-    int getPV() const;
+    TypeEnnemi getType() const { return type_; }
+    int getPV() const { return pv_; }
 
-    float  getX() const;
-    float  getY() const;
+    float getX() const { return x_; }
+    float getY() const { return y_; }
 
-    std::size_t getPointActuel() const;
-    float getProgressionChemin() const;
+    std::size_t getPointActuel() const { return pointActuel_; }
+    float getProgressionChemin() const
+    {
+        return static_cast<float>(pointActuel_) + progressionSegment_;
+    }
 };

@@ -3,7 +3,7 @@
 #include <stdexcept>
 
 Window::Window(const std::string& title, int width, int height) 
-    : m_window(nullptr, &SDL_DestroyWindow) // On initialise le pointeur avec le destructeur
+    : window_(nullptr, &SDL_DestroyWindow) // On initialise le pointeur avec le destructeur
 {
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         throw std::runtime_error("Erreur SDL_Init : " + std::string(SDL_GetError()));
@@ -24,7 +24,7 @@ Window::Window(const std::string& title, int width, int height)
         throw std::runtime_error("Erreur SDL_CreateWindow : " + std::string(SDL_GetError()));
     }
 
-    m_window.reset(rawWindow);
+    window_.reset(rawWindow);
     
     std::cout << "Fenetre creee avec succes !" << std::endl;
 }

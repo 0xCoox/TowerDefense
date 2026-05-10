@@ -102,17 +102,17 @@ public:
         int tailleCase
     ) const;
 
-    int getGridX() const;
-    int getGridY() const;
-    int getCout() const;
+    int getGridX() const { return gridX_; }
+    int getGridY() const { return gridY_; }
+    int getCout() const { return cout_; }
 
-    bool peutAmeliorer() const;
+    bool peutAmeliorer() const { return niveau_ < niveauMax_; }
     bool ameliorer();
 
-    int getNiveau() const;
+    int getNiveau() const { return niveau_; }
     int getCoutAmelioration() const;
-    int getPrixVente() const;
-    float getPortee() const;
+    int getPrixVente() const { return totalInvesti_ / 2; }
+    float getPortee() const { return portee_; }
     float getAngle() const
     {
         return angle_;

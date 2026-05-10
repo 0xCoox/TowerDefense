@@ -201,26 +201,6 @@ void Tour::creerProjectileVers(
     );
 }
 
-int Tour::getGridX() const
-{
-    return gridX_;
-}
-
-int Tour::getGridY() const
-{
-    return gridY_;
-}
-
-int Tour::getCout() const
-{
-    return cout_;
-}
-
-bool Tour::peutAmeliorer() const
-{
-    return niveau_ < niveauMax_;
-}
-
 bool Tour::ameliorer()
 {
     if (!peutAmeliorer())
@@ -241,11 +221,6 @@ bool Tour::ameliorer()
     return true;
 }
 
-int Tour::getNiveau() const
-{
-    return niveau_;
-}
-
 int Tour::getCoutAmelioration() const
 {
     if (!peutAmeliorer())
@@ -254,14 +229,4 @@ int Tour::getCoutAmelioration() const
     }
 
     return (cout_ / 2) * niveau_;
-}
-
-int Tour::getPrixVente() const
-{
-    return totalInvesti_ / 2;
-}
-
-float Tour::getPortee() const
-{
-    return portee_;
 }

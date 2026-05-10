@@ -9,8 +9,8 @@ private:
 public:
     Joueur(int argentInitial, int viesInitiales);
 
-    int getArgent() const;
-    int getVies() const;
+    int getArgent() const { return argent_; }
+    int getVies() const { return vies_; }
 
     bool peutPayer(int cout) const;
     bool payer(int cout);
@@ -18,5 +18,5 @@ public:
     void ajouterArgent(int montant);
     void perdreVie(int nombre);
 
-    bool estMort() const;
+    bool estMort() const { return vies_ <= 0; }
 };

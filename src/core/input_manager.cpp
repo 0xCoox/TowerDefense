@@ -52,8 +52,8 @@ Uint8 InputManager::toSDLButton(MouseButton button)
 
 void InputManager::update()
 {
-    m_pressedKeys.clear();
-    m_pressedMouseButtons.clear();
+    pressedKeys_.clear();
+    pressedMouseButtons_.clear();
 
     SDL_Event event;
 
@@ -61,47 +61,47 @@ void InputManager::update()
     {
         if (event.type == SDL_QUIT)
         {
-            m_shouldQuit = true;
+            shouldQuit_ = true;
         }
 
         if (event.type == SDL_KEYDOWN)
         {
             if (event.key.repeat == 0)
             {
-                m_pressedKeys.insert(event.key.keysym.sym);
+                pressedKeys_.insert(event.key.keysym.sym);
             }
         }
 
         if (event.type == SDL_MOUSEBUTTONDOWN)
         {
-            m_pressedMouseButtons.insert(event.button.button);
+            pressedMouseButtons_.insert(event.button.button);
         }
     }
 
-    m_keyboardState = SDL_GetKeyboardState(nullptr);
-    m_mouseButtons = SDL_GetMouseState(&m_mouseX, &m_mouseY);
+    keyboardState_ = SDL_GetKeyboardState(nullptr);
+    mouseButtons_ = SDL_GetMouseState(&mouseX_, &mouseY_);
 }
 
 bool InputManager::shouldQuit() const
 {
-    return m_shouldQuit;
+    return shouldQuit_;
 }
 
 bool InputManager::isKeyDown(SDL_Keycode key) const
 {
     SDL_Scancode scancode = SDL_GetScancodeFromKey(key);
 
-    if (m_keyboardState == nullptr)
+    if (keyboardState_ == nullptr)
     {
         return false;
     }
 
-    return m_keyboardState[scancode];
+    return keyboardState_[scancode];
 }
 
 bool InputManager::isKeyPressed(SDL_Keycode key) const
 {
-    return m_pressedKeys.find(key) != m_pressedKeys.end();
+    return pressedKeys_.find(key) != pressedKeys_.end();
 }
 
 bool InputManager::isKeyDown(Key key) const
@@ -116,12 +116,12 @@ bool InputManager::isKeyPressed(Key key) const
 
 bool InputManager::isMouseButtonDown(Uint8 button) const
 {
-    return (m_mouseButtons & SDL_BUTTON(button)) != 0;
+    return (mouseButtons_ & SDL_BUTTON(button)) != 0;
 }
 
 bool InputManager::isMouseButtonPressed(Uint8 button) const
 {
-    return m_pressedMouseButtons.find(button) != m_pressedMouseButtons.end();
+    return pressedMouseButtons_.find(button) != pressedMouseButtons_.end();
 }
 
 bool InputManager::isMouseButtonDown(MouseButton button) const
@@ -133,13 +133,3 @@ bool InputManager::isMouseButtonPressed(MouseButton button) const
 {
     return isMouseButtonPressed(toSDLButton(button));
 }
-
-int InputManager::getMouseX() const
-{
-    return m_mouseX;
-}
-
-int InputManager::getMouseY() const
-{
-    return m_mouseY;
-}   

@@ -122,8 +122,3 @@ void Projectile::render(Rendu& rendu) const
     }
     rendu.fillRect(rect);
 }
-
-bool Projectile::estTermine() const
-{
-    return termine_;
-}

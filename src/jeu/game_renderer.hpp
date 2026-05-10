@@ -37,8 +37,12 @@ public:
         const std::vector<Projectile>& projectiles,
         int curseurX,
         int curseurY,
+        int sourisX,
+        int sourisY,
         int numeroVague,
         TypeTour typeTourSelectionne,
+        bool dragTourActif,
+        TypeTour dragTourType,
         bool estPause,
         bool afficherPorteePlacement
     );
@@ -60,6 +64,16 @@ private:
         int curseurY,
         TypeTour typeTourSelectionne,
         bool afficherPorteePlacement
+    );
+
+    void dessinerApercuDrag(
+        Rendu& rendu,
+        Carte& carte,
+        TextureManager& textureManager,
+        const std::vector<std::unique_ptr<Tour>>& tours,
+        int sourisX,
+        int sourisY,
+        TypeTour dragTourType
     );
 
     void dessinerCerclePortee(

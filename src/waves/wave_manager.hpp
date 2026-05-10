@@ -19,17 +19,17 @@ public:
         const std::vector<Vec2>& chemin
     );
 
-    bool vagueActive() const;
+    bool vagueActive() const { return active_; }
 
 private:
     TypeEnnemi choisirTypeEnnemi() const;
 
 private:
-    bool m_active = false;
+    bool active_ = false;
 
-    int m_numeroVague = 0;
-    int m_ennemisRestants = 0;
+    int numeroVague_ = 0;
+    int ennemisRestants_ = 0;
 
-    float m_timerSpawn = 0.0f;
-    float m_delaiSpawn = 0.8f;
+    float timerSpawn_ = 0.0f;
+    float delaiSpawn_ = 0.8f;
 };

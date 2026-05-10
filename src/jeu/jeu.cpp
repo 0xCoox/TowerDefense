@@ -1,41 +1,19 @@
 #include "jeu.hpp"
 
-#include "../tours/tour_factory.hpp"
+#include "game_config.hpp"
 
 #include <SDL2/SDL.h>
 
-#include <algorithm>
 #include <iostream>
 #include <memory>
 #include <string>
 
 namespace
 {
-    //pour split la zone d'intéractions avec les bouttons et la zone de la map 
-    constexpr int LARGEUR_MAP = 720; 
-    constexpr int LARGEUR_SIDEBAR = 200; 
-    constexpr int LARGEUR_FENETRE = LARGEUR_MAP + LARGEUR_SIDEBAR;
-    constexpr int HAUTEUR_FENETRE = 720;
-    constexpr int ARGENT_INITIAL = 100000;
-    constexpr int VIES_INITIALES = 20;
-
-    constexpr int PREMIERE_VAGUE = 1;
     constexpr TypeTour TYPE_TOUR_PAR_DEFAUT = TypeTour::Basique;
 
     constexpr int CURSEUR_X_INITIAL = 0;
     constexpr int CURSEUR_Y_INITIAL = 0;
-
-    constexpr int ARGENT_PAR_ENNEMI_TUE = 5;
-
-    constexpr int COULEUR_FOND_R = 0;
-    constexpr int COULEUR_FOND_G = 0;
-    constexpr int COULEUR_FOND_B = 0;
-    constexpr int COULEUR_FOND_A = 255;
-
-    constexpr int COULEUR_CURSEUR_R = 255;
-    constexpr int COULEUR_CURSEUR_G = 0;
-    constexpr int COULEUR_CURSEUR_B = 0;
-    constexpr int COULEUR_CURSEUR_A = 255;
 
     constexpr int TAILLE_POLICE_HUD = 24;
 
@@ -44,37 +22,98 @@ namespace
 }
 
 Jeu::Jeu()
-    : window_("Tower Defense", LARGEUR_FENETRE, HAUTEUR_FENETRE),
+    : window_(
+          "Tower Defense",
+          GameConfig::LARGEUR_FENETRE,
+          GameConfig::HAUTEUR_FENETRE
+      ),
       rendu_(window_.getNativeWindow()),
-      carte_("../assets/map.txt"),
       input_(),
       hud_(CHEMIN_POLICE_HUD, TAILLE_POLICE_HUD),
       estLance_(true),
       estPause_(false),
-      afficherPorteePlacement_(false),
-      joueur_(ARGENT_INITIAL, VIES_INITIALES),
-      numeroVague_(PREMIERE_VAGUE),
-      curseurX_(CURSEUR_X_INITIAL),
-      curseurY_(CURSEUR_Y_INITIAL),
-      typeTourSelectionne_(TYPE_TOUR_PAR_DEFAUT),
+      world_(
+          "../assets/map.txt",
+          GameConfig::ARGENT_INITIAL,
+          GameConfig::VIES_INITIALES,
+          GameConfig::PREMIERE_VAGUE
+      ),
+      textureManager_(),
+      guiManager_(),
+      gameRenderer_(),
+      interactionHandler_(
+          TYPE_TOUR_PAR_DEFAUT,
+          CURSEUR_X_INITIAL,
+          CURSEUR_Y_INITIAL
+      ),
       dernierTemps_(std::chrono::steady_clock::now())
 {
-    textureManager_.charger("ennemi_regular", "../assets/ground_shaker_asset/Blue/Bodies/body_tracks.png", rendu_);
-    textureManager_.charger("ennemi_fast", "../assets/ground_shaker_asset/Purple/Bodies/body_tracks.png", rendu_);
-    textureManager_.charger("ennemi_strong", "../assets/ground_shaker_asset/Camo/Bodies/body_tracks.png", rendu_);
-    textureManager_.charger("ennemi_armored", "../assets/ground_shaker_asset/Red/Bodies/body_tracks.png", rendu_);
-    textureManager_.charger("ennemi_heli", "../assets/ground_shaker_asset/Desert/Bodies/body_tracks.png", rendu_);
-    textureManager_.charger("ennemi_jet", "../assets/ground_shaker_asset/Blue/Bodies/body_tracks.png", rendu_);
-    textureManager_.charger("weapons_purple", "../assets/ground_shaker_asset/Purple/Weapons/weapons.png", rendu_);
-    textureManager_.charger("weapons_blue", "../assets/ground_shaker_asset/Blue/Weapons/weapons.png", rendu_);
-    textureManager_.charger("map_sprite", "../assets/ground_shaker_asset/Terrains/terrain.png", rendu_);
-    textureManager_.charger("base_tour", "../assets/ground_shaker_asset/Purple/Towers/towers_walls_snow_1.png", rendu_);
+    textureManager_.charger(
+        "ennemi_regular",
+        "../assets/ground_shaker_asset/Blue/Bodies/body_tracks.png",
+        rendu_
+    );
+
+    textureManager_.charger(
+        "ennemi_fast",
+        "../assets/ground_shaker_asset/Purple/Bodies/body_tracks.png",
+        rendu_
+    );
+
+    textureManager_.charger(
+        "ennemi_strong",
+        "../assets/ground_shaker_asset/Camo/Bodies/body_tracks.png",
+        rendu_
+    );
+
+    textureManager_.charger(
+        "ennemi_armored",
+        "../assets/ground_shaker_asset/Red/Bodies/body_tracks.png",
+        rendu_
+    );
+
+    textureManager_.charger(
+        "ennemi_heli",
+        "../assets/ground_shaker_asset/Desert/Bodies/body_tracks.png",
+        rendu_
+    );
+
+    textureManager_.charger(
+        "ennemi_jet",
+        "../assets/ground_shaker_asset/Blue/Bodies/body_tracks.png",
+        rendu_
+    );
+
+    textureManager_.charger(
+        "weapons_purple",
+        "../assets/ground_shaker_asset/Purple/Weapons/weapons.png",
+        rendu_
+    );
+
+    textureManager_.charger(
+        "weapons_blue",
+        "../assets/ground_shaker_asset/Blue/Weapons/weapons.png",
+        rendu_
+    );
+
+    textureManager_.charger(
+        "map_sprite",
+        "../assets/ground_shaker_asset/Terrains/terrain.png",
+        rendu_
+    );
+
+    textureManager_.charger(
+        "base_tour",
+        "../assets/ground_shaker_asset/Purple/Towers/towers_walls_snow_1.png",
+        rendu_
+    );
 
     SDL_Color couleurAmeliorer = {50, 200, 50, 255};
     SDL_Color couleurVague = {100, 100, 100, 255};
     SDL_Color couleurVendre = {200, 50, 50, 255};
 
-    int xBouton = LARGEUR_MAP + 25; 
+    int xBouton = GameConfig::LARGEUR_MAP + 25;
+
     guiManager_.ajouterBoutton(
         std::make_unique<Boutton>(
             xBouton,
@@ -85,7 +124,7 @@ Jeu::Jeu()
             couleurAmeliorer,
             [this]()
             {
-                ameliorerTourAuCurseur();
+                interactionHandler_.ameliorerTourSelectionnee(world_);
             }
         )
     );
@@ -100,7 +139,7 @@ Jeu::Jeu()
             couleurVague,
             [this]()
             {
-                lancerVague();
+                world_.lancerVague();
             }
         )
     );
@@ -115,7 +154,7 @@ Jeu::Jeu()
             couleurVendre,
             [this]()
             {
-                vendreTourAuCurseur();
+                interactionHandler_.vendreTourSelectionnee(world_);
             }
         )
     );
@@ -128,7 +167,9 @@ void Jeu::lancer()
     while (estLance_)
     {
         auto tempsActuel = std::chrono::steady_clock::now();
-        std::chrono::duration<float> tempsEcoule = tempsActuel - dernierTemps_;
+
+        std::chrono::duration<float> tempsEcoule =
+            tempsActuel - dernierTemps_;
 
         float dt = tempsEcoule.count();
         dernierTemps_ = tempsActuel;
@@ -146,375 +187,50 @@ void Jeu::lancer()
 
 void Jeu::traiterEntrees()
 {
-    inputHandler_.traiterEntrees(
+    interactionHandler_.traiterEntrees(
         input_,
         guiManager_,
+        hud_,
+        world_,
+        textureManager_,
         estLance_,
-        estPause_,
-        curseurX_,
-        curseurY_,
-        [this](TypeTour typeTour)
-        {
-            selectionnerTour(typeTour);
-        },
-        [this]()
-        {
-            essayerAjouterTour();
-        },
-        [this]()
-        {
-            lancerVague();
-        }
+        estPause_
     );
 }
 
 void Jeu::mettreAJour(float dt)
 {
-    waveManager_.update(dt, ennemis_, carte_.getChemin());
+    world_.update(dt, textureManager_);
 
-    for (auto& ennemi : ennemis_)
-    {
-        if (ennemi->getType() == TypeEnnemi::Regular)
-        {
-            ennemi->setTexture(textureManager_.get("ennemi_regular"));
-        }
-
-        if (ennemi->getType() == TypeEnnemi::Fast)
-        {
-            ennemi->setTexture(textureManager_.get("ennemi_fast"));
-        }
-
-        if (ennemi->getType() == TypeEnnemi::Strong)
-        {
-            ennemi->setTexture(textureManager_.get("ennemi_strong"));
-        }
-
-        if (ennemi->getType() == TypeEnnemi::Armored)
-        {
-            ennemi->setTexture(textureManager_.get("ennemi_armored"));
-        }
-
-        if (ennemi->getType() == TypeEnnemi::Heli)
-        {
-            ennemi->setTexture(textureManager_.get("ennemi_heli"));
-        }
-
-        if (ennemi->getType() == TypeEnnemi::Jet)
-        {
-            ennemi->setTexture(textureManager_.get("ennemi_jet"));
-        }
-    }
-
-    mettreAJourEnnemis(dt);
-    mettreAJourTours(dt);
-    mettreAJourProjectiles(dt);
-
-    gererEnnemisMortsEtArrives();
-
-    if (joueur_.estMort())
+    if (world_.estJoueurMort())
     {
         std::cout << "Game Over !" << std::endl;
         estLance_ = false;
     }
 }
 
-void Jeu::mettreAJourEnnemis(float dt)
-{
-    for (auto& ennemi : ennemis_)
-    {
-        ennemi->update(dt, carte_.getChemin());
-    }
-}
-
-void Jeu::mettreAJourTours(float dt)
-{
-    for (auto& tour : tours_)
-    {
-        tour->update(
-            dt,
-            ennemis_,
-            projectiles_,
-            carte_.getTailleCase()
-        );
-    }
-}
-
-void Jeu::mettreAJourProjectiles(float dt)
-{
-    for (auto& projectile : projectiles_)
-    {
-        projectile.update(dt, ennemis_);
-    }
-
-    projectiles_.erase(
-        std::remove_if(
-            projectiles_.begin(),
-            projectiles_.end(),
-            [](const Projectile& projectile)
-            {
-                return projectile.estTermine();
-            }
-        ),
-        projectiles_.end()
-    );
-}
-
-void Jeu::gererEnnemisMortsEtArrives()
-{
-    int ennemisArrives = 0;
-    int argentGagne = 0;
-
-    for (const auto& ennemi : ennemis_)
-    {
-        if (ennemi->estArrive())
-        {
-            ennemisArrives++;
-        }
-
-        if (ennemi->estMort())
-        {
-            argentGagne += ARGENT_PAR_ENNEMI_TUE;
-        }
-    }
-
-    if (argentGagne > 0)
-    {
-        joueur_.ajouterArgent(argentGagne);
-
-        std::cout << "Argent gagne : +"
-                  << argentGagne
-                  << " | Argent total : "
-                  << joueur_.getArgent()
-                  << std::endl;
-    }
-
-    if (ennemisArrives > 0)
-    {
-        joueur_.perdreVie(ennemisArrives);
-
-        std::cout << ennemisArrives
-                  << " ennemi(s) arrive(s). Vies restantes : "
-                  << joueur_.getVies()
-                  << std::endl;
-    }
-
-    ennemis_.erase(
-        std::remove_if(
-            ennemis_.begin(),
-            ennemis_.end(),
-            [](const std::unique_ptr<Ennemi>& ennemi)
-            {
-                return ennemi->estMort() || ennemi->estArrive();
-            }
-        ),
-        ennemis_.end()
-    );
-}
-
 void Jeu::dessiner()
 {
     gameRenderer_.dessiner(
         rendu_,
-        carte_,
+        world_.carte(),
         textureManager_,
         guiManager_,
         hud_,
-        joueur_,
-        tours_,
-        ennemis_,
-        projectiles_,
-        curseurX_,
-        curseurY_,
-        numeroVague_,
-        typeTourSelectionne_,
+        world_.joueur(),
+        world_.tours(),
+        world_.ennemis(),
+        world_.projectiles(),
+        interactionHandler_.getCurseurX(),
+        interactionHandler_.getCurseurY(),
+        input_.getMouseX(),
+        input_.getMouseY(),
+        world_.numeroVague(),
+        interactionHandler_.getTypeTourSelectionne(),
+        interactionHandler_.estDragTourActif(),
+        interactionHandler_.getDragTourType(),
         estPause_,
-        afficherPorteePlacement_
-    );
-}
-
-void Jeu::selectionnerTour(TypeTour typeTour)
-{
-    typeTourSelectionne_ = typeTour;
-    afficherPorteePlacement_ = true;
-
-    switch (typeTourSelectionne_)
-    {
-        case TypeTour::Basique:
-            std::cout << "Selection : Tour basique" << std::endl;
-            break;
-
-        case TypeTour::Sniper:
-            std::cout << "Selection : Tour sniper" << std::endl;
-            break;
-
-        case TypeTour::Canon:
-            std::cout << "Selection : Tour canon" << std::endl;
-            break;
-
-        case TypeTour::Glace:
-            std::cout << "Selection : Tour glace" << std::endl;
-            break;
-
-        case TypeTour::AntiAir:
-            std::cout << "Selection : Tour anti-air" << std::endl;
-            break;
-    }
-}
-
-void Jeu::essayerAjouterTour()
-{
-    if (!carte_.estConstructible(curseurX_, curseurY_))
-    {
-        std::cout << "Impossible : construction seulement sur les cases @"
-                  << std::endl;
-        return;
-    }
-
-    if (tourExisteDeja(curseurX_, curseurY_))
-    {
-        std::cout << "Impossible : une tour existe deja ici"
-                  << std::endl;
-        return;
-    }
-
-    std::unique_ptr<Tour> nouvelleTour =
-        TourFactory::creerTour(typeTourSelectionne_, curseurX_, curseurY_, textureManager_);
-
-    if (!nouvelleTour)
-    {
-        return;
-    }
-
-    int cout = nouvelleTour->getCout();
-
-    if (!joueur_.payer(cout))
-    {
-        std::cout << "Pas assez d'argent. Cout = "
-                  << cout
-                  << ", argent = "
-                  << joueur_.getArgent()
-                  << std::endl;
-        return;
-    }
-
-    std::cout << "Tour ajoutee en "
-              << curseurX_
-              << ", "
-              << curseurY_
-              << " | Cout : "
-              << cout
-              << " | Argent restant : "
-              << joueur_.getArgent()
-              << std::endl;
-
-    tours_.push_back(std::move(nouvelleTour));
-    afficherPorteePlacement_ = false;
-}
-
-void Jeu::lancerVague()
-{
-    //locker pour les vagues, si ennemi pas tous tués alors on peut pas lancer
-    if (!ennemis_.empty())
-    {
-        std::cout << "Vague pas finis" << std::endl;
-        return; 
-    }
-    waveManager_.lancerVague(numeroVague_);
-
-    std::cout << "Vague "
-              << numeroVague_
-              << " lancee"
-              << std::endl;
-
-    numeroVague_++;
-}
-
-void Jeu::ameliorerTourAuCurseur()
-{
-    int indexTour = trouverIndexTour(curseurX_, curseurY_);
-    if (indexTour == -1)
-    {
-        std::cout << "Aucune tour sous le curseur." << std::endl;
-        return;
-    }
-    Tour& tour = *tours_[indexTour];
-    if (!tour.peutAmeliorer())
-    {
-        std::cout << "Cette tour est deja niveau max" << std::endl;
-        return;
-    }
-
-    int coutAmelioration = tour.getCoutAmelioration();
-
-    if (!joueur_.payer(coutAmelioration))
-    {
-        std::cout << "Pas assez d'argent pour ameliorer. Cout = "
-                  << coutAmelioration
-                  << ", argent = "
-                  << joueur_.getArgent()
-                  << std::endl;
-        return;
-    }
-
-    if (!tour.ameliorer())
-    {
-        std::cout << "Amelioration impossible." << std::endl;
-        return;
-    }
-
-    std::cout << "Tour amelioree. Niveau : "
-              << tour.getNiveau()
-              << " | Argent restant : "
-              << joueur_.getArgent()
-              << std::endl;
-}
-
-void Jeu::vendreTourAuCurseur()
-{
-    int indexTour = trouverIndexTour(curseurX_, curseurY_);
-
-    if (indexTour == -1)
-    {
-        std::cout << "Aucune tour sous le curseur." << std::endl;
-        return;
-    }
-
-    int prixVente = tours_[indexTour]->getPrixVente();
-
-    joueur_.ajouterArgent(prixVente);
-
-    tours_.erase(tours_.begin() + indexTour);
-
-    std::cout << "Tour vendue pour "
-              << prixVente
-              << " | Argent actuel : "
-              << joueur_.getArgent()
-              << std::endl;
-}
-
-int Jeu::trouverIndexTour(int gridX, int gridY) const
-{
-    for (int i = 0; i < static_cast<int>(tours_.size()); i++)
-    {
-        if (tours_[i]->getGridX() == gridX &&
-            tours_[i]->getGridY() == gridY)
-        {
-            return i;
-        }
-    }
-
-    return -1;
-}
-
-bool Jeu::tourExisteDeja(int gridX, int gridY) const
-{
-    return std::any_of(
-        tours_.begin(),
-        tours_.end(),
-        [gridX, gridY](const std::unique_ptr<Tour>& tour)
-        {
-            return tour->getGridX() == gridX && tour->getGridY() == gridY;
-        }
+        interactionHandler_.doitAfficherPorteePlacement()
     );
 }
 
@@ -529,13 +245,17 @@ void Jeu::afficherCommandes() const
     std::cout << "5 : tour anti-air" << std::endl;
     std::cout << "A : placer une tour" << std::endl;
     std::cout << "ENTER : lancer une vague" << std::endl;
-    std::cout << "Bouton Ameliorer : ameliorer la tour sous le curseur" << std::endl;
-    std::cout << "Bouton Vendre : vendre la tour sous le curseur" << std::endl;
+    std::cout << "Bouton Ameliorer : ameliorer la tour selectionnee" << std::endl;
+    std::cout << "Bouton Vendre : vendre la tour selectionnee" << std::endl;
     std::cout << "Bouton Vague : lancer une vague" << std::endl;
     std::cout << "SPACE : pause" << std::endl;
     std::cout << "ESC : quitter" << std::endl;
-    std::cout << "Argent initial : " << joueur_.getArgent() << std::endl;
-    std::cout << "Vies initiales : " << joueur_.getVies() << std::endl;
+
+    std::cout << "Argent initial : "
+              << world_.joueur().getArgent()
+              << std::endl;
+
+    std::cout << "Vies initiales : "
+              << world_.joueur().getVies()
+              << std::endl;
 }
-
-

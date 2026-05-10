@@ -2,24 +2,24 @@
 
 void WaveManager::lancerVague(int numeroVague)
 {
-    if (m_active)
+    if (active_)
     {
         return;
     }
 
-    m_active = true;
-    m_numeroVague = numeroVague;
+    active_ = true;
+    numeroVague_ = numeroVague;
 
-    m_ennemisRestants = 5 + numeroVague * 2;
-    m_timerSpawn = 0.0f;
+    ennemisRestants_ = 5 + numeroVague * 2;
+    timerSpawn_ = 0.0f;
 
     if (numeroVague < 5)
     {
-        m_delaiSpawn = 0.8f;
+        delaiSpawn_ = 0.8f;
     }
     else
     {
-        m_delaiSpawn = 0.5f;
+        delaiSpawn_ = 0.5f;
     }
 }
 
@@ -29,7 +29,7 @@ void WaveManager::update(
     const std::vector<Vec2>& chemin
 )
 {
-    if (!m_active)
+    if (!active_)
     {
         return;
     }
@@ -39,17 +39,17 @@ void WaveManager::update(
         return;
     }
 
-    if (m_ennemisRestants <= 0)
+    if (ennemisRestants_ <= 0)
     {
-        m_active = false;
+        active_ = false;
         return;
     }
 
-    m_timerSpawn += dt;
+    timerSpawn_ += dt;
 
-    if (m_timerSpawn >= m_delaiSpawn)
+    if (timerSpawn_ >= delaiSpawn_)
     {
-        m_timerSpawn = 0.0f;
+        timerSpawn_ = 0.0f;
 
         Vec2 spawn = chemin.front();
         TypeEnnemi type = choisirTypeEnnemi();
@@ -58,38 +58,33 @@ void WaveManager::update(
             std::make_unique<Ennemi>(spawn.x, spawn.y, type)
         );
 
-        m_ennemisRestants--;
+        ennemisRestants_--;
     }
-}
-
-bool WaveManager::vagueActive() const
-{
-    return m_active;
 }
 
 TypeEnnemi WaveManager::choisirTypeEnnemi() const
 {
-    if (m_numeroVague % 6 == 0)
+    if (numeroVague_ % 6 == 0)
     {
         return TypeEnnemi::Jet;
     }
 
-    if (m_numeroVague % 5 == 0)
+    if (numeroVague_ % 5 == 0)
     {
         return TypeEnnemi::Armored;
     }
 
-    if (m_numeroVague % 4 == 0)
+    if (numeroVague_ % 4 == 0)
     {
         return TypeEnnemi::Heli;
     }
 
-    if (m_numeroVague % 3 == 0)
+    if (numeroVague_ % 3 == 0)
     {
         return TypeEnnemi::Fast;
     }
 
-    if (m_numeroVague % 2 == 0)
+    if (numeroVague_ % 2 == 0)
     {
         return TypeEnnemi::Strong;
     }

@@ -13,8 +13,8 @@ public:
 
     void graphisme(Rendu& rendu, SDL_Texture* tileset, SDL_Texture* baseTour);
 
-    const std::vector<Vec2>& getChemin() const;
-    int getTailleCase() const;
+    const std::vector<Vec2>& getChemin() const { return chemin_; }
+    int getTailleCase() const { return caseTaille_; }
 
     bool estConstructible(int x, int y) const;
 
@@ -27,5 +27,5 @@ private:
     std::vector<std::vector<Case>> grille_;
     std::vector<Vec2> chemin_;
 
-    int m_Case_Taille = 80;
+    int caseTaille_ = 80;
 };

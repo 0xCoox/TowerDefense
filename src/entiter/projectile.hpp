@@ -36,5 +36,5 @@ public:
 
     void render(Rendu& rendu) const;
 
-    bool estTermine() const;
+    bool estTermine() const { return termine_; }
 };

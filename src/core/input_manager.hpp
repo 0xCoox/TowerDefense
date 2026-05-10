@@ -48,21 +48,21 @@ public:
     bool isMouseButtonDown(MouseButton button) const;
     bool isMouseButtonPressed(MouseButton button) const;
 
-    int getMouseX() const;
-    int getMouseY() const;
+    int getMouseX() const { return mouseX_; }
+    int getMouseY() const { return mouseY_; }
 
 private:
     static SDL_Keycode toSDLKey(Key key);
     static Uint8 toSDLButton(MouseButton button);
 
-    bool m_shouldQuit = false;
+    bool shouldQuit_ = false;
 
-    const Uint8* m_keyboardState = nullptr;
-    std::unordered_set<SDL_Keycode> m_pressedKeys;
+    const Uint8* keyboardState_ = nullptr;
+    std::unordered_set<SDL_Keycode> pressedKeys_;
 
-    int m_mouseX = 0;
-    int m_mouseY = 0;
-    Uint32 m_mouseButtons = 0;
+    int mouseX_ = 0;
+    int mouseY_ = 0;
+    Uint32 mouseButtons_ = 0;
 
-    std::unordered_set<Uint8> m_pressedMouseButtons;
+    std::unordered_set<Uint8> pressedMouseButtons_;
 };

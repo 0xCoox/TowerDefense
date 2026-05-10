@@ -1,17 +1,13 @@
 #include "game_renderer.hpp"
 
+#include "game_config.hpp"
 #include "../tours/tour_factory.hpp"
 
-#include <SDL2/SDL.h>
-
+#include <array>
 #include <cmath>
 
 namespace
 {
-    constexpr int LARGEUR_MAP = 720;
-    constexpr int LARGEUR_SIDEBAR = 200;
-    constexpr int HAUTEUR_FENETRE = 720;
-
     constexpr int COULEUR_FOND_R = 0;
     constexpr int COULEUR_FOND_G = 0;
     constexpr int COULEUR_FOND_B = 0;
@@ -21,6 +17,23 @@ namespace
     constexpr int COULEUR_CURSEUR_G = 0;
     constexpr int COULEUR_CURSEUR_B = 0;
     constexpr int COULEUR_CURSEUR_A = 255;
+
+    constexpr int SPRITE_SIZE = 96;
+
+    struct PaletteDef
+    {
+        TypeTour type;
+        const char* textureId;
+        int spriteRow;
+    };
+
+    constexpr std::array<PaletteDef, 5> PALETTE_DEFS = {
+        PaletteDef{TypeTour::Basique, "weapons_purple", 0},
+        PaletteDef{TypeTour::Sniper, "weapons_purple", 1},
+        PaletteDef{TypeTour::Canon, "weapons_purple", 3},
+        PaletteDef{TypeTour::Glace, "weapons_blue", 1},
+        PaletteDef{TypeTour::AntiAir, "weapons_purple", 2}
+    };
 }
 
 void GameRenderer::dessiner(
@@ -35,8 +48,12 @@ void GameRenderer::dessiner(
     const std::vector<Projectile>& projectiles,
     int curseurX,
     int curseurY,
+    int sourisX,
+    int sourisY,
     int numeroVague,
     TypeTour typeTourSelectionne,
+    bool dragTourActif,
+    TypeTour dragTourType,
     bool estPause,
     bool afficherPorteePlacement
 )
@@ -60,6 +77,19 @@ void GameRenderer::dessiner(
         afficherPorteePlacement
     );
 
+    if (dragTourActif)
+    {
+        dessinerApercuDrag(
+            rendu,
+            carte,
+            textureManager,
+            tours,
+            sourisX,
+            sourisY,
+            dragTourType
+        );
+    }
+
     for (const auto& tour : tours)
     {
         tour->render(rendu, carte.getTailleCase());
@@ -75,12 +105,9 @@ void GameRenderer::dessiner(
         projectile.render(rendu);
     }
 
-    SDL_Rect curseurRect = {
-        curseurX * carte.getTailleCase(),
-        curseurY * carte.getTailleCase(),
-        carte.getTailleCase(),
-        carte.getTailleCase()
-    };
+    int curseurRectX = curseurX * carte.getTailleCase();
+    int curseurRectY = curseurY * carte.getTailleCase();
+    int curseurRectTaille = carte.getTailleCase();
 
     rendu.setColor(
         COULEUR_CURSEUR_R,
@@ -89,24 +116,31 @@ void GameRenderer::dessiner(
         COULEUR_CURSEUR_A
     );
 
-    rendu.drawRect(curseurRect);
+    rendu.drawRect(
+        curseurRectX,
+        curseurRectY,
+        curseurRectTaille,
+        curseurRectTaille
+    );
 
-    SDL_Rect sidebarRect = {
-        LARGEUR_MAP,
-        0,
-        LARGEUR_SIDEBAR,
-        HAUTEUR_FENETRE
-    };
+    int sidebarRectX = GameConfig::LARGEUR_MAP;
+    int sidebarRectY = 0;
+    int sidebarRectW = GameConfig::LARGEUR_SIDEBAR;
+    int sidebarRectH = GameConfig::HAUTEUR_FENETRE;
 
     rendu.setColor(40, 40, 40, 255);
-    rendu.fillRect(sidebarRect);
+    rendu.fillRect(sidebarRectX, sidebarRectY, sidebarRectW, sidebarRectH);
 
     guiManager.render(rendu);
 
     hud.render(
         rendu,
+        textureManager,
         joueur,
         numeroVague - 1,
+        typeTourSelectionne,
+        dragTourActif,
+        dragTourType,
         estPause
     );
 
@@ -207,6 +241,72 @@ void GameRenderer::dessinerPorteeAuCurseur(
     );
 }
 
+void GameRenderer::dessinerApercuDrag(
+    Rendu& rendu,
+    Carte& carte,
+    TextureManager& textureManager,
+    const std::vector<std::unique_ptr<Tour>>& tours,
+    int sourisX,
+    int sourisY,
+    TypeTour dragTourType
+)
+{
+    if (sourisX < 0 || sourisX >= GameConfig::LARGEUR_MAP ||
+        sourisY < 0 || sourisY >= GameConfig::HAUTEUR_FENETRE)
+    {
+        return;
+    }
+
+    int tailleCase = carte.getTailleCase();
+    int gridX = sourisX / tailleCase;
+    int gridY = sourisY / tailleCase;
+
+    bool libre =
+        carte.estConstructible(gridX, gridY) &&
+        trouverIndexTour(tours, gridX, gridY) == -1;
+
+    for (const PaletteDef& def : PALETTE_DEFS)
+    {
+        if (def.type != dragTourType)
+        {
+            continue;
+        }
+
+        SDL_Texture* texture = textureManager.get(def.textureId);
+        if (!texture)
+        {
+            return;
+        }
+
+        int dstX = gridX * tailleCase;
+        int dstY = gridY * tailleCase;
+
+        rendu.renderCopy(
+            texture,
+            0,
+            def.spriteRow * SPRITE_SIZE,
+            SPRITE_SIZE,
+            SPRITE_SIZE,
+            dstX,
+            dstY,
+            tailleCase,
+            tailleCase
+        );
+
+        if (libre)
+        {
+            rendu.setColor(0, 255, 0, 180);
+        }
+        else
+        {
+            rendu.setColor(255, 0, 0, 180);
+        }
+
+        rendu.drawRect(dstX, dstY, tailleCase, tailleCase);
+        break;
+    }
+}
+
 void GameRenderer::dessinerCerclePortee(
     Rendu& rendu,
     Carte& carte,
@@ -219,7 +319,7 @@ void GameRenderer::dessinerCerclePortee(
     int a
 ) const
 {
-    rendu.setBlendMode(SDL_BLENDMODE_BLEND);
+    rendu.enableBlend();
 
     int tailleCase = carte.getTailleCase();
 

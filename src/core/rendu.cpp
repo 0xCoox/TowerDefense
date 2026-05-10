@@ -5,7 +5,7 @@
 #include <string>
 
 Rendu::Rendu(SDL_Window* window)
-    : m_renderer(nullptr, &SDL_DestroyRenderer)
+    : renderer_(nullptr, &SDL_DestroyRenderer)
 {
     if (TTF_Init() == -1)
     {
@@ -27,36 +27,36 @@ Rendu::Rendu(SDL_Window* window)
         );
     }
 
-    m_renderer.reset(rawRenderer);
+    renderer_.reset(rawRenderer);
 
     std::cout << "Rendu cree avec succes !" << std::endl;
 }
 
 Rendu::~Rendu()
 {
-    m_renderer.reset();
+    renderer_.reset();
     TTF_Quit();
 }
 
 void Rendu::clear()
 {
-    SDL_RenderClear(m_renderer.get());
+    SDL_RenderClear(renderer_.get());
 }
 
 void Rendu::present()
 {
-    SDL_RenderPresent(m_renderer.get());
+    SDL_RenderPresent(renderer_.get());
 }
 
 void Rendu::setColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a)
 {
-    SDL_SetRenderDrawColor(m_renderer.get(), r, g, b, a);
+    SDL_SetRenderDrawColor(renderer_.get(), r, g, b, a);
 }
 
 void Rendu::setColor(const SDL_Color& couleur)
 {
     SDL_SetRenderDrawColor(
-        m_renderer.get(),
+        renderer_.get(),
         couleur.r,
         couleur.g,
         couleur.b,
@@ -66,27 +66,44 @@ void Rendu::setColor(const SDL_Color& couleur)
 
 void Rendu::setBlendMode(SDL_BlendMode mode)
 {
-    SDL_SetRenderDrawBlendMode(m_renderer.get(), mode);
+    SDL_SetRenderDrawBlendMode(renderer_.get(), mode);
+}
+
+void Rendu::enableBlend()
+{
+    SDL_SetRenderDrawBlendMode(renderer_.get(), SDL_BLENDMODE_BLEND);
 }
 
 void Rendu::drawRect(const SDL_Rect& rect)
 {
-    SDL_RenderDrawRect(m_renderer.get(), &rect);
+    SDL_RenderDrawRect(renderer_.get(), &rect);
+}
+
+void Rendu::drawRect(int x, int y, int w, int h)
+{
+    SDL_Rect rect = {x, y, w, h};
+    SDL_RenderDrawRect(renderer_.get(), &rect);
 }
 
 void Rendu::fillRect(const SDL_Rect& rect)
 {
-    SDL_RenderFillRect(m_renderer.get(), &rect);
+    SDL_RenderFillRect(renderer_.get(), &rect);
+}
+
+void Rendu::fillRect(int x, int y, int w, int h)
+{
+    SDL_Rect rect = {x, y, w, h};
+    SDL_RenderFillRect(renderer_.get(), &rect);
 }
 
 void Rendu::drawLine(int x1, int y1, int x2, int y2)
 {
-    SDL_RenderDrawLine(m_renderer.get(), x1, y1, x2, y2);
+    SDL_RenderDrawLine(renderer_.get(), x1, y1, x2, y2);
 }
 
 void Rendu::drawPoint(int x, int y)
 {
-    SDL_RenderDrawPoint(m_renderer.get(), x, y);
+    SDL_RenderDrawPoint(renderer_.get(), x, y);
 }
 
 void Rendu::renderCopy(
@@ -95,7 +112,24 @@ void Rendu::renderCopy(
     const SDL_Rect* dst
 )
 {
-    SDL_RenderCopy(m_renderer.get(), texture, src, dst);
+    SDL_RenderCopy(renderer_.get(), texture, src, dst);
+}
+
+void Rendu::renderCopy(
+    SDL_Texture* texture,
+    int srcX,
+    int srcY,
+    int srcW,
+    int srcH,
+    int dstX,
+    int dstY,
+    int dstW,
+    int dstH
+)
+{
+    SDL_Rect src = {srcX, srcY, srcW, srcH};
+    SDL_Rect dst = {dstX, dstY, dstW, dstH};
+    SDL_RenderCopy(renderer_.get(), texture, &src, &dst);
 }
 
 void Rendu::renderCopyEx(
@@ -107,12 +141,34 @@ void Rendu::renderCopyEx(
     SDL_RendererFlip flip
 )
 {
-    SDL_RenderCopyEx(m_renderer.get(), texture, src, dst, angle, center, flip);
+    SDL_RenderCopyEx(renderer_.get(), texture, src, dst, angle, center, flip);
+}
+
+void Rendu::renderCopyEx(
+    SDL_Texture* texture,
+    int srcX,
+    int srcY,
+    int srcW,
+    int srcH,
+    int dstX,
+    int dstY,
+    int dstW,
+    int dstH,
+    double angle,
+    int centerX,
+    int centerY,
+    SDL_RendererFlip flip
+)
+{
+    SDL_Rect src = {srcX, srcY, srcW, srcH};
+    SDL_Rect dst = {dstX, dstY, dstW, dstH};
+    SDL_Point center = {centerX, centerY};
+    SDL_RenderCopyEx(renderer_.get(), texture, &src, &dst, angle, &center, flip);
 }
 
 SDL_Texture* Rendu::createTextureFromSurface(SDL_Surface* surface)
 {
-    return SDL_CreateTextureFromSurface(m_renderer.get(), surface);
+    return SDL_CreateTextureFromSurface(renderer_.get(), surface);
 }
 
 void Rendu::destroyTexture(SDL_Texture* texture)
@@ -122,7 +178,7 @@ void Rendu::destroyTexture(SDL_Texture* texture)
 
 SDL_Renderer* Rendu::getNativeRenderer() const
 {
-    return m_renderer.get();
+    return renderer_.get();
 }
 
 void Rendu::dessinerTexte(

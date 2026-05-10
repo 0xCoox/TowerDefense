@@ -18,9 +18,9 @@ public:
     Window& operator=(const Window&) = delete;
 
     // Accesseur pour récupérer le pointeur brut (nécessaire pour le Renderer plus tard)
-    SDL_Window* getNativeWindow() const { return m_window.get(); }
+    SDL_Window* getNativeWindow() const { return window_.get(); }
 
 private:
     // Le Smart Pointer : il contient la fenêtre ET la fonction pour la détruire
-    std::unique_ptr<SDL_Window, decltype(&SDL_DestroyWindow)> m_window;
+    std::unique_ptr<SDL_Window, decltype(&SDL_DestroyWindow)> window_;
 };

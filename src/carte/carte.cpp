@@ -62,10 +62,10 @@ void Carte::graphisme(Rendu& rendu, SDL_Texture* tileset, SDL_Texture* baseTour)
         for (size_t x = 0; x < grille_[y].size(); ++x) {
             
             SDL_Rect destRect = {
-                static_cast<int>(x) * m_Case_Taille,
-                static_cast<int>(y) * m_Case_Taille,
-                m_Case_Taille,
-                m_Case_Taille
+                static_cast<int>(x) * caseTaille_,
+                static_cast<int>(y) * caseTaille_,
+                caseTaille_,
+                caseTaille_
             };
 
             if (tileset) {
@@ -195,8 +195,8 @@ void Carte::calculerChemin()
     while (!cheminTermine)
     {
         Vec2 point;
-        point.x = x * m_Case_Taille + m_Case_Taille / 2.0f;
-        point.y = y * m_Case_Taille + m_Case_Taille / 2.0f;
+        point.x = x * caseTaille_ + caseTaille_ / 2.0f;
+        point.y = y * caseTaille_ + caseTaille_ / 2.0f;
 
         chemin_.push_back(point);
         visite[y][x] = true;
@@ -233,16 +233,6 @@ void Carte::calculerChemin()
             cheminTermine = true;
         }
     }
-}
-
-const std::vector<Vec2>& Carte::getChemin() const
-{
-    return chemin_;
-}
-
-int Carte::getTailleCase() const
-{
-    return m_Case_Taille;
 }
 
 bool Carte::estConstructible(int x, int y) const

@@ -12,7 +12,7 @@ enum class TypeEntite {
 class Entite {
 public:
     Entite(float x, float y, TypeEntite entite) 
-        : m_x(x), m_y(y), m_type(entite), m_id(genererIdUnique()) {}
+        : x_(x), y_(y), type_(entite), id_(genererIdUnique()) {}
 
     //Destructeur, evite les fuites mémoires
     virtual ~Entite() = default;
@@ -23,17 +23,17 @@ public:
     virtual void render(Rendu& rendu) const = 0; 
 
     // Getters inline - Vu dans StudentManager
-    inline float getX() const { return m_x; }
-    inline float getY() const { return m_y; }
-    inline int getId() const { return m_id; }
-    inline TypeEntite getType() const { return m_type; }
+    inline float getX() const { return x_; }
+    inline float getY() const { return y_; }
+    inline int getId() const { return id_; }
+    inline TypeEntite getType() const { return type_; }
 
 protected: 
     // Ennemis et Tours puissent modifier leurs coordonnées
-    float m_x;
-    float m_y;
-    TypeEntite m_type; //
-    int m_id; // id unique par tout
+    float x_;
+    float y_;
+    TypeEntite type_; //
+    int id_; // id unique par tout
 
 private:
     // on genere les id pour mon unordered_set
