@@ -143,13 +143,12 @@ void Ennemi::render(Rendu& rendu) const
     if (m_texture) 
     {
         float newAngle = m_angle + 90.0f;
-        SDL_RenderCopyEx(
-            rendu.getNativeRenderer(),
+        rendu.renderCopyEx(
             m_texture,
-            nullptr,    
-            &rect,        
-            newAngle,      
-            nullptr,      
+            nullptr,
+            &rect,
+            newAngle,
+            nullptr,
             SDL_FLIP_NONE
         );
     }
@@ -164,12 +163,12 @@ void Ennemi::render(Rendu& rendu) const
             case TypeEnnemi::Heli:    rendu.setColor(0, 200, 0, 255); break;
             case TypeEnnemi::Jet:     rendu.setColor(255, 255, 255, 255); break;
         }
-        SDL_RenderFillRect(rendu.getNativeRenderer(), &rect);
+        rendu.fillRect(rect);
     }
 
     SDL_Rect barreFond = { static_cast<int>(m_x - moitie), static_cast<int>(m_y - moitie - 10), tailleAffichage, 5 };
         rendu.setColor(80, 80, 80, 255);
-        SDL_RenderFillRect(rendu.getNativeRenderer(), &barreFond);
+        rendu.fillRect(barreFond);
 
         float ratioVie = std::fmax(0.0f, std::fmin(1.0f, (float)m_pv / m_pvMax));
         SDL_Rect barreVie = {
@@ -179,7 +178,7 @@ void Ennemi::render(Rendu& rendu) const
             5
         };
         rendu.setColor(0, 255, 0, 255);
-        SDL_RenderFillRect(rendu.getNativeRenderer(), &barreVie);
+        rendu.fillRect(barreVie);
 }
 
 void Ennemi::prendreDegat(int degat)

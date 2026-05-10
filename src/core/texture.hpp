@@ -1,5 +1,7 @@
 #pragma once
 
+#include "rendu.hpp"
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <string>
@@ -8,8 +10,8 @@
 
 class TextureManager {
 public:
-    void charger(const std::string& id, const std::string& chemin, SDL_Renderer* renderer) {
-        SDL_Texture* tex = IMG_LoadTexture(renderer, chemin.c_str());
+    void charger(const std::string& id, const std::string& chemin, Rendu& rendu) {
+        SDL_Texture* tex = IMG_LoadTexture(rendu.getNativeRenderer(), chemin.c_str());
         if (!tex) {
             std::cerr << "Erreur chargement : " << chemin << " -> " << IMG_GetError() << std::endl;
             return;

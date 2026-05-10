@@ -25,24 +25,17 @@ void Boutton::action()
     }
 }
 
-void Boutton::dessiner(SDL_Renderer* renderer, TTF_Font* font) const
+void Boutton::dessiner(Rendu& rendu, TTF_Font* font) const
 {
-    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+    rendu.setBlendMode(SDL_BLENDMODE_BLEND);
 
     // Fond du bouton
-    SDL_SetRenderDrawColor(
-        renderer,
-        couleur_.r,
-        couleur_.g,
-        couleur_.b,
-        couleur_.a
-    );
-
-    SDL_RenderFillRect(renderer, &rect_);
+    rendu.setColor(couleur_);
+    rendu.fillRect(rect_);
 
     // Bordure noire
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-    SDL_RenderDrawRect(renderer, &rect_);
+    rendu.setColor(0, 0, 0, 255);
+    rendu.drawRect(rect_);
 
     // Si la police n'est pas chargée, on dessine seulement le rectangle
     if (font == nullptr)
@@ -61,10 +54,7 @@ void Boutton::dessiner(SDL_Renderer* renderer, TTF_Font* font) const
         return;
     }
 
-    SDL_Texture* textureTexte = SDL_CreateTextureFromSurface(
-        renderer,
-        surfaceTexte
-    );
+    SDL_Texture* textureTexte = rendu.createTextureFromSurface(surfaceTexte);
 
     if (textureTexte == nullptr)
     {
@@ -78,9 +68,9 @@ void Boutton::dessiner(SDL_Renderer* renderer, TTF_Font* font) const
     rectTexte.x = rect_.x + (rect_.w - rectTexte.w) / 2;
     rectTexte.y = rect_.y + (rect_.h - rectTexte.h) / 2;
 
-    SDL_RenderCopy(renderer, textureTexte, nullptr, &rectTexte);
+    rendu.renderCopy(textureTexte, nullptr, &rectTexte);
 
-    SDL_DestroyTexture(textureTexte);
+    rendu.destroyTexture(textureTexte);
     SDL_FreeSurface(surfaceTexte);
 }
 

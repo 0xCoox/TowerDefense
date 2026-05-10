@@ -89,7 +89,7 @@ void GameRenderer::dessiner(
         COULEUR_CURSEUR_A
     );
 
-    SDL_RenderDrawRect(rendu.getNativeRenderer(), &curseurRect);
+    rendu.drawRect(curseurRect);
 
     SDL_Rect sidebarRect = {
         LARGEUR_MAP,
@@ -98,10 +98,10 @@ void GameRenderer::dessiner(
         HAUTEUR_FENETRE
     };
 
-    SDL_SetRenderDrawColor(rendu.getNativeRenderer(), 40, 40, 40, 255);
-    SDL_RenderFillRect(rendu.getNativeRenderer(), &sidebarRect);
+    rendu.setColor(40, 40, 40, 255);
+    rendu.fillRect(sidebarRect);
 
-    guiManager.render(rendu.getNativeRenderer());
+    guiManager.render(rendu);
 
     hud.render(
         rendu,
@@ -219,9 +219,7 @@ void GameRenderer::dessinerCerclePortee(
     int a
 ) const
 {
-    SDL_Renderer* renderer = rendu.getNativeRenderer();
-
-    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+    rendu.setBlendMode(SDL_BLENDMODE_BLEND);
 
     int tailleCase = carte.getTailleCase();
 
@@ -229,7 +227,7 @@ void GameRenderer::dessinerCerclePortee(
     int centreY = gridY * tailleCase + tailleCase / 2;
     int rayon = static_cast<int>(portee);
 
-    SDL_SetRenderDrawColor(renderer, r, g, b, a);
+    rendu.setColor(r, g, b, a);
 
     for (int y = -rayon; y <= rayon; y++)
     {
@@ -237,8 +235,7 @@ void GameRenderer::dessinerCerclePortee(
             std::sqrt(static_cast<float>(rayon * rayon - y * y))
         );
 
-        SDL_RenderDrawLine(
-            renderer,
+        rendu.drawLine(
             centreX - xMax,
             centreY + y,
             centreX + xMax,
@@ -246,7 +243,7 @@ void GameRenderer::dessinerCerclePortee(
         );
     }
 
-    SDL_SetRenderDrawColor(renderer, r, g, b, 180);
+    rendu.setColor(r, g, b, 180);
 
     constexpr float PI = 3.14159265f;
 
@@ -257,7 +254,7 @@ void GameRenderer::dessinerCerclePortee(
         int x = centreX + static_cast<int>(std::cos(rad) * rayon);
         int y = centreY + static_cast<int>(std::sin(rad) * rayon);
 
-        SDL_RenderDrawPoint(renderer, x, y);
+        rendu.drawPoint(x, y);
     }
 }
 

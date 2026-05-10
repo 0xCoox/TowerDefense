@@ -120,7 +120,7 @@ void Projectile::render(Rendu& rendu) const
             COULEUR_PROJECTILE_A
         );
     }
-    SDL_RenderFillRect(rendu.getNativeRenderer(), &rect);
+    rendu.fillRect(rect);
 }
 
 bool Projectile::estTermine() const

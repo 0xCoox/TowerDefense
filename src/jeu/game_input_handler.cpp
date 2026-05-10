@@ -1,7 +1,5 @@
 #include "game_input_handler.hpp"
 
-#include <SDL2/SDL.h>
-
 #include <array>
 #include <iostream>
 
@@ -9,16 +7,16 @@ namespace
 {
     struct ToucheTour
     {
-        SDL_Keycode touche;
+        InputManager::Key touche;
         TypeTour typeTour;
     };
 
     constexpr std::array<ToucheTour, 5> TOUCHES_TOURS = {
-        ToucheTour{SDLK_1, TypeTour::Basique},
-        ToucheTour{SDLK_2, TypeTour::Sniper},
-        ToucheTour{SDLK_3, TypeTour::Canon},
-        ToucheTour{SDLK_4, TypeTour::Glace},
-        ToucheTour{SDLK_5, TypeTour::AntiAir}
+        ToucheTour{InputManager::Key::Num1, TypeTour::Basique},
+        ToucheTour{InputManager::Key::Num2, TypeTour::Sniper},
+        ToucheTour{InputManager::Key::Num3, TypeTour::Canon},
+        ToucheTour{InputManager::Key::Num4, TypeTour::Glace},
+        ToucheTour{InputManager::Key::Num5, TypeTour::AntiAir}
     };
 }
 
@@ -36,7 +34,7 @@ void GameInputHandler::traiterEntrees(
 {
     input.update();
 
-    if (input.isMouseButtonPressed(SDL_BUTTON_LEFT))
+    if (input.isMouseButtonPressed(InputManager::MouseButton::Left))
     {
         guiManager.handleClick(
             input.getMouseX(),
@@ -44,12 +42,12 @@ void GameInputHandler::traiterEntrees(
         );
     }
 
-    if (input.shouldQuit() || input.isKeyPressed(SDLK_ESCAPE))
+    if (input.shouldQuit() || input.isKeyPressed(InputManager::Key::Escape))
     {
         estLance = false;
     }
 
-    if (input.isKeyPressed(SDLK_SPACE))
+    if (input.isKeyPressed(InputManager::Key::Space))
     {
         estPause = !estPause;
 
@@ -63,27 +61,27 @@ void GameInputHandler::traiterEntrees(
         }
     }
 
-    if (input.isKeyPressed(SDLK_RETURN))
+    if (input.isKeyPressed(InputManager::Key::Return))
     {
         lancerVague();
     }
 
-    if (input.isKeyPressed(SDLK_UP))
+    if (input.isKeyPressed(InputManager::Key::Up))
     {
         curseurY--;
     }
 
-    if (input.isKeyPressed(SDLK_DOWN))
+    if (input.isKeyPressed(InputManager::Key::Down))
     {
         curseurY++;
     }
 
-    if (input.isKeyPressed(SDLK_LEFT))
+    if (input.isKeyPressed(InputManager::Key::Left))
     {
         curseurX--;
     }
 
-    if (input.isKeyPressed(SDLK_RIGHT))
+    if (input.isKeyPressed(InputManager::Key::Right))
     {
         curseurX++;
     }
@@ -97,7 +95,7 @@ void GameInputHandler::traiterEntrees(
         }
     }
 
-    if (input.isKeyPressed(SDLK_a))
+    if (input.isKeyPressed(InputManager::Key::A))
     {
         essayerAjouterTour();
     }

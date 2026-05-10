@@ -40,18 +40,17 @@ void TourAntiAir::render(Rendu& rendu, int tailleCase) const {
 
     if (textureCanon_ != nullptr) {
         float angleCorrection = angle_ + 90.0f;
-        SDL_RenderCopyEx(
-            rendu.getNativeRenderer(),
+        rendu.renderCopyEx(
             textureCanon_,
-            &srcRect,        
-            &dstRect,       
+            &srcRect,
+            &dstRect,
             angleCorrection,
-            nullptr,         
+            nullptr,
             SDL_FLIP_NONE
         );
     } else {
         rendu.setColor(255, 255, 0, 255); 
-        SDL_RenderDrawRect(rendu.getNativeRenderer(), &dstRect);
+        rendu.drawRect(dstRect);
     }
 }
 

@@ -93,23 +93,30 @@ void Carte::graphisme(Rendu& rendu, SDL_Texture* tileset, SDL_Texture* baseTour)
                     srcRectMap.x = 0; // Neige
                 }
 
-                SDL_RenderCopyEx(rendu.getNativeRenderer(), tileset, &srcRectMap, &destRect, angle, NULL, SDL_FLIP_NONE);
+                rendu.renderCopyEx(
+                    tileset,
+                    &srcRectMap,
+                    &destRect,
+                    angle,
+                    nullptr,
+                    SDL_FLIP_NONE
+                );
             }
 
             if (grille_[y][x].type == CaseType::Spawn) {
                 rendu.setColor(0, 255, 0, 100); 
-                SDL_SetRenderDrawBlendMode(rendu.getNativeRenderer(), SDL_BLENDMODE_BLEND);
-                SDL_RenderFillRect(rendu.getNativeRenderer(), &destRect);
+                rendu.setBlendMode(SDL_BLENDMODE_BLEND);
+                rendu.fillRect(destRect);
             } 
             else if (grille_[y][x].type == CaseType::Base) {
                 rendu.setColor(255, 0, 0, 100);
-                SDL_SetRenderDrawBlendMode(rendu.getNativeRenderer(), SDL_BLENDMODE_BLEND);
-                SDL_RenderFillRect(rendu.getNativeRenderer(), &destRect);
+                rendu.setBlendMode(SDL_BLENDMODE_BLEND);
+                rendu.fillRect(destRect);
             }
 
             if (grille_[y][x].type == CaseType::TowerSpace && baseTour) {
                 SDL_Rect srcRectBase = { 0, 128, ASSET_SIZE, ASSET_SIZE };
-                SDL_RenderCopy(rendu.getNativeRenderer(), baseTour, &srcRectBase, &destRect);
+                rendu.renderCopy(baseTour, &srcRectBase, &destRect);
             }
         }
     }

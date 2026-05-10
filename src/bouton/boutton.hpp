@@ -1,6 +1,8 @@
 #ifndef BOUTTON_HPP
 #define BOUTTON_HPP
 
+#include "../core/rendu.hpp"
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 
@@ -28,7 +30,7 @@ public:
     );
 
     void action();
-    void dessiner(SDL_Renderer* renderer, TTF_Font* font) const;
+    void dessiner(Rendu& rendu, TTF_Font* font) const;
     bool estClique(int mouseX, int mouseY) const;
 };
 

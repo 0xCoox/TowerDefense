@@ -41,13 +41,12 @@ void TourGlace::render(Rendu& rendu, int tailleCase) const {
 
     if (textureCanon_ != nullptr) {
         float angleCorrection = angle_ + 90.0f;
-        SDL_RenderCopyEx(
-            rendu.getNativeRenderer(),
+        rendu.renderCopyEx(
             textureCanon_,
-            &srcRect,        
-            &dstRect,       
+            &srcRect,
+            &dstRect,
             angleCorrection,
-            nullptr,         
+            nullptr,
             SDL_FLIP_NONE
         );
     }

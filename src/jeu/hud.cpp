@@ -68,7 +68,7 @@ void Hud::render(
     };
 
     rendu.setColor(FOND_R, FOND_G, FOND_B, FOND_A);
-    SDL_RenderFillRect(rendu.getNativeRenderer(), &fond);
+    rendu.fillRect(fond);
 
     std::string texte =
         "Argent : " + std::to_string(joueur.getArgent()) +

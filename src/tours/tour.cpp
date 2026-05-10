@@ -109,12 +109,7 @@ void Tour::render(Rendu& rendu, int tailleCase) const
             tailleCase
         };
 
-        SDL_RenderCopy(
-            rendu.getNativeRenderer(),
-            textureBase_,
-            nullptr,
-            &rect
-        );
+        rendu.renderCopy(textureBase_, nullptr, &rect);
     }
 }
 

@@ -59,16 +59,16 @@ Jeu::Jeu()
       typeTourSelectionne_(TYPE_TOUR_PAR_DEFAUT),
       dernierTemps_(std::chrono::steady_clock::now())
 {
-    textureManager_.charger("ennemi_regular", "../assets/ground_shaker_asset/Blue/Bodies/body_tracks.png", rendu_.getNativeRenderer());
-    textureManager_.charger("ennemi_fast", "../assets/ground_shaker_asset/Purple/Bodies/body_tracks.png", rendu_.getNativeRenderer());
-    textureManager_.charger("ennemi_strong", "../assets/ground_shaker_asset/Camo/Bodies/body_tracks.png", rendu_.getNativeRenderer());
-    textureManager_.charger("ennemi_armored", "../assets/ground_shaker_asset/Red/Bodies/body_tracks.png", rendu_.getNativeRenderer());
-    textureManager_.charger("ennemi_heli", "../assets/ground_shaker_asset/Desert/Bodies/body_tracks.png", rendu_.getNativeRenderer());
-    textureManager_.charger("ennemi_jet", "../assets/ground_shaker_asset/Blue/Bodies/body_tracks.png", rendu_.getNativeRenderer());
-    textureManager_.charger("weapons_purple", "../assets/ground_shaker_asset/Purple/Weapons/weapons.png", rendu_.getNativeRenderer());
-    textureManager_.charger("weapons_blue", "../assets/ground_shaker_asset/Blue/Weapons/weapons.png", rendu_.getNativeRenderer());
-    textureManager_.charger("map_sprite", "../assets/ground_shaker_asset/Terrains/terrain.png", rendu_.getNativeRenderer());
-    textureManager_.charger("base_tour", "../assets/ground_shaker_asset/Purple/Towers/towers_walls_snow_1.png", rendu_.getNativeRenderer());
+    textureManager_.charger("ennemi_regular", "../assets/ground_shaker_asset/Blue/Bodies/body_tracks.png", rendu_);
+    textureManager_.charger("ennemi_fast", "../assets/ground_shaker_asset/Purple/Bodies/body_tracks.png", rendu_);
+    textureManager_.charger("ennemi_strong", "../assets/ground_shaker_asset/Camo/Bodies/body_tracks.png", rendu_);
+    textureManager_.charger("ennemi_armored", "../assets/ground_shaker_asset/Red/Bodies/body_tracks.png", rendu_);
+    textureManager_.charger("ennemi_heli", "../assets/ground_shaker_asset/Desert/Bodies/body_tracks.png", rendu_);
+    textureManager_.charger("ennemi_jet", "../assets/ground_shaker_asset/Blue/Bodies/body_tracks.png", rendu_);
+    textureManager_.charger("weapons_purple", "../assets/ground_shaker_asset/Purple/Weapons/weapons.png", rendu_);
+    textureManager_.charger("weapons_blue", "../assets/ground_shaker_asset/Blue/Weapons/weapons.png", rendu_);
+    textureManager_.charger("map_sprite", "../assets/ground_shaker_asset/Terrains/terrain.png", rendu_);
+    textureManager_.charger("base_tour", "../assets/ground_shaker_asset/Purple/Towers/towers_walls_snow_1.png", rendu_);
 
     SDL_Color couleurAmeliorer = {50, 200, 50, 255};
     SDL_Color couleurVague = {100, 100, 100, 255};

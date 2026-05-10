@@ -3,6 +3,8 @@
 
 #include "boutton.hpp"
 
+#include "../core/rendu.hpp"
+
 #include <SDL2/SDL_ttf.h>
 
 #include <iostream>
@@ -72,11 +74,11 @@ public:
         }
     }
 
-    void render(SDL_Renderer* renderer)
+    void render(Rendu& rendu)
     {
         for (const auto& bouton : listeBouttons_)
         {
-            bouton->dessiner(renderer, font_);
+            bouton->dessiner(rendu, font_);
         }
     }
 };
