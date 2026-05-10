@@ -5,7 +5,6 @@
 #include <SDL2/SDL.h>
 
 #include <algorithm>
-#include <cmath>
 #include <iostream>
 #include <memory>
 #include <string>
@@ -383,64 +382,23 @@ void Jeu::gererEnnemisMortsEtArrives()
 
 void Jeu::dessiner()
 {
-    rendu_.setColor(COULEUR_FOND_R, COULEUR_FOND_G, COULEUR_FOND_B, COULEUR_FOND_A);
-    rendu_.clear();
-
-    //
-    SDL_Texture* texMap = textureManager_.get("map_sprite");
-    SDL_Texture* texBase = textureManager_.get("base_tour");
-
-    carte_.graphisme(rendu_, texMap, texBase);
-
-    dessinerPorteeAuCurseur();
-
-    for (const auto& tour : tours_)
-    {
-        tour->render(rendu_, carte_.getTailleCase());
-    }
-
-    for (const auto& ennemi : ennemis_)
-    {
-        ennemi->render(rendu_);
-    }
-
-    for (const auto& projectile : projectiles_)
-    {
-        projectile.render(rendu_);
-    }
-
-    SDL_Rect curseurRect = {
-        curseurX_ * carte_.getTailleCase(),
-        curseurY_ * carte_.getTailleCase(),
-        carte_.getTailleCase(),
-        carte_.getTailleCase()
-    };
-
-    rendu_.setColor(
-        COULEUR_CURSEUR_R,
-        COULEUR_CURSEUR_G,
-        COULEUR_CURSEUR_B,
-        COULEUR_CURSEUR_A
-    );
-
-    SDL_RenderDrawRect(rendu_.getNativeRenderer(), &curseurRect);
-
-
-    //separation entre la zone jeu et zone intéractable 
-    SDL_Rect sidebarRect = { LARGEUR_MAP, 0, LARGEUR_SIDEBAR, HAUTEUR_FENETRE };
-    SDL_SetRenderDrawColor(rendu_.getNativeRenderer(), 40, 40, 40, 255);
-    SDL_RenderFillRect(rendu_.getNativeRenderer(), &sidebarRect);
-
-    guiManager_.render(rendu_.getNativeRenderer());
-
-    hud_.render(
+    gameRenderer_.dessiner(
         rendu_,
+        carte_,
+        textureManager_,
+        guiManager_,
+        hud_,
         joueur_,
-        numeroVague_ - 1,
-        estPause_
+        tours_,
+        ennemis_,
+        projectiles_,
+        curseurX_,
+        curseurY_,
+        numeroVague_,
+        typeTourSelectionne_,
+        estPause_,
+        afficherPorteePlacement_
     );
-
-    rendu_.present();
 }
 
 void Jeu::selectionnerTour(int typeTour)
@@ -647,129 +605,4 @@ void Jeu::afficherCommandes() const
     std::cout << "Vies initiales : " << joueur_.getVies() << std::endl;
 }
 
-float Jeu::getPorteeTourSelectionnee()
-{
-    std::unique_ptr<Tour> tourPreview =
-        TourFactory::creerTour(
-            typeTourSelectionne_,
-            curseurX_,
-            curseurY_,
-            textureManager_
-        );
 
-    if (!tourPreview)
-    {
-        return 0.0f;
-    }
-
-    return tourPreview->getPortee();
-}
-void Jeu::dessinerPorteeAuCurseur()
-{
-    int indexTour = trouverIndexTour(curseurX_, curseurY_);
-
-    // 1) Si le curseur est sur une tour déjà posée,
-    // on affiche toujours sa vraie portée.
-    if (indexTour != -1)
-    {
-        float portee = tours_[indexTour]->getPortee();
-
-        dessinerCerclePortee(
-            curseurX_,
-            curseurY_,
-            portee,
-            80,
-            160,
-            255,
-            45
-        );
-
-        return;
-    }
-
-    // 2) Si aucune tour n'est sélectionnée pour placement,
-    // on n'affiche rien.
-    if (!afficherPorteePlacement_)
-    {
-        return;
-    }
-
-    // 3) On affiche la prévisualisation uniquement sur une case @ vide.
-    bool caseConstructibleVide =
-        carte_.estConstructible(curseurX_, curseurY_) &&
-        !tourExisteDeja(curseurX_, curseurY_);
-
-    if (!caseConstructibleVide)
-    {
-        return;
-    }
-
-    float porteePreview = getPorteeTourSelectionnee();
-
-    if (porteePreview <= 0.0f)
-    {
-        return;
-    }
-
-    // Vert : portée de la tour avant placement
-    dessinerCerclePortee(
-        curseurX_,
-        curseurY_,
-        porteePreview,
-        80,
-        255,
-        120,
-        40
-    );
-}
-void Jeu::dessinerCerclePortee(
-    int gridX,
-    int gridY,
-    float portee,
-    int r,
-    int g,
-    int b,
-    int a
-) const
-{
-    SDL_Renderer* renderer = rendu_.getNativeRenderer();
-
-    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
-
-    int tailleCase = carte_.getTailleCase();
-
-    int centreX = gridX * tailleCase + tailleCase / 2;
-    int centreY = gridY * tailleCase + tailleCase / 2;
-    int rayon = static_cast<int>(portee);
-
-    SDL_SetRenderDrawColor(renderer, r, g, b, a);
-
-    for (int y = -rayon; y <= rayon; y++)
-    {
-        int xMax = static_cast<int>(
-            std::sqrt(static_cast<float>(rayon * rayon - y * y))
-        );
-
-        SDL_RenderDrawLine(
-            renderer,
-            centreX - xMax,
-            centreY + y,
-            centreX + xMax,
-            centreY + y
-        );
-    }
-
-    SDL_SetRenderDrawColor(renderer, r, g, b, 180);
-
-    constexpr float PI = 3.14159265f;
-
-    for (int angle = 0; angle < 360; angle++)
-    {
-        float rad = angle * PI / 180.0f;
-
-        int x = centreX + static_cast<int>(std::cos(rad) * rayon);
-        int y = centreY + static_cast<int>(std::sin(rad) * rayon);
-
-        SDL_RenderDrawPoint(renderer, x, y);
-    }
-}

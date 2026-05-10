@@ -1,5 +1,5 @@
 #pragma once
-
+#include "game_renderer.hpp"
 #include "../core/window.hpp"
 #include "../core/rendu.hpp"
 #include "../core/input_manager.hpp"
@@ -39,6 +39,7 @@ private:
     WaveManager waveManager_;
     TextureManager textureManager_;
     BouttonManager guiManager_;
+    GameRenderer gameRenderer_;
 
     int numeroVague_;
 
@@ -72,19 +73,8 @@ private:
     void vendreTourAuCurseur();
 
     int trouverIndexTour(int gridX, int gridY) const;
-    float getPorteeTourSelectionnee();
 
-    void dessinerPorteeAuCurseur();
 
-    void dessinerCerclePortee(
-        int gridX,
-        int gridY,
-        float portee,
-        int r,
-        int g,
-        int b,
-        int a
-    ) const;
     void mettreAJourEnnemis(float dt);
     void mettreAJourTours(float dt);
     void mettreAJourProjectiles(float dt);
