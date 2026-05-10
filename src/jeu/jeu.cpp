@@ -74,13 +74,13 @@ Jeu::Jeu()
 
     textureManager_.charger(
         "ennemi_heli",
-        "../assets/ground_shaker_asset/Desert/Bodies/body_tracks.png",
+        "../assets/ground_shaker_asset/Blue/Bodies/av2.png",
         rendu_
     );
 
     textureManager_.charger(
         "ennemi_jet",
-        "../assets/ground_shaker_asset/Blue/Bodies/body_tracks.png",
+        "../assets/ground_shaker_asset/Blue/Bodies/av.png",
         rendu_
     );
 
