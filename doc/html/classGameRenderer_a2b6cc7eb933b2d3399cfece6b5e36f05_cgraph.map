@@ -1,0 +1,19 @@
+<map id="GameRenderer::dessinerApercuDrag" name="GameRenderer::dessinerApercuDrag">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,153,264,179"/>
+<area shape="rect" id="Node000002" href="$classRendu.html#a034fb504d82fad0cff314e166f8ccabc" title=" " alt="" coords="365,5,497,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="148,151,215,97,261,66,311,40,351,27,352,32,313,44,264,70,218,101,152,155"/>
+<area shape="rect" id="Node000003" href="$classCarte.html#a7e172109f8790d18ca121c22a652a70c" title=" " alt="" coords="346,55,517,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="161,151,228,120,311,89,342,80,343,86,313,94,230,125,163,156"/>
+<area shape="rect" id="Node000005" href="$classTextureManager.html#afb2cc454e6e3d0ee5038618626b3f218" title=" " alt="" coords="353,104,509,129"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="211,151,340,129,341,134,212,156"/>
+<area shape="rect" id="Node000006" href="$classCarte.html#a9bc537f1cb048cb2703ecb7c8f6ffae2" title=" " alt="" coords="355,153,507,179"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="264,163,342,163,342,169,264,169"/>
+<area shape="rect" id="Node000007" href="$classRendu.html#aac7d7296d903e2847fcfc49470cb3d4a" title=" " alt="" coords="358,203,505,228"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="212,176,345,198,344,204,211,181"/>
+<area shape="rect" id="Node000008" href="$classRendu.html#adbc9c3ea4520b4db4d15dad9c64440c2" title=" " alt="" coords="369,252,494,277"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="163,176,230,206,313,237,356,248,354,253,311,242,228,211,161,181"/>
+<area shape="rect" id="Node000009" href="$classGameRenderer.html#abd11dd0ff42a9ba95703ea1b37c050c0" title=" " alt="" coords="312,301,551,327"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="152,177,219,230,264,261,313,286,337,295,336,300,311,291,261,265,215,235,149,181"/>
+<area shape="rect" id="Node000004" href="$classCarte.html#a341fc2f88c60b555428ac440192e2ba4" title=" " alt="" coords="599,55,767,80"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="517,65,585,65,585,70,517,70"/>
+</map>

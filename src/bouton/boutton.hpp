@@ -12,9 +12,14 @@
 class Boutton
 {
 private:
-    SDL_Rect rect_;
+    int x_;
+    int y_;
+    int largeur_;
+    int hauteur_;
+
     SDL_Color couleur_;
     SDL_Color couleurTexte_;
+
     std::string texte_;
     std::function<void()> action_;
 
@@ -30,8 +35,16 @@ public:
     );
 
     void action();
-    void dessiner(Rendu& rendu, TTF_Font* font) const;
-    bool estClique(int mouseX, int mouseY) const;
+
+    void dessiner(
+        Rendu& rendu,
+        TTF_Font* font
+    ) const;
+
+    bool estClique(
+        int mouseX,
+        int mouseY
+    ) const;
 };
 
 #endif

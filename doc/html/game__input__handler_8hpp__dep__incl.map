@@ -1,0 +1,15 @@
+<map id="src/jeu/game_input_handler.hpp" name="src/jeu/game_input_handler.hpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="100,5,247,45"/>
+<area shape="rect" id="Node000002" href="$game__input__handler_8cpp.html" title=" " alt="" coords="5,93,152,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="144,57,101,95,98,91,140,53"/>
+<area shape="rect" id="Node000003" href="$game__interaction__handler_8hpp.html" title=" " alt="" coords="177,93,359,133"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="206,53,249,91,245,95,203,57"/>
+<area shape="rect" id="Node000004" href="$game__interaction__handler_8cpp.html" title=" " alt="" coords="89,181,271,221"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="240,145,201,183,198,179,237,141"/>
+<area shape="rect" id="Node000005" href="$jeu_8hpp.html" title=" " alt="" coords="296,189,413,214"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="299,141,345,186,341,190,295,145"/>
+<area shape="rect" id="Node000006" href="$jeu_8cpp.html" title=" " alt="" coords="229,269,345,295"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="338,226,299,271,295,267,334,223"/>
+<area shape="rect" id="Node000007" href="$main_8cpp.html" title=" " alt="" coords="369,269,474,295"/>
+<area shape="poly" id="edge6_Node000005_Node000007" title=" " alt="" coords="376,223,413,267,409,271,371,226"/>
+</map>

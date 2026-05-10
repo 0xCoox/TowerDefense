@@ -6,9 +6,16 @@
 
 #include "../bouton/bouton_manager.hpp"
 #include "../core/input_manager.hpp"
-#include "../core/texture.hpp"
+#include "../core/texture_manager.hpp"
 #include "../tours/type_tour.hpp"
-
+/**
+ * @brief Gère les interactions avancées entre le joueur, le HUD et le monde.
+ *
+ * Cette classe conserve l'état du curseur, la tour sélectionnée, le drag-and-drop
+ * depuis la palette du HUD et la sélection verrouillée d'une tour existante.
+ *
+ * Elle sert d'intermédiaire entre InputManager, Hud, GameWorld et TextureManager.
+ */
 class GameInteractionHandler
 {
 private:

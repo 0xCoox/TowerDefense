@@ -1,0 +1,9 @@
+<map id="Rendu::dessinerTexte" name="Rendu::dessinerTexte">
+<area shape="rect" id="Node000001" title="Dessine un texte à l&#39;écran." alt="" coords="5,70,167,95"/>
+<area shape="rect" id="Node000002" href="$classRendu.html#a8aac861704514300b83a64ea8dcaa6b9" title=" " alt="" coords="215,5,408,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="136,67,218,46,220,51,137,73"/>
+<area shape="rect" id="Node000003" href="$classRendu.html#a2f07c69d2cfc518cdc0b7ed2e40461e6" title=" " alt="" coords="227,70,395,95"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="167,80,214,80,214,85,167,85"/>
+<area shape="rect" id="Node000004" href="$classRendu.html#aac7d7296d903e2847fcfc49470cb3d4a" title=" " alt="" coords="238,119,385,145"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="145,93,240,114,239,119,144,98"/>
+</map>

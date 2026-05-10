@@ -1,0 +1,27 @@
+<map id="Hud::render" name="Hud::render">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,219,104,244"/>
+<area shape="rect" id="Node000002" href="$classTourFactory.html#a1d20f371046f0ac95cc40d71599beecb" title=" " alt="" coords="152,8,315,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="57,218,69,185,88,142,115,95,150,53,174,37,177,41,154,57,119,98,92,144,74,187,62,219"/>
+<area shape="rect" id="Node000003" href="$classTextureManager.html#afb2cc454e6e3d0ee5038618626b3f218" title=" " alt="" coords="381,5,537,31"/>
+<area shape="poly" id="edge9_Node000001_Node000003" title=" " alt="" coords="60,217,93,162,119,130,151,102,192,83,251,63,382,31,383,36,253,68,194,88,153,107,123,134,98,165,64,220"/>
+<area shape="rect" id="Node000004" href="$classRendu.html#a995626abfaee401f00fc2213d9545b02" title="Dessine un texte à l&#39;écran." alt="" coords="153,117,314,143"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="70,216,106,189,151,160,181,145,183,150,153,164,109,193,73,220"/>
+<area shape="rect" id="Node000007" href="$classRendu.html#aac7d7296d903e2847fcfc49470cb3d4a" title=" " alt="" coords="386,169,533,195"/>
+<area shape="poly" id="edge12_Node000001_Node000007" title=" " alt="" coords="100,216,152,205,266,190,372,183,373,188,267,196,152,210,101,221"/>
+<area shape="rect" id="Node000008" href="$classRendu.html#a034fb504d82fad0cff314e166f8ccabc" title=" " alt="" coords="167,219,299,244"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="104,229,153,229,153,234,104,234"/>
+<area shape="rect" id="Node000009" href="$classRendu.html#a6bd04ede66b554be958c1f955e73341b" title=" " alt="" coords="175,268,291,293"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="102,241,174,262,172,267,101,247"/>
+<area shape="rect" id="Node000010" href="$classJoueur.html#ad18d1c7012dc9800669f44e5ec3e00d0" title=" " alt="" coords="166,317,301,343"/>
+<area shape="poly" id="edge10_Node000001_Node000010" title=" " alt="" coords="71,242,107,273,153,304,168,310,166,315,151,308,103,277,67,246"/>
+<area shape="rect" id="Node000011" href="$classJoueur.html#a5e0267e837c01ab7712dcfc6614d3862" title=" " alt="" coords="173,367,293,392"/>
+<area shape="poly" id="edge11_Node000001_Node000011" title=" " alt="" coords="65,243,98,297,123,327,154,353,163,359,160,363,150,357,120,331,94,300,60,246"/>
+<area shape="rect" id="Node000012" href="$classRendu.html#adbc9c3ea4520b4db4d15dad9c64440c2" title=" " alt="" coords="171,416,296,441"/>
+<area shape="poly" id="edge13_Node000001_Node000012" title=" " alt="" coords="62,244,73,276,91,319,118,364,154,403,160,407,157,412,150,407,114,367,86,321,68,278,57,245"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="315,17,368,16,368,22,315,22"/>
+<area shape="rect" id="Node000005" href="$classRendu.html#a8aac861704514300b83a64ea8dcaa6b9" title=" " alt="" coords="363,55,556,95"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="286,115,362,96,363,101,287,120"/>
+<area shape="rect" id="Node000006" href="$classRendu.html#a2f07c69d2cfc518cdc0b7ed2e40461e6" title=" " alt="" coords="375,120,543,145"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="314,128,361,129,361,134,314,134"/>
+<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="290,140,391,164,390,169,289,145"/>
+</map>

@@ -1,6 +1,5 @@
 #include "projectile.hpp"
 
-#include <SDL2/SDL.h>
 
 #include <algorithm>
 #include <cmath>
@@ -98,21 +97,20 @@ void Projectile::update(float dt, std::vector<std::unique_ptr<Ennemi>>& ennemis)
 
 void Projectile::render(Rendu& rendu) const
 {
-    SDL_Rect rect = {
-        static_cast<int>(x_ - TAILLE_PROJECTILE / 2),
-        static_cast<int>(y_ - TAILLE_PROJECTILE / 2),
-        TAILLE_PROJECTILE,
-        TAILLE_PROJECTILE
-    };
+    int rectX = static_cast<int>(x_ - TAILLE_PROJECTILE / 2);
+    int rectY = static_cast<int>(y_ - TAILLE_PROJECTILE / 2);
 
     // choisit couleur projectiles
-    if (ralentissement_ < 1.0f) {
+    if (ralentissement_ < 1.0f)
+    {
         rendu.setColor(100, 150, 255, 255);
-    } 
-    else if (rayonSplash_ > 0.0f) {
+    }
+    else if (rayonSplash_ > 0.0f)
+    {
         rendu.setColor(255, 100, 0, 255);
     }
-    else {
+    else
+    {
         rendu.setColor(
             COULEUR_PROJECTILE_R,
             COULEUR_PROJECTILE_G,
@@ -120,5 +118,11 @@ void Projectile::render(Rendu& rendu) const
             COULEUR_PROJECTILE_A
         );
     }
-    rendu.fillRect(rect);
+
+    rendu.fillRect(
+        rectX,
+        rectY,
+        TAILLE_PROJECTILE,
+        TAILLE_PROJECTILE
+    );
 }

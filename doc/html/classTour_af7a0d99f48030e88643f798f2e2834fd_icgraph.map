@@ -1,0 +1,16 @@
+<map id="Tour::peutAmeliorer" name="Tour::peutAmeliorer">
+<area shape="rect" id="Node000001" title=" " alt="" coords="1028,25,1179,50"/>
+<area shape="rect" id="Node000002" href="$classTour.html#ae504c090f236256bb423fab4fa07757c" title="Améliore la tour si elle n&#39;a pas atteint son niveau maximum." alt="" coords="620,25,740,50"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="1014,40,741,40,741,35,1014,35"/>
+<area shape="rect" id="Node000003" href="$classGameWorld.html#a3c42e3d9a5a232c0df4c3ed9d151d0af" title=" " alt="" coords="376,25,572,50"/>
+<area shape="poly" id="edge5_Node000001_Node000003" title=" " alt="" coords="1016,25,980,21,800,9,721,9,620,16,538,27,538,22,620,11,721,4,800,3,980,16,1016,20"/>
+<area shape="rect" id="Node000006" href="$classTour.html#a994e6f727ad7ae61c951b13d431b0cb4" title=" " alt="" coords="788,75,980,101"/>
+<area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="1035,56,940,78,939,73,1034,51"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="606,40,572,40,572,35,606,35"/>
+<area shape="rect" id="Node000004" href="$classGameInteractionHandler.html#a6e41f34f3ce117a218dc2ca184ba4c6a" title=" " alt="" coords="124,17,328,57"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="362,40,328,40,328,35,362,35"/>
+<area shape="rect" id="Node000005" href="$classJeu.html#acc5795ee00edf75516d3dfe65be3e6d6" title=" " alt="" coords="5,25,76,50"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="110,40,76,40,76,35,110,35"/>
+<area shape="poly" id="edge7_Node000006_Node000002" title=" " alt="" coords="818,75,731,53,732,48,820,69"/>
+<area shape="poly" id="edge8_Node000006_Node000003" title=" " alt="" coords="774,82,620,65,541,53,542,47,620,60,774,77"/>
+</map>

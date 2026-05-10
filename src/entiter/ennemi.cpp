@@ -1,14 +1,23 @@
 #include "ennemi.hpp"
 #include "../core/rendu.hpp"
 
-#include <SDL2/SDL.h>
+#include <algorithm>
 #include <cmath>
+
+namespace
+{
+    constexpr float PI = 3.1415926535f;
+
+    constexpr int TAILLE_AFFICHAGE_ENNEMI = 50;
+    constexpr int HAUTEUR_BARRE_VIE = 5;
+    constexpr int DECALAGE_BARRE_VIE = 10;
+}
 
 Ennemi::Ennemi(float x, float y, TypeEnnemi type)
     : Entite(x, y, TypeEntite::Ennemi),
-      type_(type),     
-      texture_(nullptr), 
-      angle_(0.0f)      
+      type_(type),
+      texture_(nullptr),
+      angle_(0.0f)
 {
     initialiserStats();
 }
@@ -34,7 +43,7 @@ void Ennemi::initialiserStats()
         case TypeEnnemi::Strong:
             vitesse_ = 45.0f;
             pv_ = 250;
-            resistance_ = 0.0f;
+            resistance_ = .0f;
             volant_ = false;
             break;
 
@@ -65,7 +74,8 @@ void Ennemi::initialiserStats()
 
 void Ennemi::update(float dt)
 {
-    // Cette fonction existe pour respecter la classe entite; dans le jeu, on utilise update(dt, chemin).
+    // Cette fonction existe pour respecter la classe Entite.
+    // Dans le jeu, on utilise update(dt, chemin).
     (void)dt;
 }
 
@@ -73,35 +83,50 @@ void Ennemi::appliquerRalentissement(float coeff, float duree)
 {
     multiplicateurVitesse_ *= coeff;
     timerRalentissement_ = std::max(timerRalentissement_, duree);
-    //Pour eviter d'avoir des cibles a l'arret 
-    if (multiplicateurVitesse_ < 0.2f) multiplicateurVitesse_ = 0.2f;
+
+    // Pour éviter d'avoir des cibles complètement à l'arrêt
+    if (multiplicateurVitesse_ < 0.2f)
+    {
+        multiplicateurVitesse_ = 0.2f;
+    }
 }
 
 void Ennemi::update(float dt, const std::vector<Vec2>& chemin)
 {
-    if (chemin.empty() || estArrive_) return;
+    if (chemin.empty() || estArrive_)
+    {
+        return;
+    }
+
     // Gestion du ralentissement
-    if (timerRalentissement_ > 0) {
+    if (timerRalentissement_ > 0.0f)
+    {
         timerRalentissement_ -= dt;
-        if (timerRalentissement_ <= 0) {
-            timerRalentissement_ = 0;
-            multiplicateurVitesse_ = 1.0f; 
+
+        if (timerRalentissement_ <= 0.0f)
+        {
+            timerRalentissement_ = 0.0f;
+            multiplicateurVitesse_ = 1.0f;
         }
     }
-    // application ralentissement
-    float vitesseReel = vitesse_ * multiplicateurVitesse_; 
 
-    if (pointActuel_ >= chemin.size()) {
+    float vitesseReel = vitesse_ * multiplicateurVitesse_;
+
+    if (pointActuel_ >= chemin.size())
+    {
         estArrive_ = true;
         return;
     }
 
     Vec2 cible = chemin[pointActuel_];
+
     float dx = cible.x - x_;
     float dy = cible.y - y_;
+
     float distance = std::sqrt(dx * dx + dy * dy);
 
-    if (distance < 2.0f) {
+    if (distance < 2.0f)
+    {
         pointActuel_++;
         progressionSegment_ = 0.0f;
         return;
@@ -109,20 +134,26 @@ void Ennemi::update(float dt, const std::vector<Vec2>& chemin)
 
     float directionX = dx / distance;
     float directionY = dy / distance;
-    angle_ = std::atan2(directionY, directionX) * (180.0f / M_PI);
 
+    angle_ = std::atan2(directionY, directionX) * (180.0f / PI);
 
     float distanceAParcourir = vitesseReel * dt;
-    
-    if (distanceAParcourir >= distance) {
+
+    if (distanceAParcourir >= distance)
+    {
         x_ = cible.x;
         y_ = cible.y;
+
         pointActuel_++;
         progressionSegment_ = 0.0f;
-    } else {
+    }
+    else
+    {
         x_ += directionX * distanceAParcourir;
         y_ += directionY * distanceAParcourir;
-        if (distance > 0.001f) {
+
+        if (distance > 0.001f)
+        {
             progressionSegment_ += distanceAParcourir / distance;
         }
     }
@@ -130,60 +161,103 @@ void Ennemi::update(float dt, const std::vector<Vec2>& chemin)
 
 void Ennemi::render(Rendu& rendu) const
 {
-    int tailleAffichage = 50; 
-    int moitie = tailleAffichage / 2;
+    int moitie = TAILLE_AFFICHAGE_ENNEMI / 2;
 
-    SDL_Rect rect = {
-        static_cast<int>(x_ - moitie),
-        static_cast<int>(y_ - moitie),
-        tailleAffichage,
-        tailleAffichage
-    };
+    int ennemiX = static_cast<int>(x_ - moitie);
+    int ennemiY = static_cast<int>(y_ - moitie);
 
-    if (texture_) 
+    if (texture_ != nullptr)
     {
-        float newAngle = angle_ + 90.0f;
-        rendu.renderCopyEx(
+        double angleCorrection = angle_ + 90.0;
+
+        rendu.renderCopyExWholeTexture(
             texture_,
-            nullptr,
-            &rect,
-            newAngle,
-            nullptr,
-            SDL_FLIP_NONE
+            ennemiX,
+            ennemiY,
+            TAILLE_AFFICHAGE_ENNEMI,
+            TAILLE_AFFICHAGE_ENNEMI,
+            angleCorrection,
+            moitie,
+            moitie
         );
     }
-    else 
+    else
     {
         switch (type_)
         {
-            case TypeEnnemi::Regular: rendu.setColor(255, 0, 0, 255); break;
-            case TypeEnnemi::Fast:    rendu.setColor(255, 100, 100, 255); break;
-            case TypeEnnemi::Strong:  rendu.setColor(120, 0, 0, 255); break;
-            case TypeEnnemi::Armored: rendu.setColor(120, 120, 120, 255); break;
-            case TypeEnnemi::Heli:    rendu.setColor(0, 200, 0, 255); break;
-            case TypeEnnemi::Jet:     rendu.setColor(255, 255, 255, 255); break;
+            case TypeEnnemi::Regular:
+                rendu.setColor(255, 0, 0, 255);
+                break;
+
+            case TypeEnnemi::Fast:
+                rendu.setColor(255, 100, 100, 255);
+                break;
+
+            case TypeEnnemi::Strong:
+                rendu.setColor(120, 0, 0, 255);
+                break;
+
+            case TypeEnnemi::Armored:
+                rendu.setColor(120, 120, 120, 255);
+                break;
+
+            case TypeEnnemi::Heli:
+                rendu.setColor(0, 200, 0, 255);
+                break;
+
+            case TypeEnnemi::Jet:
+                rendu.setColor(255, 255, 255, 255);
+                break;
         }
-        rendu.fillRect(rect);
+
+        rendu.fillRect(
+            ennemiX,
+            ennemiY,
+            TAILLE_AFFICHAGE_ENNEMI,
+            TAILLE_AFFICHAGE_ENNEMI
+        );
     }
 
-    SDL_Rect barreFond = { static_cast<int>(x_ - moitie), static_cast<int>(y_ - moitie - 10), tailleAffichage, 5 };
-        rendu.setColor(80, 80, 80, 255);
-        rendu.fillRect(barreFond);
+    int barreX = ennemiX;
+    int barreY = ennemiY - DECALAGE_BARRE_VIE;
 
-        float ratioVie = std::fmax(0.0f, std::fmin(1.0f, (float)pv_ / pvMax_));
-        SDL_Rect barreVie = {
-            static_cast<int>(x_ - moitie),
-            static_cast<int>(y_ - moitie - 10),
-            static_cast<int>(tailleAffichage * ratioVie),
-            5
-        };
-        rendu.setColor(0, 255, 0, 255);
-        rendu.fillRect(barreVie);
+    rendu.setColor(80, 80, 80, 255);
+
+    rendu.fillRect(
+        barreX,
+        barreY,
+        TAILLE_AFFICHAGE_ENNEMI,
+        HAUTEUR_BARRE_VIE
+    );
+
+    float ratioVie = 0.0f;
+
+    if (pvMax_ > 0)
+    {
+        ratioVie = std::clamp(
+            static_cast<float>(pv_) / static_cast<float>(pvMax_),
+            0.0f,
+            1.0f
+        );
+    }
+
+    int largeurBarreVie =
+        static_cast<int>(TAILLE_AFFICHAGE_ENNEMI * ratioVie);
+
+    rendu.setColor(0, 255, 0, 255);
+
+    rendu.fillRect(
+        barreX,
+        barreY,
+        largeurBarreVie,
+        HAUTEUR_BARRE_VIE
+    );
 }
 
 void Ennemi::prendreDegat(int degat)
 {
-    float degatApresResistance = static_cast<float>(degat) * (1.0f - resistance_);
+    float degatApresResistance =
+        static_cast<float>(degat) * (1.0f - resistance_);
 
     pv_ -= static_cast<int>(degatApresResistance);
 

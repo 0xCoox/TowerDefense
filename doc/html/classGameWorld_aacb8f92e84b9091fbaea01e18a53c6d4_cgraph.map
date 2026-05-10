@@ -1,0 +1,19 @@
+<map id="GameWorld::placerTour" name="GameWorld::placerTour">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,104,179,129"/>
+<area shape="rect" id="Node000002" href="$classTourFactory.html#a1d20f371046f0ac95cc40d71599beecb" title=" " alt="" coords="247,5,409,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="111,101,162,71,226,40,248,32,250,37,228,44,164,75,114,106"/>
+<area shape="rect" id="Node000004" href="$classCarte.html#a7e172109f8790d18ca121c22a652a70c" title=" " alt="" coords="243,55,413,80"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="153,101,252,80,254,86,154,107"/>
+<area shape="rect" id="Node000006" href="$classJoueur.html#ad18d1c7012dc9800669f44e5ec3e00d0" title=" " alt="" coords="261,104,395,129"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="179,114,247,114,247,119,179,119"/>
+<area shape="rect" id="Node000007" href="$classJoueur.html#ac333503e9a8a5c2e0501641fe45a2c42" title=" " alt="" coords="274,153,382,179"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="154,127,261,149,260,155,153,132"/>
+<area shape="rect" id="Node000009" href="$classGameWorld.html#a9e009f6b9f599713dd904208c1748d54" title=" " alt="" coords="227,203,429,228"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="114,127,165,157,228,188,254,196,252,201,226,192,162,162,112,132"/>
+<area shape="rect" id="Node000003" href="$classTextureManager.html#afb2cc454e6e3d0ee5038618626b3f218" title=" " alt="" coords="483,5,639,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="409,15,470,15,470,21,409,21"/>
+<area shape="rect" id="Node000005" href="$classCarte.html#a341fc2f88c60b555428ac440192e2ba4" title=" " alt="" coords="477,55,645,80"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="414,65,463,65,463,70,414,70"/>
+<area shape="rect" id="Node000008" href="$classJoueur.html#ae6be60af6eb59da598453e39d3e6d5a7" title=" " alt="" coords="493,153,629,179"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="382,163,480,163,480,169,382,169"/>
+</map>

@@ -42,10 +42,19 @@ void Tour::update(
         timerAttaque_ -= dt;
     }
 
-    auto it = std::find_if(ennemis.begin(), ennemis.end(), [this, tailleCase](const std::unique_ptr<Ennemi>& e) {
-        return e && e->getId() == idCibleVerrouille_ && 
-               !e->estMort() && !e->estArrive() && estDansPortee(*e, tailleCase);
-    });
+   auto it = std::find_if(
+    ennemis.begin(),
+    ennemis.end(),
+    [this, tailleCase](const std::unique_ptr<Ennemi>& e)
+    {
+        return e != nullptr &&
+               e->getId() == idCibleVerrouille_ &&
+               !e->estMort() &&
+               !e->estArrive() &&
+               peutCibler(*e) &&
+               estDansPortee(*e, tailleCase);
+    }
+);
 
     std::optional<std::size_t> indexCible;
 
@@ -100,23 +109,21 @@ void Tour::update(
 
 void Tour::render(Rendu& rendu, int tailleCase) const
 {
-    if (textureBase_)
+    if (textureBase_ != nullptr)
     {
-        SDL_Rect rect = {
+        rendu.renderCopy(
+            textureBase_,
             gridX_ * tailleCase,
             gridY_ * tailleCase,
             tailleCase,
             tailleCase
-        };
-
-        rendu.renderCopy(textureBase_, nullptr, &rect);
+        );
     }
 }
 
 bool Tour::peutCibler(const Ennemi& ennemi) const
 {
-    (void)ennemi;
-    return true;
+    return !ennemi.estVolant();
 }
 
 bool Tour::estDansPortee(const Ennemi& ennemi, int tailleCase) const

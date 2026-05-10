@@ -1,0 +1,13 @@
+<map id="Tour" name="Tour">
+<area shape="rect" id="Node000001" title="Classe mère de toutes les tours du jeu." alt="" coords="253,5,414,471"/>
+<area shape="rect" id="Node000002" href="$classTourAntiAir.html" title=" " alt="" coords="5,519,115,624"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="246,349,105,520,101,517,242,346"/>
+<area shape="rect" id="Node000003" href="$classTourBasique.html" title=" " alt="" coords="139,529,256,614"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="250,449,217,529,212,527,245,447"/>
+<area shape="rect" id="Node000004" href="$classTourCanon.html" title=" " alt="" coords="280,529,387,614"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="336,484,336,529,331,529,331,484"/>
+<area shape="rect" id="Node000005" href="$classTourGlace.html" title=" " alt="" coords="411,529,514,614"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="422,458,449,527,444,529,417,460"/>
+<area shape="rect" id="Node000006" href="$classTourSniper.html" title=" " alt="" coords="539,529,645,614"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="425,352,562,527,557,530,420,355"/>
+</map>

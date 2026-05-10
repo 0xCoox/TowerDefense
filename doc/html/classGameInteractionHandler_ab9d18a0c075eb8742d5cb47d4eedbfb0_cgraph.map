@@ -1,0 +1,7 @@
+<map id="GameInteractionHandler::getGridYDepuisSouris" name="GameInteractionHandler::getGridYDepuisSouris">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,23,188,63"/>
+<area shape="rect" id="Node000002" href="$classGameWorld.html#a158dd7f9b3891d15b76f35b6648125af" title=" " alt="" coords="243,5,381,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="188,30,228,25,229,30,189,35"/>
+<area shape="rect" id="Node000003" href="$classCarte.html#a9bc537f1cb048cb2703ecb7c8f6ffae2" title=" " alt="" coords="236,55,388,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="188,51,223,55,222,60,188,56"/>
+</map>

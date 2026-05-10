@@ -1,0 +1,16 @@
+<map id="GameRenderer::trouverIndexTour" name="GameRenderer::trouverIndexTour">
+<area shape="rect" id="Node000001" title=" " alt="" coords="937,35,1176,60"/>
+<area shape="rect" id="Node000002" href="$classGameRenderer.html#a2b6cc7eb933b2d3399cfece6b5e36f05" title=" " alt="" coords="631,5,889,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="923,37,888,33,889,28,924,32"/>
+<area shape="rect" id="Node000007" href="$classGameRenderer.html#aa858b2e517db91eb5242152feda7f561" title=" " alt="" coords="647,55,873,95"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="924,63,873,67,872,62,923,57"/>
+<area shape="rect" id="Node000003" href="$classGameRenderer.html#a22a89ca662c181cef84d69fce2b9d72b" title=" " alt="" coords="400,35,583,60"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="630,35,583,40,582,35,630,30"/>
+<area shape="rect" id="Node000004" href="$classJeu.html#a97e016653e9f3df8735a322627c16fc0" title=" " alt="" coords="247,35,352,60"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="386,50,352,50,352,45,386,45"/>
+<area shape="rect" id="Node000005" href="$classJeu.html#ae5227e7a3d506e3511bd76201f4c7aad" title=" " alt="" coords="108,35,199,60"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="233,50,199,50,199,45,233,45"/>
+<area shape="rect" id="Node000006" href="$main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="5,35,60,60"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="94,50,60,50,60,45,94,45"/>
+<area shape="poly" id="edge7_Node000007_Node000003" title=" " alt="" coords="633,65,583,59,583,54,634,59"/>
+</map>

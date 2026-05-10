@@ -1,0 +1,29 @@
+<map id="Rendu::drawRect" name="Rendu::drawRect">
+<area shape="rect" id="Node000001" title=" " alt="" coords="937,198,1069,223"/>
+<area shape="rect" id="Node000002" href="$classGameRenderer.html#a22a89ca662c181cef84d69fce2b9d72b" title=" " alt="" coords="400,99,583,125"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="992,186,978,151,956,110,926,70,908,53,888,40,853,23,821,13,792,9,764,9,704,20,631,40,596,52,563,68,511,101,508,97,561,64,594,47,630,35,703,15,764,4,793,3,823,8,855,18,891,35,912,49,930,66,961,107,983,148,997,184"/>
+<area shape="rect" id="Node000006" href="$classBoutton.html#aab6d47e52b13c7e2db55f20ce03fbbef" title=" " alt="" coords="692,50,828,75"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="985,188,945,137,918,111,888,89,859,77,828,70,829,65,861,72,891,84,922,106,949,133,989,185"/>
+<area shape="rect" id="Node000007" href="$classGameRenderer.html#a2b6cc7eb933b2d3399cfece6b5e36f05" title=" " alt="" coords="631,99,889,125"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="975,191,935,164,888,139,853,127,854,122,890,134,938,159,978,187"/>
+<area shape="rect" id="Node000008" href="$classTourAntiAir.html#a0b473b322d4742d67423bc236a1662fe" title=" " alt="" coords="689,149,831,174"/>
+<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="933,198,889,188,831,177,832,172,890,183,934,192"/>
+<area shape="rect" id="Node000009" href="$classTourBasique.html#ac3273aeb6dcac4ebd4f37a40e8b3c39c" title=" " alt="" coords="685,198,835,223"/>
+<area shape="poly" id="edge9_Node000001_Node000009" title=" " alt="" coords="923,213,835,213,835,208,923,208"/>
+<area shape="rect" id="Node000010" href="$classTourCanon.html#a3edccdb37fa703dcc12f584016b1db09" title=" " alt="" coords="690,247,830,273"/>
+<area shape="poly" id="edge10_Node000001_Node000010" title=" " alt="" coords="930,229,890,237,827,250,826,245,889,232,929,224"/>
+<area shape="rect" id="Node000011" href="$classTourGlace.html#ada69af0829cbba776ecfdfe5c6fb1163" title=" " alt="" coords="692,297,828,322"/>
+<area shape="poly" id="edge11_Node000001_Node000011" title=" " alt="" coords="977,234,938,262,890,287,829,304,828,299,888,282,935,257,974,230"/>
+<area shape="rect" id="Node000012" href="$classTourSniper.html#a04a93eebf783b9919c85d9281291ddeb" title=" " alt="" coords="690,346,830,371"/>
+<area shape="poly" id="edge12_Node000001_Node000012" title=" " alt="" coords="989,237,949,288,922,314,891,336,862,348,831,356,830,351,860,343,888,331,918,310,945,284,985,233"/>
+<area shape="rect" id="Node000013" href="$classHud.html#a3063f2e8a8a71c83c88ef1e7773e93ff" title=" " alt="" coords="711,395,809,421"/>
+<area shape="poly" id="edge13_Node000001_Node000013" title=" " alt="" coords="995,238,980,272,958,312,928,352,891,385,851,403,810,410,809,405,850,398,888,381,924,348,953,309,975,269,990,236"/>
+<area shape="rect" id="Node000003" href="$classJeu.html#a97e016653e9f3df8735a322627c16fc0" title=" " alt="" coords="247,99,352,125"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="386,115,352,115,352,109,386,109"/>
+<area shape="rect" id="Node000004" href="$classJeu.html#ae5227e7a3d506e3511bd76201f4c7aad" title=" " alt="" coords="108,99,199,125"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="233,115,199,115,199,109,233,109"/>
+<area shape="rect" id="Node000005" href="$main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="5,99,60,125"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="94,115,60,115,60,109,94,109"/>
+<area shape="poly" id="edge7_Node000007_Node000002" title=" " alt="" coords="617,115,583,115,583,109,617,109"/>
+<area shape="poly" id="edge14_Node000013_Node000002" title=" " alt="" coords="696,410,661,402,629,385,597,356,570,321,548,284,530,246,505,175,492,126,498,124,510,173,535,243,553,281,575,318,601,352,632,381,663,397,697,404"/>
+</map>

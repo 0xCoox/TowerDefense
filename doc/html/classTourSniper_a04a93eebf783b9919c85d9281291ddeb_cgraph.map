@@ -1,0 +1,9 @@
+<map id="TourSniper::render" name="TourSniper::render">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,55,145,80"/>
+<area shape="rect" id="Node000002" href="$classRendu.html#a034fb504d82fad0cff314e166f8ccabc" title=" " alt="" coords="209,5,341,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="127,52,209,31,210,37,128,57"/>
+<area shape="rect" id="Node000003" href="$classRendu.html#aa4e8efb5aa903d2f2c381a4c26e62294" title=" " alt="" coords="193,55,356,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="145,65,180,65,180,70,145,70"/>
+<area shape="rect" id="Node000004" href="$classRendu.html#adbc9c3ea4520b4db4d15dad9c64440c2" title=" " alt="" coords="212,104,337,129"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="128,77,210,98,209,103,127,83"/>
+</map>

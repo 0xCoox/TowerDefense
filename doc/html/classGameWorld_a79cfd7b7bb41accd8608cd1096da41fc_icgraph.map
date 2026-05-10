@@ -1,0 +1,18 @@
+<map id="GameWorld::tours" name="GameWorld::tours">
+<area shape="rect" id="Node000001" title=" " alt="" coords="671,35,809,60"/>
+<area shape="rect" id="Node000002" href="$classJeu.html#a97e016653e9f3df8735a322627c16fc0" title=" " alt="" coords="447,5,552,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="657,40,552,27,553,22,657,35"/>
+<area shape="rect" id="Node000005" href="$classGameInteractionHandler.html#a2c6f5cda0ff641c9e0c15807b71dd028" title=" " alt="" coords="376,55,623,95"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="657,60,623,64,623,58,657,54"/>
+<area shape="rect" id="Node000003" href="$classJeu.html#ae5227e7a3d506e3511bd76201f4c7aad" title=" " alt="" coords="181,5,271,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="433,21,272,21,272,15,433,15"/>
+<area shape="rect" id="Node000004" href="$main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="13,5,68,31"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="167,21,68,21,68,15,167,15"/>
+<area shape="rect" id="Node000006" href="$classGameInteractionHandler.html#a6e41f34f3ce117a218dc2ca184ba4c6a" title=" " alt="" coords="124,55,328,95"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="362,78,328,78,328,73,362,73"/>
+<area shape="rect" id="Node000008" href="$classGameInteractionHandler.html#aad3064ad5b1000a06617a4c6a3d91951" title=" " alt="" coords="133,119,319,159"/>
+<area shape="poly" id="edge7_Node000005_Node000008" title=" " alt="" coords="401,101,313,122,311,117,399,96"/>
+<area shape="rect" id="Node000007" href="$classJeu.html#acc5795ee00edf75516d3dfe65be3e6d6" title=" " alt="" coords="5,95,76,120"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="111,98,77,104,76,99,110,93"/>
+<area shape="poly" id="edge8_Node000008_Node000007" title=" " alt="" coords="118,123,76,116,77,111,119,118"/>
+</map>

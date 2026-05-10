@@ -2,7 +2,7 @@
 
 #include "../core/rendu.hpp"
 #include "../core/joueur.hpp"
-#include "../core/texture.hpp"
+#include "../core/texture_manager.hpp"
 
 #include "../carte/carte.hpp"
 
@@ -18,7 +18,15 @@
 
 #include <memory>
 #include <vector>
-
+/**
+ * @brief Responsable de l'affichage complet du jeu.
+ *
+ * GameRenderer dessine la carte, les tours, les ennemis, les projectiles,
+ * la portée des tours, le HUD, les boutons et les aperçus de placement.
+ *
+ * Cette classe ne doit pas modifier la logique du jeu : elle doit seulement
+ * afficher l'état courant.
+ */
 class GameRenderer
 {
 public:

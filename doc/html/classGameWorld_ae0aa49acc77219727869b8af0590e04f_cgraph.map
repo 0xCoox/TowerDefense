@@ -1,0 +1,9 @@
+<map id="GameWorld::vendreTour" name="GameWorld::vendreTour">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,55,184,80"/>
+<area shape="rect" id="Node000002" href="$classJoueur.html#a9100b4141ff1303f12062b7fb79f817b" title=" " alt="" coords="260,5,420,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="158,52,262,31,263,36,159,57"/>
+<area shape="rect" id="Node000003" href="$classJoueur.html#ad18d1c7012dc9800669f44e5ec3e00d0" title=" " alt="" coords="273,55,407,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="184,65,259,65,259,70,184,70"/>
+<area shape="rect" id="Node000004" href="$classGameWorld.html#a032d027d5731484705128abc4f06c60e" title=" " alt="" coords="232,104,448,129"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="159,77,263,99,262,104,158,83"/>
+</map>

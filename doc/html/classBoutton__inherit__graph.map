@@ -1,0 +1,9 @@
+<map id="Boutton" name="Boutton">
+<area shape="rect" id="Node000001" title=" " alt="" coords="141,5,260,271"/>
+<area shape="rect" id="Node000002" href="$classBouttonLevelUp.html" title=" " alt="" coords="5,319,124,404"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="136,249,92,320,88,317,132,246"/>
+<area shape="rect" id="Node000003" href="$classBouttonVague.html" title=" " alt="" coords="148,319,253,404"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="203,284,203,319,198,319,198,284"/>
+<area shape="rect" id="Node000004" href="$classBouttonVendre.html" title=" " alt="" coords="277,319,388,404"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="270,249,310,317,306,320,265,252"/>
+</map>

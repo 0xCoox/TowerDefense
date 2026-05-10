@@ -1,0 +1,5 @@
+<map id="BouttonVendre" name="BouttonVendre">
+<area shape="rect" id="Node000001" title=" " alt="" coords="9,319,120,404"/>
+<area shape="rect" id="Node000002" href="$classBoutton.html" title=" " alt="" coords="5,5,124,271"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="67,284,67,319,62,319,62,284"/>
+</map>

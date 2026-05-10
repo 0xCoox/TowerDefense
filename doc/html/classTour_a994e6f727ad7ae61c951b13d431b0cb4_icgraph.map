@@ -1,0 +1,12 @@
+<map id="Tour::getCoutAmelioration" name="Tour::getCoutAmelioration">
+<area shape="rect" id="Node000001" title=" " alt="" coords="788,31,980,56"/>
+<area shape="rect" id="Node000002" href="$classTour.html#ae504c090f236256bb423fab4fa07757c" title="Améliore la tour si elle n&#39;a pas atteint son niveau maximum." alt="" coords="620,5,740,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="774,32,740,28,740,23,775,27"/>
+<area shape="rect" id="Node000003" href="$classGameWorld.html#a3c42e3d9a5a232c0df4c3ed9d151d0af" title=" " alt="" coords="376,31,572,56"/>
+<area shape="poly" id="edge5_Node000001_Node000003" title=" " alt="" coords="774,46,572,46,572,41,774,41"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="607,30,573,34,572,29,606,24"/>
+<area shape="rect" id="Node000004" href="$classGameInteractionHandler.html#a6e41f34f3ce117a218dc2ca184ba4c6a" title=" " alt="" coords="124,23,328,63"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="362,46,328,46,328,41,362,41"/>
+<area shape="rect" id="Node000005" href="$classJeu.html#acc5795ee00edf75516d3dfe65be3e6d6" title=" " alt="" coords="5,31,76,56"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="110,46,76,46,76,41,110,41"/>
+</map>

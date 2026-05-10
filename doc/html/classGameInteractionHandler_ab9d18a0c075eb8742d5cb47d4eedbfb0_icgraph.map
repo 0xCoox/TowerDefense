@@ -1,0 +1,17 @@
+<map id="GameInteractionHandler::getGridYDepuisSouris" name="GameInteractionHandler::getGridYDepuisSouris">
+<area shape="rect" id="Node000001" title=" " alt="" coords="895,63,1077,103"/>
+<area shape="rect" id="Node000002" href="$classGameInteractionHandler.html#ace00bbdcd73488d9059cbd769eb11825" title=" " alt="" coords="664,5,847,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="891,62,836,48,837,43,892,57"/>
+<area shape="rect" id="Node000003" href="$classGameInteractionHandler.html#a41e39c38d892a4f72a796a5d0e311ac6" title=" " alt="" coords="433,63,616,103"/>
+<area shape="poly" id="edge8_Node000001_Node000003" title=" " alt="" coords="881,85,616,85,616,80,881,80"/>
+<area shape="rect" id="Node000007" href="$classGameInteractionHandler.html#aa28051eaa0c36ab4a7a9a6375f521b4f" title=" " alt="" coords="664,120,847,160"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="892,109,837,123,836,117,891,103"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="662,51,606,65,605,60,660,46"/>
+<area shape="rect" id="Node000004" href="$classJeu.html#af7c3c31fab677367d100dabc3d0dbec9" title=" " alt="" coords="247,70,385,95"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="420,85,386,85,386,80,420,80"/>
+<area shape="rect" id="Node000005" href="$classJeu.html#ae5227e7a3d506e3511bd76201f4c7aad" title=" " alt="" coords="108,70,199,95"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="233,85,199,85,199,80,233,80"/>
+<area shape="rect" id="Node000006" href="$main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="5,70,60,95"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="94,85,60,85,60,80,94,80"/>
+<area shape="poly" id="edge7_Node000007_Node000003" title=" " alt="" coords="660,119,605,105,606,100,662,114"/>
+</map>

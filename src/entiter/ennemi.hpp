@@ -18,7 +18,13 @@ enum class TypeEnnemi
     Heli,
     Jet
 };
-
+/**
+ * 
+ * @brief Représente un ennemi se déplaçant sur le chemin de la carte.
+ *
+ * Un ennemi possède des points de vie, une vitesse, une résistance, un type
+ * et une progression sur le chemin. Certains ennemis peuvent être volants.
+ */
 class Ennemi : public Entite
 {
 private:
@@ -51,6 +57,15 @@ public:
     void initialiserStats();
 
     void update(float dt) override;
+    /**
+     * @brief Met à jour le déplacement de l'ennemi sur le chemin.
+     *
+     * L'ennemi avance vers le point suivant du chemin. Cette fonction gère aussi
+     * le ralentissement temporaire appliqué par les tours de glace.
+     *
+     * @param dt Temps écoulé depuis la dernière frame.
+     * @param chemin Liste des points à suivre jusqu'à la base.
+     */
     void update(float dt, const std::vector<Vec2>& chemin);
 
     void render(Rendu& rendu) const override;

@@ -2,7 +2,7 @@
 
 #include "../core/rendu.hpp"
 #include "../core/joueur.hpp"
-#include "../core/texture.hpp"
+#include "../core/texture_manager.hpp"
 
 #include "../tours/type_tour.hpp"
 

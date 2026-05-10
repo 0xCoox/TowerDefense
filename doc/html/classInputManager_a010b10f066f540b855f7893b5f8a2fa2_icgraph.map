@@ -1,0 +1,16 @@
+<map id="InputManager::isMouseButtonPressed" name="InputManager::isMouseButtonPressed">
+<area shape="rect" id="Node000001" title=" " alt="" coords="929,69,1147,109"/>
+<area shape="rect" id="Node000002" href="$classInputManager.html#aab088b24ce504e2d180d7310f61a1c5a" title=" " alt="" coords="664,5,881,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="941,69,855,48,857,43,942,63"/>
+<area shape="rect" id="Node000003" href="$classGameInputHandler.html#ac8f94229346eaacb1b5b3a05f32bf287" title=" " alt="" coords="676,69,869,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="916,92,870,92,870,87,916,87"/>
+<area shape="rect" id="Node000004" href="$classGameInteractionHandler.html#a41e39c38d892a4f72a796a5d0e311ac6" title=" " alt="" coords="433,99,616,139"/>
+<area shape="poly" id="edge7_Node000001_Node000004" title=" " alt="" coords="942,115,882,124,821,128,773,128,664,124,616,123,616,118,664,119,773,123,820,123,881,119,941,109"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="663,105,616,111,616,105,662,100"/>
+<area shape="rect" id="Node000005" href="$classJeu.html#af7c3c31fab677367d100dabc3d0dbec9" title=" " alt="" coords="247,106,385,131"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="420,121,386,121,386,116,420,116"/>
+<area shape="rect" id="Node000006" href="$classJeu.html#ae5227e7a3d506e3511bd76201f4c7aad" title=" " alt="" coords="108,106,199,131"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="233,121,199,121,199,116,233,116"/>
+<area shape="rect" id="Node000007" href="$main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="5,106,60,131"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="94,121,60,121,60,116,94,116"/>
+</map>

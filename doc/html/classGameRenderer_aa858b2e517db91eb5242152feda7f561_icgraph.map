@@ -1,0 +1,11 @@
+<map id="GameRenderer::dessinerPorteeAuCurseur" name="GameRenderer::dessinerPorteeAuCurseur">
+<area shape="rect" id="Node000001" title=" " alt="" coords="631,5,856,45"/>
+<area shape="rect" id="Node000002" href="$classGameRenderer.html#a22a89ca662c181cef84d69fce2b9d72b" title=" " alt="" coords="400,13,583,38"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="617,28,583,28,583,23,617,23"/>
+<area shape="rect" id="Node000003" href="$classJeu.html#a97e016653e9f3df8735a322627c16fc0" title=" " alt="" coords="247,13,352,38"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="386,28,352,28,352,23,386,23"/>
+<area shape="rect" id="Node000004" href="$classJeu.html#ae5227e7a3d506e3511bd76201f4c7aad" title=" " alt="" coords="108,13,199,38"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="233,28,199,28,199,23,233,23"/>
+<area shape="rect" id="Node000005" href="$main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="5,13,60,38"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="94,28,60,28,60,23,94,23"/>
+</map>

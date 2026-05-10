@@ -1,0 +1,5 @@
+<map id="GameWorld::mettreAJourEnnemis" name="GameWorld::mettreAJourEnnemis">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,245,31"/>
+<area shape="rect" id="Node000002" href="$classCarte.html#a14a7ac9e2cdfa7398f37ad4da7fed0c7" title=" " alt="" coords="293,5,429,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="245,15,280,15,280,21,245,21"/>
+</map>

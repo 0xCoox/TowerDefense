@@ -1,0 +1,5 @@
+<map id="TourFactory::creerTour" name="TourFactory::creerTour">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,168,31"/>
+<area shape="rect" id="Node000002" href="$classTextureManager.html#afb2cc454e6e3d0ee5038618626b3f218" title=" " alt="" coords="216,5,372,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="168,15,202,15,202,21,168,21"/>
+</map>

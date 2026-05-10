@@ -2,7 +2,7 @@
 
 #include "tour.hpp"
 #include "type_tour.hpp"
-#include "../core/texture.hpp"
+#include "../core/texture_manager.hpp"
 
 #include <memory>
 

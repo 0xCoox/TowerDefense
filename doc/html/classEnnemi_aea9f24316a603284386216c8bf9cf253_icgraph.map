@@ -1,0 +1,5 @@
+<map id="Ennemi::prendreDegat" name="Ennemi::prendreDegat">
+<area shape="rect" id="Node000001" title=" " alt="" coords="189,5,357,31"/>
+<area shape="rect" id="Node000002" href="$classProjectile.html#a1254e9f7e64b8326d94625712272c9c0" title=" " alt="" coords="5,5,141,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="175,21,142,21,142,15,175,15"/>
+</map>

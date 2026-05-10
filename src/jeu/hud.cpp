@@ -112,15 +112,12 @@ void Hud::render(
     bool estPause
 )
 {
-    SDL_Rect fond = {
-        FOND_X,
-        FOND_Y,
-        FOND_LARGEUR,
-        FOND_HAUTEUR
-    };
-
     rendu.setColor(FOND_R, FOND_G, FOND_B, FOND_A);
-    rendu.fillRect(fond);
+    rendu.fillRect(
+    FOND_X,
+    FOND_Y,
+    FOND_LARGEUR,
+    FOND_HAUTEUR);
 
     std::string texte =
         "Argent : " + std::to_string(joueur.getArgent()) +

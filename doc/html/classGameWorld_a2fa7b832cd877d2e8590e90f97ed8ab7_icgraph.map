@@ -1,0 +1,13 @@
+<map id="GameWorld::preparerAchatTour" name="GameWorld::preparerAchatTour">
+<area shape="rect" id="Node000001" title=" " alt="" coords="895,13,1120,38"/>
+<area shape="rect" id="Node000002" href="$classGameInteractionHandler.html#ace00bbdcd73488d9059cbd769eb11825" title=" " alt="" coords="664,5,847,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="881,28,847,28,847,23,881,23"/>
+<area shape="rect" id="Node000003" href="$classGameInteractionHandler.html#a41e39c38d892a4f72a796a5d0e311ac6" title=" " alt="" coords="433,5,616,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="651,28,616,28,616,23,651,23"/>
+<area shape="rect" id="Node000004" href="$classJeu.html#af7c3c31fab677367d100dabc3d0dbec9" title=" " alt="" coords="247,13,385,38"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="420,28,386,28,386,23,420,23"/>
+<area shape="rect" id="Node000005" href="$classJeu.html#ae5227e7a3d506e3511bd76201f4c7aad" title=" " alt="" coords="108,13,199,38"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="233,28,199,28,199,23,233,23"/>
+<area shape="rect" id="Node000006" href="$main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="5,13,60,38"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="94,28,60,28,60,23,94,23"/>
+</map>

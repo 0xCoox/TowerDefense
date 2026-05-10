@@ -9,12 +9,15 @@ Boutton::Boutton(
     SDL_Color couleur,
     std::function<void()> action
 )
-    : couleur_(couleur),
+    : x_(x),
+      y_(y),
+      largeur_(w),
+      hauteur_(h),
+      couleur_(couleur),
       couleurTexte_{255, 255, 255, 255},
       texte_(texte),
       action_(action)
 {
-    rect_ = {x, y, w, h};
 }
 
 void Boutton::action()
@@ -25,17 +28,32 @@ void Boutton::action()
     }
 }
 
-void Boutton::dessiner(Rendu& rendu, TTF_Font* font) const
+void Boutton::dessiner(
+    Rendu& rendu,
+    TTF_Font* font
+) const
 {
-    rendu.setBlendMode(SDL_BLENDMODE_BLEND);
+    rendu.enableBlend();
 
     // Fond du bouton
     rendu.setColor(couleur_);
-    rendu.fillRect(rect_);
+
+    rendu.fillRect(
+        x_,
+        y_,
+        largeur_,
+        hauteur_
+    );
 
     // Bordure noire
     rendu.setColor(0, 0, 0, 255);
-    rendu.drawRect(rect_);
+
+    rendu.drawRect(
+        x_,
+        y_,
+        largeur_,
+        hauteur_
+    );
 
     // Si la police n'est pas chargée, on dessine seulement le rectangle
     if (font == nullptr)
@@ -43,39 +61,38 @@ void Boutton::dessiner(Rendu& rendu, TTF_Font* font) const
         return;
     }
 
-    SDL_Surface* surfaceTexte = TTF_RenderUTF8_Blended(
+    int texteLargeur = 0;
+    int texteHauteur = 0;
+
+    if (TTF_SizeUTF8(
+            font,
+            texte_.c_str(),
+            &texteLargeur,
+            &texteHauteur
+        ) != 0)
+    {
+        return;
+    }
+
+    int texteX = x_ + (largeur_ - texteLargeur) / 2;
+    int texteY = y_ + (hauteur_ - texteHauteur) / 2;
+
+    rendu.dessinerTexte(
         font,
-        texte_.c_str(),
+        texte_,
+        texteX,
+        texteY,
         couleurTexte_
     );
-
-    if (surfaceTexte == nullptr)
-    {
-        return;
-    }
-
-    SDL_Texture* textureTexte = rendu.createTextureFromSurface(surfaceTexte);
-
-    if (textureTexte == nullptr)
-    {
-        SDL_FreeSurface(surfaceTexte);
-        return;
-    }
-
-    SDL_Rect rectTexte;
-    rectTexte.w = surfaceTexte->w;
-    rectTexte.h = surfaceTexte->h;
-    rectTexte.x = rect_.x + (rect_.w - rectTexte.w) / 2;
-    rectTexte.y = rect_.y + (rect_.h - rectTexte.h) / 2;
-
-    rendu.renderCopy(textureTexte, nullptr, &rectTexte);
-
-    rendu.destroyTexture(textureTexte);
-    SDL_FreeSurface(surfaceTexte);
 }
 
-bool Boutton::estClique(int mouseX, int mouseY) const
+bool Boutton::estClique(
+    int mouseX,
+    int mouseY
+) const
 {
-    SDL_Point point = {mouseX, mouseY};
-    return SDL_PointInRect(&point, &rect_);
+    return mouseX >= x_ &&
+           mouseX <= x_ + largeur_ &&
+           mouseY >= y_ &&
+           mouseY <= y_ + hauteur_;
 }

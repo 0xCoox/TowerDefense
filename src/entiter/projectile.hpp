@@ -6,6 +6,12 @@
 #include <memory>
 #include <vector>
 
+/**
+ * @brief Représente un projectile tiré par une tour.
+ *
+ * Un projectile cible un ennemi grâce à son identifiant. Il se déplace vers
+ * cette cible et applique ses effets lorsqu'il l'atteint.
+ */
 class Projectile
 {
 private:

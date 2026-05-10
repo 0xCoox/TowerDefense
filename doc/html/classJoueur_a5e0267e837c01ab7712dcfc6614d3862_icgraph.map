@@ -1,0 +1,24 @@
+<map id="Joueur::getVies" name="Joueur::getVies">
+<area shape="rect" id="Node000001" title=" " alt="" coords="935,63,1055,88"/>
+<area shape="rect" id="Node000002" href="$classJeu.html#aa94dfefd50fa2a64de716172f6e0d29e" title=" " alt="" coords="679,5,861,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="940,61,886,46,833,33,834,28,887,41,941,56"/>
+<area shape="rect" id="Node000004" href="$classGameWorld.html#a0a41812e8d618eea4b89bf055cf197df" title=" " alt="" coords="653,55,887,95"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="921,78,887,78,887,73,921,73"/>
+<area shape="rect" id="Node000009" href="$classHud.html#a3063f2e8a8a71c83c88ef1e7773e93ff" title=" " alt="" coords="721,120,819,145"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="941,95,887,110,820,125,819,120,886,105,940,90"/>
+<area shape="rect" id="Node000003" href="$classJeu.html#acc5795ee00edf75516d3dfe65be3e6d6" title=" " alt="" coords="479,5,549,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="665,21,550,21,550,15,665,15"/>
+<area shape="rect" id="Node000005" href="$classGameWorld.html#a05e3c815364f41639a4ffe918cce3bcd" title=" " alt="" coords="439,67,589,92"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="639,80,589,81,589,75,639,75"/>
+<area shape="rect" id="Node000006" href="$classJeu.html#a27a7a87e15010502edd0e38676636bdd" title=" " alt="" coords="247,68,375,93"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="425,83,375,83,375,78,425,77"/>
+<area shape="rect" id="Node000007" href="$classJeu.html#ae5227e7a3d506e3511bd76201f4c7aad" title=" " alt="" coords="108,93,199,119"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="234,96,199,101,199,96,233,90"/>
+<area shape="rect" id="Node000008" href="$main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="5,93,60,119"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="94,109,60,109,60,103,94,103"/>
+<area shape="rect" id="Node000010" href="$classGameRenderer.html#a22a89ca662c181cef84d69fce2b9d72b" title=" " alt="" coords="423,117,605,143"/>
+<area shape="poly" id="edge9_Node000009_Node000010" title=" " alt="" coords="707,135,605,134,605,128,707,129"/>
+<area shape="rect" id="Node000011" href="$classJeu.html#a97e016653e9f3df8735a322627c16fc0" title=" " alt="" coords="258,117,363,143"/>
+<area shape="poly" id="edge10_Node000010_Node000011" title=" " alt="" coords="409,133,363,133,363,127,409,127"/>
+<area shape="poly" id="edge11_Node000011_Node000007" title=" " alt="" coords="244,123,198,115,199,110,245,117"/>
+</map>

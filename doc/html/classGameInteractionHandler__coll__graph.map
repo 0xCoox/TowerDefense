@@ -1,0 +1,5 @@
+<map id="GameInteractionHandler" name="GameInteractionHandler">
+<area shape="rect" id="Node000001" title="Gère les interactions avancées entre le joueur, le HUD et le monde." alt="" coords="5,173,261,759"/>
+<area shape="rect" id="Node000002" href="$classGameInputHandler.html" title="Gère les entrées simples du joueur." alt="" coords="47,5,220,111"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="136,111,136,157,131,157,131,111"/>
+</map>

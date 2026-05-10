@@ -1,0 +1,17 @@
+<map id="Rendu::createTextureFromSurface" name="Rendu::createTextureFromSurface">
+<area shape="rect" id="Node000001" title=" " alt="" coords="1024,23,1217,63"/>
+<area shape="rect" id="Node000002" href="$classRendu.html#a995626abfaee401f00fc2213d9545b02" title="Dessine un texte à l&#39;écran." alt="" coords="815,31,976,56"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="1010,46,976,46,976,41,1010,41"/>
+<area shape="rect" id="Node000003" href="$classBoutton.html#aab6d47e52b13c7e2db55f20ce03fbbef" title=" " alt="" coords="631,5,767,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="801,34,767,29,768,24,802,29"/>
+<area shape="rect" id="Node000004" href="$classHud.html#a3063f2e8a8a71c83c88ef1e7773e93ff" title=" " alt="" coords="649,55,748,80"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="801,58,749,64,748,59,800,52"/>
+<area shape="rect" id="Node000005" href="$classGameRenderer.html#a22a89ca662c181cef84d69fce2b9d72b" title=" " alt="" coords="400,55,583,80"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="635,70,583,70,583,65,635,65"/>
+<area shape="rect" id="Node000006" href="$classJeu.html#a97e016653e9f3df8735a322627c16fc0" title=" " alt="" coords="247,55,352,80"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="386,70,352,70,352,65,386,65"/>
+<area shape="rect" id="Node000007" href="$classJeu.html#ae5227e7a3d506e3511bd76201f4c7aad" title=" " alt="" coords="108,55,199,80"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="233,70,199,70,199,65,233,65"/>
+<area shape="rect" id="Node000008" href="$main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="5,55,60,80"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="94,70,60,70,60,65,94,65"/>
+</map>

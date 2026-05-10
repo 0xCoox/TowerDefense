@@ -1,0 +1,5 @@
+<map id="Ennemi" name="Ennemi">
+<area shape="rect" id="Node000001" title="Représente un ennemi se déplaçant sur le chemin de la carte." alt="" coords="5,339,207,844"/>
+<area shape="rect" id="Node000002" href="$classEntite.html" title=" " alt="" coords="33,5,179,291"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="109,305,109,339,103,339,103,305"/>
+</map>

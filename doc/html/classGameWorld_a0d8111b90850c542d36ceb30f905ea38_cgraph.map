@@ -1,0 +1,5 @@
+<map id="GameWorld::mettreAJourTours" name="GameWorld::mettreAJourTours">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,224,31"/>
+<area shape="rect" id="Node000002" href="$classCarte.html#a9bc537f1cb048cb2703ecb7c8f6ffae2" title=" " alt="" coords="272,5,424,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="224,15,259,15,259,21,224,21"/>
+</map>

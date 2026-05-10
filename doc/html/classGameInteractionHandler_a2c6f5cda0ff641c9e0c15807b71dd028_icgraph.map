@@ -1,0 +1,10 @@
+<map id="GameInteractionHandler::getCoordonneesTourSelectionnee" name="GameInteractionHandler::getCoordonneesTourSelectionnee">
+<area shape="rect" id="Node000001" title=" " alt="" coords="376,37,623,77"/>
+<area shape="rect" id="Node000002" href="$classGameInteractionHandler.html#a6e41f34f3ce117a218dc2ca184ba4c6a" title=" " alt="" coords="124,5,328,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="362,44,328,40,329,35,363,39"/>
+<area shape="rect" id="Node000004" href="$classGameInteractionHandler.html#aad3064ad5b1000a06617a4c6a3d91951" title=" " alt="" coords="133,69,319,109"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="363,76,320,81,319,76,362,71"/>
+<area shape="rect" id="Node000003" href="$classJeu.html#acc5795ee00edf75516d3dfe65be3e6d6" title=" " alt="" coords="5,45,76,70"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="111,48,77,54,76,49,110,43"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="118,73,76,66,77,61,119,68"/>
+</map>

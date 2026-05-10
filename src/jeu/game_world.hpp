@@ -2,7 +2,7 @@
 
 #include "../carte/carte.hpp"
 #include "../core/joueur.hpp"
-#include "../core/texture.hpp"
+#include "../core/texture_manager.hpp"
 #include "../entiter/ennemi.hpp"
 #include "../entiter/projectile.hpp"
 #include "../tours/tour.hpp"
@@ -12,7 +12,19 @@
 #include <memory>
 #include <optional>
 #include <vector>
-
+/**
+ * @brief Contient l'état logique de la partie.
+ *
+ * GameWorld possède la carte, le joueur, les ennemis, les tours, les projectiles
+ * et le gestionnaire de vagues.
+ *
+ * Cette classe est responsable de la logique du jeu :
+ * - mise à jour des ennemis ;
+ * - mise à jour des tours ;
+ * - mise à jour des projectiles ;
+ * - gestion des ennemis morts ou arrivés à la base ;
+ * - placement, amélioration et vente des tours.
+ */
 class GameWorld
 {
 public:

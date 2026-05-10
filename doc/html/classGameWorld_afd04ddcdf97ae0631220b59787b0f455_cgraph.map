@@ -1,0 +1,15 @@
+<map id="GameWorld::placerTourDejaPayee" name="GameWorld::placerTourDejaPayee">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,73,208,113"/>
+<area shape="rect" id="Node000002" href="$classTourFactory.html#a1d20f371046f0ac95cc40d71599beecb" title=" " alt="" coords="276,5,439,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="162,70,255,39,285,31,286,37,257,45,163,75"/>
+<area shape="rect" id="Node000004" href="$classCarte.html#a7e172109f8790d18ca121c22a652a70c" title=" " alt="" coords="272,55,443,80"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="208,80,258,75,258,80,208,85"/>
+<area shape="rect" id="Node000006" href="$classJoueur.html#ad18d1c7012dc9800669f44e5ec3e00d0" title=" " alt="" coords="290,104,425,129"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="208,100,276,106,276,112,208,105"/>
+<area shape="rect" id="Node000007" href="$classGameWorld.html#a9e009f6b9f599713dd904208c1748d54" title=" " alt="" coords="256,153,459,179"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="168,110,257,138,291,147,289,152,255,143,166,115"/>
+<area shape="rect" id="Node000003" href="$classTextureManager.html#afb2cc454e6e3d0ee5038618626b3f218" title=" " alt="" coords="513,5,669,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="439,15,499,15,499,21,439,21"/>
+<area shape="rect" id="Node000005" href="$classCarte.html#a341fc2f88c60b555428ac440192e2ba4" title=" " alt="" coords="507,55,675,80"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="443,65,493,65,493,70,443,70"/>
+</map>

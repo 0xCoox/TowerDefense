@@ -82,7 +82,11 @@ void Rendu::drawRect(const SDL_Rect& rect)
 void Rendu::drawRect(int x, int y, int w, int h)
 {
     SDL_Rect rect = {x, y, w, h};
-    SDL_RenderDrawRect(renderer_.get(), &rect);
+
+    SDL_RenderDrawRect(
+        renderer_.get(),
+        &rect
+    );
 }
 
 void Rendu::fillRect(const SDL_Rect& rect)
@@ -93,17 +97,31 @@ void Rendu::fillRect(const SDL_Rect& rect)
 void Rendu::fillRect(int x, int y, int w, int h)
 {
     SDL_Rect rect = {x, y, w, h};
-    SDL_RenderFillRect(renderer_.get(), &rect);
+
+    SDL_RenderFillRect(
+        renderer_.get(),
+        &rect
+    );
 }
 
 void Rendu::drawLine(int x1, int y1, int x2, int y2)
 {
-    SDL_RenderDrawLine(renderer_.get(), x1, y1, x2, y2);
+    SDL_RenderDrawLine(
+        renderer_.get(),
+        x1,
+        y1,
+        x2,
+        y2
+    );
 }
 
 void Rendu::drawPoint(int x, int y)
 {
-    SDL_RenderDrawPoint(renderer_.get(), x, y);
+    SDL_RenderDrawPoint(
+        renderer_.get(),
+        x,
+        y
+    );
 }
 
 void Rendu::renderCopy(
@@ -112,7 +130,35 @@ void Rendu::renderCopy(
     const SDL_Rect* dst
 )
 {
-    SDL_RenderCopy(renderer_.get(), texture, src, dst);
+    SDL_RenderCopy(
+        renderer_.get(),
+        texture,
+        src,
+        dst
+    );
+}
+
+void Rendu::renderCopy(
+    SDL_Texture* texture,
+    int dstX,
+    int dstY,
+    int dstW,
+    int dstH
+)
+{
+    SDL_Rect dst = {
+        dstX,
+        dstY,
+        dstW,
+        dstH
+    };
+
+    SDL_RenderCopy(
+        renderer_.get(),
+        texture,
+        nullptr,
+        &dst
+    );
 }
 
 void Rendu::renderCopy(
@@ -127,9 +173,26 @@ void Rendu::renderCopy(
     int dstH
 )
 {
-    SDL_Rect src = {srcX, srcY, srcW, srcH};
-    SDL_Rect dst = {dstX, dstY, dstW, dstH};
-    SDL_RenderCopy(renderer_.get(), texture, &src, &dst);
+    SDL_Rect src = {
+        srcX,
+        srcY,
+        srcW,
+        srcH
+    };
+
+    SDL_Rect dst = {
+        dstX,
+        dstY,
+        dstW,
+        dstH
+    };
+
+    SDL_RenderCopy(
+        renderer_.get(),
+        texture,
+        &src,
+        &dst
+    );
 }
 
 void Rendu::renderCopyEx(
@@ -141,7 +204,47 @@ void Rendu::renderCopyEx(
     SDL_RendererFlip flip
 )
 {
-    SDL_RenderCopyEx(renderer_.get(), texture, src, dst, angle, center, flip);
+    SDL_RenderCopyEx(
+        renderer_.get(),
+        texture,
+        src,
+        dst,
+        angle,
+        center,
+        flip
+    );
+}
+
+void Rendu::renderCopyEx(
+    SDL_Texture* texture,
+    int srcX,
+    int srcY,
+    int srcW,
+    int srcH,
+    int dstX,
+    int dstY,
+    int dstW,
+    int dstH,
+    double angle,
+    int centerX,
+    int centerY
+)
+{
+    renderCopyEx(
+        texture,
+        srcX,
+        srcY,
+        srcW,
+        srcH,
+        dstX,
+        dstY,
+        dstW,
+        dstH,
+        angle,
+        centerX,
+        centerY,
+        SDL_FLIP_NONE
+    );
 }
 
 void Rendu::renderCopyEx(
@@ -160,15 +263,76 @@ void Rendu::renderCopyEx(
     SDL_RendererFlip flip
 )
 {
-    SDL_Rect src = {srcX, srcY, srcW, srcH};
-    SDL_Rect dst = {dstX, dstY, dstW, dstH};
-    SDL_Point center = {centerX, centerY};
-    SDL_RenderCopyEx(renderer_.get(), texture, &src, &dst, angle, &center, flip);
+    SDL_Rect src = {
+        srcX,
+        srcY,
+        srcW,
+        srcH
+    };
+
+    SDL_Rect dst = {
+        dstX,
+        dstY,
+        dstW,
+        dstH
+    };
+
+    SDL_Point center = {
+        centerX,
+        centerY
+    };
+
+    SDL_RenderCopyEx(
+        renderer_.get(),
+        texture,
+        &src,
+        &dst,
+        angle,
+        &center,
+        flip
+    );
+}
+
+void Rendu::renderCopyExWholeTexture(
+    SDL_Texture* texture,
+    int dstX,
+    int dstY,
+    int dstW,
+    int dstH,
+    double angle,
+    int centerX,
+    int centerY
+)
+{
+    SDL_Rect dst = {
+        dstX,
+        dstY,
+        dstW,
+        dstH
+    };
+
+    SDL_Point center = {
+        centerX,
+        centerY
+    };
+
+    SDL_RenderCopyEx(
+        renderer_.get(),
+        texture,
+        nullptr,
+        &dst,
+        angle,
+        &center,
+        SDL_FLIP_NONE
+    );
 }
 
 SDL_Texture* Rendu::createTextureFromSurface(SDL_Surface* surface)
 {
-    return SDL_CreateTextureFromSurface(renderer_.get(), surface);
+    return SDL_CreateTextureFromSurface(
+        renderer_.get(),
+        surface
+    );
 }
 
 void Rendu::destroyTexture(SDL_Texture* texture)
@@ -220,16 +384,18 @@ void Rendu::dessinerTexte(
         return;
     }
 
-    SDL_Rect destination = {
-        x,
-        y,
-        surface->w,
-        surface->h
-    };
+    int largeur = surface->w;
+    int hauteur = surface->h;
 
     SDL_FreeSurface(surface);
 
-    renderCopy(texture, nullptr, &destination);
+    renderCopy(
+        texture,
+        x,
+        y,
+        largeur,
+        hauteur
+    );
 
     destroyTexture(texture);
 }

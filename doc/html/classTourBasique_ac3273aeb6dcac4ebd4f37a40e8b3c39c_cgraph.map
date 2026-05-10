@@ -1,0 +1,9 @@
+<map id="TourBasique::render" name="TourBasique::render">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,55,156,80"/>
+<area shape="rect" id="Node000002" href="$classRendu.html#a034fb504d82fad0cff314e166f8ccabc" title=" " alt="" coords="219,5,351,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="133,52,218,31,219,37,135,57"/>
+<area shape="rect" id="Node000003" href="$classRendu.html#aa4e8efb5aa903d2f2c381a4c26e62294" title=" " alt="" coords="204,55,367,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="156,65,190,65,190,70,156,70"/>
+<area shape="rect" id="Node000004" href="$classRendu.html#adbc9c3ea4520b4db4d15dad9c64440c2" title=" " alt="" coords="223,104,348,129"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="135,77,219,98,218,103,133,83"/>
+</map>

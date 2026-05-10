@@ -1,0 +1,19 @@
+<map id="Boutton::dessiner" name="Boutton::dessiner">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,169,141,194"/>
+<area shape="rect" id="Node000002" href="$classRendu.html#a995626abfaee401f00fc2213d9545b02" title="Dessine un texte à l&#39;écran." alt="" coords="189,70,351,95"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="90,166,133,136,188,106,208,97,210,102,191,110,136,141,93,171"/>
+<area shape="rect" id="Node000006" href="$classRendu.html#a034fb504d82fad0cff314e166f8ccabc" title=" " alt="" coords="204,119,336,145"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="124,166,205,145,206,151,125,171"/>
+<area shape="rect" id="Node000007" href="$classRendu.html#a77775b3077686949f20bb6bc2e04a707" title=" " alt="" coords="194,169,346,194"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="141,179,180,179,180,184,141,184"/>
+<area shape="rect" id="Node000008" href="$classRendu.html#a6bd04ede66b554be958c1f955e73341b" title=" " alt="" coords="212,218,328,243"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="125,191,206,212,205,217,124,197"/>
+<area shape="rect" id="Node000009" href="$classRendu.html#adbc9c3ea4520b4db4d15dad9c64440c2" title=" " alt="" coords="207,267,333,293"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="92,192,136,222,191,254,207,260,205,265,188,258,133,227,89,196"/>
+<area shape="rect" id="Node000003" href="$classRendu.html#a8aac861704514300b83a64ea8dcaa6b9" title=" " alt="" coords="399,5,592,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="320,67,402,46,404,51,321,73"/>
+<area shape="rect" id="Node000004" href="$classRendu.html#a2f07c69d2cfc518cdc0b7ed2e40461e6" title=" " alt="" coords="411,70,579,95"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="351,80,398,80,398,85,351,85"/>
+<area shape="rect" id="Node000005" href="$classRendu.html#aac7d7296d903e2847fcfc49470cb3d4a" title=" " alt="" coords="422,119,569,145"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="329,93,424,114,423,119,328,98"/>
+</map>

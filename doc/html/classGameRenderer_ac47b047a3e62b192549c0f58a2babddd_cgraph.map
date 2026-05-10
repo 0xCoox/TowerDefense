@@ -1,0 +1,7 @@
+<map id="GameRenderer::getPorteeTourSelectionnee" name="GameRenderer::getPorteeTourSelectionnee">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,224,45"/>
+<area shape="rect" id="Node000002" href="$classTourFactory.html#a1d20f371046f0ac95cc40d71599beecb" title=" " alt="" coords="272,13,435,38"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="224,23,258,23,258,28,224,28"/>
+<area shape="rect" id="Node000003" href="$classTextureManager.html#afb2cc454e6e3d0ee5038618626b3f218" title=" " alt="" coords="483,13,639,38"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="435,23,469,23,469,28,435,28"/>
+</map>

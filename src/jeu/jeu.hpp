@@ -8,12 +8,23 @@
 #include "../bouton/bouton_manager.hpp"
 #include "../core/input_manager.hpp"
 #include "../core/rendu.hpp"
-#include "../core/texture.hpp"
+#include "../core/texture_manager.hpp"
 #include "../core/window.hpp"
 #include "../tours/type_tour.hpp"
 
 #include <chrono>
-
+/**
+ * @brief Classe principale du Tower Defense.
+ *
+ * Jeu initialise les ressources principales, crée la fenêtre, charge les textures,
+ * initialise le monde, puis lance la boucle principale.
+ *
+ * Son rôle est d'orchestrer les autres classes :
+ * - InputManager pour lire les entrées ;
+ * - GameWorld pour la logique ;
+ * - GameRenderer pour l'affichage ;
+ * - Hud et BouttonManager pour l'interface.
+ */
 class Jeu
 {
 private:

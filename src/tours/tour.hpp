@@ -9,7 +9,15 @@
 #include <memory>
 #include <optional>
 #include <vector>
-
+/**
+ * @brief Classe mère de toutes les tours du jeu.
+ *
+ * Une tour possède une position sur la grille, des statistiques d'attaque,
+ * un coût, un niveau d'amélioration et une texture de canon.
+ *
+ * Les classes filles comme TourBasique, TourSniper, TourCanon, TourGlace
+ * et TourAntiAir définissent les valeurs spécifiques de chaque type de tour.
+ */
 class Tour
 {
 protected:
@@ -71,6 +79,18 @@ public:
         textureBase_ = base;
         textureCanon_ = canon;
     }
+    /**
+     * @brief Met à jour la tour pendant une frame.
+     *
+     * La tour cherche une cible valide, vérifie si cette cible est dans sa portée,
+     * oriente son canon vers elle, puis crée un projectile si son délai d'attaque
+     * est terminé.
+     *
+     * @param dt Temps écoulé depuis la dernière frame, en secondes.
+     * @param ennemis Liste des ennemis actifs.
+     * @param projectiles Liste des projectiles du jeu.
+     * @param tailleCase Taille d'une case de la carte en pixels.
+     */
 
     virtual void update(
         float dt,
@@ -107,6 +127,14 @@ public:
     int getCout() const { return cout_; }
 
     bool peutAmeliorer() const { return niveau_ < niveauMax_; }
+    /**
+     * @brief Améliore la tour si elle n'a pas atteint son niveau maximum.
+     *
+     * L'amélioration augmente les statistiques de la tour, par exemple les dégâts,
+     * la portée ou la vitesse des projectiles.
+     *
+     * @return true si l'amélioration a été effectuée, false sinon.
+     */
     bool ameliorer();
 
     int getNiveau() const { return niveau_; }

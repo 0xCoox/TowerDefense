@@ -55,68 +55,127 @@ Carte::Carte(const std::string& filechemin) {
     std::cout << "Chemin trouve : " << chemin_.size() << " points" << std::endl;
 }
 
-void Carte::graphisme(Rendu& rendu, SDL_Texture* tileset, SDL_Texture* baseTour) {
-    const int ASSET_SIZE = 128; 
+void Carte::graphisme(
+    Rendu& rendu,
+    SDL_Texture* tileset,
+    SDL_Texture* baseTour
+)
+{
+    const int ASSET_SIZE = 128;
 
-    for (size_t y = 0; y < grille_.size(); ++y) {
-        for (size_t x = 0; x < grille_[y].size(); ++x) {
-            
-            SDL_Rect destRect = {
-                static_cast<int>(x) * caseTaille_,
-                static_cast<int>(y) * caseTaille_,
-                caseTaille_,
-                caseTaille_
-            };
+    for (size_t y = 0; y < grille_.size(); ++y)
+    {
+        for (size_t x = 0; x < grille_[y].size(); ++x)
+        {
+            int gridX = static_cast<int>(x);
+            int gridY = static_cast<int>(y);
 
-            if (tileset) {
-                SDL_Rect srcRectMap = { 0, 0, ASSET_SIZE, ASSET_SIZE };
+            int dstX = gridX * caseTaille_;
+            int dstY = gridY * caseTaille_;
+
+            if (tileset != nullptr)
+            {
+                int srcX = 0;
+                int srcY = 0;
                 double angle = 0.0;
 
-                if (estCaseDeChemin(x, y)) {
-                    bool H = estCaseDeChemin(x, (int)y - 1);
-                    bool B = estCaseDeChemin(x, (int)y + 1);
-                    bool G = estCaseDeChemin((int)x - 1, y);
-                    bool D = estCaseDeChemin((int)x + 1, y);
+                if (estCaseDeChemin(gridX, gridY))
+                {
+                    bool H = estCaseDeChemin(gridX, gridY - 1);
+                    bool B = estCaseDeChemin(gridX, gridY + 1);
+                    bool G = estCaseDeChemin(gridX - 1, gridY);
+                    bool D = estCaseDeChemin(gridX + 1, gridY);
 
-                    if ((G && D) || (G && !H && !B) || (D && !H && !B)) {
-                        srcRectMap.x = 3 * ASSET_SIZE; angle = 90.0;
-                    } else if ((H && B) || (H && !G && !D) || (B && !G && !D)) {
-                        srcRectMap.x = 3 * ASSET_SIZE; angle = 0.0;
-                    } else {
-                        srcRectMap.x = 4 * ASSET_SIZE;
-                        if (B && D) angle = 0.0;
-                        else if (B && G) angle = 90.0;
-                        else if (H && G) angle = 180.0;
-                        else if (H && D) angle = 270.0;
+                    if ((G && D) || (G && !H && !B) || (D && !H && !B))
+                    {
+                        srcX = 3 * ASSET_SIZE;
+                        angle = 90.0;
                     }
-                } else {
-                    srcRectMap.x = 0; // Neige
+                    else if ((H && B) || (H && !G && !D) || (B && !G && !D))
+                    {
+                        srcX = 3 * ASSET_SIZE;
+                        angle = 0.0;
+                    }
+                    else
+                    {
+                        srcX = 4 * ASSET_SIZE;
+
+                        if (B && D)
+                        {
+                            angle = 0.0;
+                        }
+                        else if (B && G)
+                        {
+                            angle = 90.0;
+                        }
+                        else if (H && G)
+                        {
+                            angle = 180.0;
+                        }
+                        else if (H && D)
+                        {
+                            angle = 270.0;
+                        }
+                    }
+                }
+                else
+                {
+                    srcX = 0; // Neige
                 }
 
                 rendu.renderCopyEx(
                     tileset,
-                    &srcRectMap,
-                    &destRect,
+                    srcX,
+                    srcY,
+                    ASSET_SIZE,
+                    ASSET_SIZE,
+                    dstX,
+                    dstY,
+                    caseTaille_,
+                    caseTaille_,
                     angle,
-                    nullptr,
-                    SDL_FLIP_NONE
+                    caseTaille_ / 2,
+                    caseTaille_ / 2
                 );
             }
 
-            if (grille_[y][x].type == CaseType::Spawn) {
-                rendu.setColor(0, 255, 0, 100); 
-                rendu.setBlendMode(SDL_BLENDMODE_BLEND);
-                rendu.fillRect(destRect);
-            } 
-            else if (grille_[y][x].type == CaseType::Base) {
+            if (grille_[y][x].type == CaseType::Spawn)
+            {
+                rendu.enableBlend();
+                rendu.setColor(0, 255, 0, 100);
+                rendu.fillRect(
+                    dstX,
+                    dstY,
+                    caseTaille_,
+                    caseTaille_
+                );
+            }
+            else if (grille_[y][x].type == CaseType::Base)
+            {
+                rendu.enableBlend();
                 rendu.setColor(255, 0, 0, 100);
-                rendu.setBlendMode(SDL_BLENDMODE_BLEND);
-                rendu.fillRect(destRect);
+                rendu.fillRect(
+                    dstX,
+                    dstY,
+                    caseTaille_,
+                    caseTaille_
+                );
             }
 
-            if (grille_[y][x].type == CaseType::TowerSpace && baseTour) {
-                SDL_Rect srcRectBase = { 0, 128, ASSET_SIZE, ASSET_SIZE };
-                rendu.renderCopy(baseTour, &srcRectBase, &destRect);
+            if (grille_[y][x].type == CaseType::TowerSpace &&
+                baseTour != nullptr)
+            {
+                rendu.renderCopy(
+                    baseTour,
+                    0,
+                    128,
+                    ASSET_SIZE,
+                    ASSET_SIZE,
+                    dstX,
+                    dstY,
+                    caseTaille_,
+                    caseTaille_
+                );
             }
         }
     }

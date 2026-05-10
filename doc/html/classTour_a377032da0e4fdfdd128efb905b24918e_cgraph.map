@@ -1,0 +1,21 @@
+<map id="Tour::update" name="Tour::update">
+<area shape="rect" id="Node000001" title="Met à jour la tour pendant une frame." alt="" coords="5,129,108,155"/>
+<area shape="rect" id="Node000002" href="$classTour.html#ad3f382dc94747832a19bd7c8e27b2364" title=" " alt="" coords="156,31,335,56"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="81,127,207,60,209,65,83,132"/>
+<area shape="rect" id="Node000004" href="$classEnnemi.html#ad58fd44efe2f7aec8c207c4bbdb86653" title=" " alt="" coords="598,129,707,155"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="108,139,584,139,584,145,108,145"/>
+<area shape="rect" id="Node000005" href="$classEnnemi.html#a46f58fe1b5c47b668572d7259481db51" title=" " alt="" coords="599,179,707,204"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="108,144,585,183,585,188,108,149"/>
+<area shape="rect" id="Node000006" href="$classTour.html#acc2bf31bcd0b441e7d8b9f9355002d5b" title=" " alt="" coords="159,104,332,129"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="108,133,145,127,146,133,109,138"/>
+<area shape="rect" id="Node000003" href="$classEntite.html#a83249d985f7b8df907c2899cfb84ca0b" title=" " alt="" coords="408,5,509,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="334,30,393,23,394,28,335,35"/>
+<area shape="rect" id="Node000007" href="$classTour.html#af773846f589321d8a7b32b9fed88bfe3" title=" " alt="" coords="383,104,535,129"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="332,114,369,114,369,119,332,119"/>
+<area shape="rect" id="Node000008" href="$classTour.html#aa0bd22c568385d8e973c4f76f1472195" title=" " alt="" coords="397,55,521,80"/>
+<area shape="poly" id="edge9_Node000006_Node000008" title=" " alt="" coords="300,101,389,81,390,86,302,107"/>
+<area shape="poly" id="edge7_Node000007_Node000004" title=" " alt="" coords="535,124,585,130,584,136,535,129"/>
+<area shape="poly" id="edge8_Node000007_Node000005" title=" " alt="" coords="491,127,584,165,602,172,600,177,582,170,489,132"/>
+<area shape="rect" id="Node000009" href="$classEnnemi.html#a6d9610ad8a342cedd9ff2b6aa79b8778" title=" " alt="" coords="583,55,723,80"/>
+<area shape="poly" id="edge10_Node000008_Node000009" title=" " alt="" coords="521,65,569,65,569,70,521,70"/>
+</map>

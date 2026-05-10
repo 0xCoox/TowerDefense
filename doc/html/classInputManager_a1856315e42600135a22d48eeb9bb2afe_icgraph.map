@@ -1,0 +1,7 @@
+<map id="InputManager::toSDLButton" name="InputManager::toSDLButton">
+<area shape="rect" id="Node000001" title=" " alt="" coords="308,35,509,60"/>
+<area shape="rect" id="Node000002" href="$classInputManager.html#aae062cc293590f8f077c5f8d8b891ec8" title=" " alt="" coords="5,5,260,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="294,38,252,33,253,28,295,33"/>
+<area shape="rect" id="Node000003" href="$classInputManager.html#aab088b24ce504e2d180d7310f61a1c5a" title=" " alt="" coords="24,55,241,95"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="294,62,242,67,241,62,294,56"/>
+</map>

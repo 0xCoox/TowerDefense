@@ -53,8 +53,7 @@ public:
             font_ = nullptr;
         }
 
-        // Ne pas faire TTF_Quit ici.
-        // Le HUD utilise aussi SDL_ttf.
+
     }
 
     void ajouterBoutton(std::unique_ptr<Boutton> bouton)

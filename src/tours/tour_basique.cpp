@@ -1,6 +1,5 @@
 #include "tour_basique.hpp"
 
-#include <SDL2/SDL.h>
 
 namespace
 {
@@ -24,31 +23,43 @@ TourBasique::TourBasique(int gridX, int gridY)
 {
 }
 
-void TourBasique::render(Rendu& rendu, int tailleCase) const {
-    const int SIZE = 96; 
+void TourBasique::render(Rendu& rendu, int tailleCase) const
+{
+    constexpr int SIZE = 96;
 
-    int currentSpriteX = (niveau_ - 1) * SIZE;    
-    SDL_Rect srcRect = { currentSpriteX, spriteY_, SPRITE_SIZE, SPRITE_SIZE };
+    int currentSpriteX = (niveau_ - 1) * SIZE;
 
-    SDL_Rect dstRect = { 
-        gridX_ * tailleCase, 
-        gridY_ * tailleCase, 
-        tailleCase, 
-        tailleCase 
-    };
+    int dstX = gridX_ * tailleCase;
+    int dstY = gridY_ * tailleCase;
 
-    if (textureCanon_ != nullptr) {
-        float angleCorrection = angle_ + 90.0f;
+    if (textureCanon_ != nullptr)
+    {
+        double angleCorrection = angle_ + 90.0;
+
         rendu.renderCopyEx(
             textureCanon_,
-            &srcRect,
-            &dstRect,
+            currentSpriteX,
+            spriteY_,
+            SPRITE_SIZE,
+            SPRITE_SIZE,
+            dstX,
+            dstY,
+            tailleCase,
+            tailleCase,
             angleCorrection,
-            nullptr,
-            SDL_FLIP_NONE
+            tailleCase / 2,
+            tailleCase / 2
         );
-    } else {
-        rendu.setColor(255, 255, 0, 255); 
-        rendu.drawRect(dstRect);
+    }
+    else
+    {
+        rendu.setColor(255, 255, 0, 255);
+
+        rendu.drawRect(
+            dstX,
+            dstY,
+            tailleCase,
+            tailleCase
+        );
     }
 }

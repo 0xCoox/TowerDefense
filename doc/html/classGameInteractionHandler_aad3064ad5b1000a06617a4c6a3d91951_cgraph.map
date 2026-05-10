@@ -1,0 +1,15 @@
+<map id="GameInteractionHandler::vendreTourSelectionnee" name="GameInteractionHandler::vendreTourSelectionnee">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,49,192,89"/>
+<area shape="rect" id="Node000002" href="$classGameInteractionHandler.html#a2c6f5cda0ff641c9e0c15807b71dd028" title=" " alt="" coords="240,9,487,49"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="192,52,226,47,227,52,192,57"/>
+<area shape="rect" id="Node000004" href="$classGameWorld.html#ae0aa49acc77219727869b8af0590e04f" title=" " alt="" coords="274,84,453,109"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="192,76,260,83,260,88,192,81"/>
+<area shape="rect" id="Node000003" href="$classGameWorld.html#a79cfd7b7bb41accd8608cd1096da41fc" title=" " alt="" coords="573,5,712,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="487,21,559,18,560,24,487,27"/>
+<area shape="rect" id="Node000005" href="$classJoueur.html#a9100b4141ff1303f12062b7fb79f817b" title=" " alt="" coords="563,55,723,80"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="453,85,549,74,549,80,453,90"/>
+<area shape="rect" id="Node000006" href="$classJoueur.html#ad18d1c7012dc9800669f44e5ec3e00d0" title=" " alt="" coords="575,104,710,129"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="453,100,561,108,561,114,453,106"/>
+<area shape="rect" id="Node000007" href="$classGameWorld.html#a032d027d5731484705128abc4f06c60e" title=" " alt="" coords="535,153,751,179"/>
+<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="411,107,535,139,570,148,569,153,534,145,410,112"/>
+</map>
