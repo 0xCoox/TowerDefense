@@ -1,5 +1,7 @@
 #pragma once
+#include "game_input_handler.hpp"
 #include "game_renderer.hpp"
+
 #include "../core/window.hpp"
 #include "../core/rendu.hpp"
 #include "../core/input_manager.hpp"
@@ -14,6 +16,7 @@
 #include "../waves/wave_manager.hpp"
 
 #include "../tours/tour.hpp"
+#include "../tours/type_tour.hpp"
 
 #include "../bouton/bouton_manager.hpp"
 
@@ -30,6 +33,7 @@ private:
     Rendu rendu_;
     Carte carte_;
     InputManager input_;
+    GameInputHandler inputHandler_;
     Hud hud_;
 
     bool estLance_;
@@ -45,9 +49,8 @@ private:
 
     int curseurX_;
     int curseurY_;
-    int typeTourSelectionne_;
+    TypeTour typeTourSelectionne_;
 
-    bool sourisGaucheAvant_;
 
     std::vector<std::unique_ptr<Ennemi>> ennemis_;
     std::vector<std::unique_ptr<Tour>> tours_;
@@ -65,7 +68,7 @@ private:
     void mettreAJour(float dt);
     void dessiner();
 
-    void selectionnerTour(int typeTour);
+    void selectionnerTour(TypeTour typeTour);
     void essayerAjouterTour();
 
     void lancerVague();

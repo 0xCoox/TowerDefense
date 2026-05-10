@@ -20,7 +20,7 @@ namespace
     constexpr int VIES_INITIALES = 20;
 
     constexpr int PREMIERE_VAGUE = 1;
-    constexpr int TYPE_TOUR_PAR_DEFAUT = 1;
+    constexpr TypeTour TYPE_TOUR_PAR_DEFAUT = TypeTour::Basique;
 
     constexpr int CURSEUR_X_INITIAL = 0;
     constexpr int CURSEUR_Y_INITIAL = 0;
@@ -57,7 +57,6 @@ Jeu::Jeu()
       curseurX_(CURSEUR_X_INITIAL),
       curseurY_(CURSEUR_Y_INITIAL),
       typeTourSelectionne_(TYPE_TOUR_PAR_DEFAUT),
-      sourisGaucheAvant_(false),
       dernierTemps_(std::chrono::steady_clock::now())
 {
     textureManager_.charger("ennemi_regular", "../assets/ground_shaker_asset/Blue/Bodies/body_tracks.png", rendu_.getNativeRenderer());
@@ -147,94 +146,26 @@ void Jeu::lancer()
 
 void Jeu::traiterEntrees()
 {
-    input_.update();
-
-    int sourisX = 0;
-    int sourisY = 0;
-
-    Uint32 etatSouris = SDL_GetMouseState(&sourisX, &sourisY);
-    bool sourisGauche = (etatSouris & SDL_BUTTON(SDL_BUTTON_LEFT)) != 0;
-
-    if (sourisGauche && !sourisGaucheAvant_)
-    {
-        guiManager_.handleClick(sourisX, sourisY);
-    }
-
-    sourisGaucheAvant_ = sourisGauche;
-
-    if (input_.shouldQuit() || input_.isKeyPressed(SDLK_ESCAPE))
-    {
-        estLance_ = false;
-    }
-
-    if (input_.isKeyPressed(SDLK_SPACE))
-    {
-        estPause_ = !estPause_;
-
-        if (estPause_)
+    inputHandler_.traiterEntrees(
+        input_,
+        guiManager_,
+        estLance_,
+        estPause_,
+        curseurX_,
+        curseurY_,
+        [this](TypeTour typeTour)
         {
-            std::cout << "Pause" << std::endl;
-        }
-        else
+            selectionnerTour(typeTour);
+        },
+        [this]()
         {
-            std::cout << "Reprise" << std::endl;
+            essayerAjouterTour();
+        },
+        [this]()
+        {
+            lancerVague();
         }
-    }
-
-    if (input_.isKeyPressed(SDLK_RETURN))
-    {
-        lancerVague();
-    }
-
-    if (input_.isKeyPressed(SDLK_UP))
-    {
-        curseurY_--;
-    }
-
-    if (input_.isKeyPressed(SDLK_DOWN))
-    {
-        curseurY_++;
-    }
-
-    if (input_.isKeyPressed(SDLK_LEFT))
-    {
-        curseurX_--;
-    }
-
-    if (input_.isKeyPressed(SDLK_RIGHT))
-    {
-        curseurX_++;
-    }
-
-    if (input_.isKeyPressed(SDLK_1))
-    {
-        selectionnerTour(1);
-    }
-
-    if (input_.isKeyPressed(SDLK_2))
-    {
-        selectionnerTour(2);
-    }
-
-    if (input_.isKeyPressed(SDLK_3))
-    {
-        selectionnerTour(3);
-    }
-
-    if (input_.isKeyPressed(SDLK_4))
-    {
-        selectionnerTour(4);
-    }
-
-    if (input_.isKeyPressed(SDLK_5))
-    {
-        selectionnerTour(5);
-    }
-
-    if (input_.isKeyPressed(SDLK_a))
-    {
-        essayerAjouterTour();
-    }
+    );
 }
 
 void Jeu::mettreAJour(float dt)
@@ -401,30 +332,32 @@ void Jeu::dessiner()
     );
 }
 
-void Jeu::selectionnerTour(int typeTour)
+void Jeu::selectionnerTour(TypeTour typeTour)
 {
     typeTourSelectionne_ = typeTour;
     afficherPorteePlacement_ = true;
 
-    if (typeTourSelectionne_ == 1)
+    switch (typeTourSelectionne_)
     {
-        std::cout << "Selection : Tour basique" << std::endl;
-    }
-    else if (typeTourSelectionne_ == 2)
-    {
-        std::cout << "Selection : Tour sniper" << std::endl;
-    }
-    else if (typeTourSelectionne_ == 3)
-    {
-        std::cout << "Selection : Tour canon" << std::endl;
-    }
-    else if (typeTourSelectionne_ == 4)
-    {
-        std::cout << "Selection : Tour glace" << std::endl;
-    }
-    else if (typeTourSelectionne_ == 5)
-    {
-        std::cout << "Selection : Tour anti-air" << std::endl;
+        case TypeTour::Basique:
+            std::cout << "Selection : Tour basique" << std::endl;
+            break;
+
+        case TypeTour::Sniper:
+            std::cout << "Selection : Tour sniper" << std::endl;
+            break;
+
+        case TypeTour::Canon:
+            std::cout << "Selection : Tour canon" << std::endl;
+            break;
+
+        case TypeTour::Glace:
+            std::cout << "Selection : Tour glace" << std::endl;
+            break;
+
+        case TypeTour::AntiAir:
+            std::cout << "Selection : Tour anti-air" << std::endl;
+            break;
     }
 }
 

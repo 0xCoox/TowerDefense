@@ -10,6 +10,7 @@
 #include "../entiter/projectile.hpp"
 
 #include "../tours/tour.hpp"
+#include "../tours/type_tour.hpp"
 
 #include "../bouton/bouton_manager.hpp"
 
@@ -37,14 +38,14 @@ public:
         int curseurX,
         int curseurY,
         int numeroVague,
-        int typeTourSelectionne,
+        TypeTour typeTourSelectionne,
         bool estPause,
         bool afficherPorteePlacement
     );
 
 private:
     float getPorteeTourSelectionnee(
-        int typeTourSelectionne,
+        TypeTour typeTourSelectionne,
         int curseurX,
         int curseurY,
         TextureManager& textureManager
@@ -57,7 +58,7 @@ private:
         const std::vector<std::unique_ptr<Tour>>& tours,
         int curseurX,
         int curseurY,
-        int typeTourSelectionne,
+        TypeTour typeTourSelectionne,
         bool afficherPorteePlacement
     );
 

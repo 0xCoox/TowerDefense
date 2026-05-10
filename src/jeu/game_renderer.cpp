@@ -36,7 +36,7 @@ void GameRenderer::dessiner(
     int curseurX,
     int curseurY,
     int numeroVague,
-    int typeTourSelectionne,
+    TypeTour typeTourSelectionne,
     bool estPause,
     bool afficherPorteePlacement
 )
@@ -114,7 +114,7 @@ void GameRenderer::dessiner(
 }
 
 float GameRenderer::getPorteeTourSelectionnee(
-    int typeTourSelectionne,
+    TypeTour typeTourSelectionne,
     int curseurX,
     int curseurY,
     TextureManager& textureManager
@@ -143,7 +143,7 @@ void GameRenderer::dessinerPorteeAuCurseur(
     const std::vector<std::unique_ptr<Tour>>& tours,
     int curseurX,
     int curseurY,
-    int typeTourSelectionne,
+    TypeTour typeTourSelectionne,
     bool afficherPorteePlacement
 )
 {
